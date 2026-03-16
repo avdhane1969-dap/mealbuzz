@@ -1,0 +1,998 @@
+<!DOCTYPE html>
+<html lang="mr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Meal Buzz</title>
+  <style>
+    *{
+      margin:0;
+      padding:0;
+      box-sizing:border-box;
+      font-family:Arial,sans-serif;
+    }
+
+    body{
+      background:#0d0d10;
+      color:white;
+    }
+
+    .navbar{
+      position:sticky;
+      top:0;
+      z-index:1000;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:16px;
+      padding:16px 28px;
+      background:rgba(15,15,18,0.92);
+      backdrop-filter:blur(10px);
+      border-bottom:1px solid rgba(255,255,255,0.08);
+    }
+
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:12px;
+    }
+
+    .brand-icon{
+      width:46px;
+      height:46px;
+      border-radius:14px;
+      background:linear-gradient(135deg,#ff7a2f,#ffb36b);
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      font-size:22px;
+      box-shadow:0 10px 20px rgba(255,122,47,0.25);
+    }
+
+    .brand-text{
+      display:flex;
+      flex-direction:column;
+      line-height:1.1;
+    }
+
+    .brand-text .name{
+      font-size:24px;
+      font-weight:900;
+      color:#fff;
+      letter-spacing:0.4px;
+    }
+
+    .brand-text .sub{
+      font-size:12px;
+      color:#ffcfac;
+      font-weight:700;
+    }
+
+    .nav-right{
+      display:flex;
+      align-items:center;
+      gap:12px;
+      flex-wrap:wrap;
+    }
+
+    .lang-select{
+      padding:10px 12px;
+      border-radius:12px;
+      border:1px solid rgba(255,255,255,0.12);
+      background:#1b1b20;
+      color:white;
+      outline:none;
+      font-size:14px;
+    }
+
+    .owner-link{
+      text-decoration:none;
+      color:white;
+      background:linear-gradient(135deg,#ff7a2f,#ff9d5c);
+      padding:10px 16px;
+      border-radius:12px;
+      font-size:14px;
+      font-weight:800;
+      box-shadow:0 10px 20px rgba(255,122,47,0.2);
+      cursor:pointer;
+      border:none;
+    }
+
+    .hero{
+      min-height:78vh;
+      display:flex;
+      align-items:center;
+      padding:60px 28px;
+      background:
+        linear-gradient(rgba(0,0,0,0.56), rgba(0,0,0,0.68)),
+        url("https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=1600&q=80");
+      background-size:cover;
+      background-position:center;
+    }
+
+    .hero-content{
+      max-width:820px;
+    }
+
+    .hero-tag{
+      display:inline-block;
+      background:rgba(255,255,255,0.12);
+      color:#fff;
+      padding:10px 16px;
+      border-radius:999px;
+      font-size:14px;
+      font-weight:700;
+      margin-bottom:18px;
+      border:1px solid rgba(255,255,255,0.1);
+    }
+
+    .hero h1{
+      font-size:58px;
+      line-height:1.04;
+      font-weight:900;
+      margin-bottom:16px;
+      max-width:820px;
+    }
+
+    .hero h1 .accent{
+      color:#c8ff62;
+    }
+
+    .hero p{
+      font-size:20px;
+      line-height:1.6;
+      color:#ececec;
+      margin-bottom:24px;
+      max-width:760px;
+    }
+
+    .search-box{
+      display:flex;
+      gap:12px;
+      width:100%;
+      max-width:760px;
+      background:#fff;
+      border-radius:22px;
+      padding:10px;
+      box-shadow:0 18px 34px rgba(0,0,0,0.22);
+    }
+
+    .search-box input{
+      flex:1;
+      border:none;
+      outline:none;
+      font-size:17px;
+      padding:18px;
+      border-radius:16px;
+    }
+
+    .search-box button{
+      border:none;
+      background:linear-gradient(135deg,#ff7a2f,#ffb36b);
+      color:white;
+      font-weight:800;
+      font-size:16px;
+      padding:18px 24px;
+      border-radius:16px;
+      cursor:pointer;
+    }
+
+    .quick-filters{
+      display:flex;
+      flex-wrap:wrap;
+      gap:12px;
+      margin-top:18px;
+    }
+
+    .filter-btn{
+      border:none;
+      background:rgba(255,255,255,0.12);
+      color:white;
+      font-weight:700;
+      padding:10px 15px;
+      border-radius:999px;
+      cursor:pointer;
+    }
+
+    .section{
+      padding:60px 28px;
+    }
+
+    .section h2{
+      font-size:40px;
+      margin-bottom:10px;
+    }
+
+    .section p{
+      font-size:17px;
+      color:#bdbdbd;
+      line-height:1.6;
+      margin-bottom:28px;
+    }
+
+    .cards{
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(290px,1fr));
+      gap:22px;
+    }
+
+    .card{
+      background:#17171c;
+      border:1px solid rgba(255,255,255,0.08);
+      border-radius:24px;
+      overflow:hidden;
+      box-shadow:0 14px 28px rgba(0,0,0,0.22);
+      transition:0.3s;
+    }
+
+    .card:hover{
+      transform:translateY(-6px);
+    }
+
+    .card img{
+      width:100%;
+      height:220px;
+      object-fit:cover;
+    }
+
+    .card-content{
+      padding:18px;
+    }
+
+    .card-top{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:12px;
+      margin-bottom:10px;
+    }
+
+    .card-top h3{
+      font-size:24px;
+      color:white;
+    }
+
+    .rating{
+      background:#2d241c;
+      color:#ffb36b;
+      padding:7px 11px;
+      border-radius:999px;
+      font-size:13px;
+      font-weight:800;
+      white-space:nowrap;
+    }
+
+    .location{
+      color:#c9c9c9;
+      font-size:15px;
+      margin-bottom:14px;
+    }
+
+    .menu-box{
+      background:#101014;
+      border-radius:16px;
+      padding:14px;
+      margin-bottom:14px;
+      border:1px solid rgba(255,255,255,0.05);
+    }
+
+    .menu-box h4{
+      color:#ffb36b;
+      margin-bottom:8px;
+      font-size:16px;
+    }
+
+    .menu-box ul{
+      padding-left:18px;
+      color:#ededed;
+      line-height:1.7;
+      font-size:14px;
+    }
+
+    .bottom-row{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:12px;
+      margin-top:8px;
+    }
+
+    .price{
+      color:#c8ff62;
+      font-size:18px;
+      font-weight:900;
+    }
+
+    .view-btn{
+      text-decoration:none;
+      background:#ff7a2f;
+      color:white;
+      padding:11px 15px;
+      border-radius:12px;
+      font-size:14px;
+      font-weight:800;
+    }
+
+    .empty{
+      display:none;
+      text-align:center;
+      color:#bbb;
+      padding:20px 0;
+      font-size:18px;
+    }
+
+    .footer{
+      border-top:1px solid rgba(255,255,255,0.08);
+      padding:22px 28px;
+      color:#9d9d9d;
+      font-size:14px;
+    }
+
+    .modal{
+      display:none;
+      position:fixed;
+      inset:0;
+      background:rgba(0,0,0,0.7);
+      z-index:2000;
+      justify-content:center;
+      align-items:center;
+      padding:20px;
+    }
+
+    .modal-box{
+      width:100%;
+      max-width:460px;
+      background:#17171c;
+      border:1px solid rgba(255,255,255,0.08);
+      border-radius:24px;
+      padding:24px;
+      box-shadow:0 20px 40px rgba(0,0,0,0.3);
+    }
+
+    .modal-box h2{
+      margin-bottom:10px;
+      font-size:30px;
+    }
+
+    .modal-box p{
+      color:#bdbdbd;
+      line-height:1.6;
+      margin-bottom:18px;
+    }
+
+    .field{
+      margin-bottom:14px;
+    }
+
+    .field label{
+      display:block;
+      margin-bottom:8px;
+      color:#ffcfac;
+      font-weight:700;
+      font-size:14px;
+    }
+
+    .field input, .field textarea, .field select{
+      width:100%;
+      padding:14px;
+      border-radius:14px;
+      border:1px solid rgba(255,255,255,0.08);
+      background:#101014;
+      color:white;
+      outline:none;
+      font-size:15px;
+    }
+
+    .field textarea{
+      min-height:120px;
+      resize:vertical;
+    }
+
+    .btn{
+      border:none;
+      background:linear-gradient(135deg,#ff7a2f,#ffb36b);
+      color:white;
+      padding:14px 18px;
+      border-radius:14px;
+      font-weight:800;
+      cursor:pointer;
+    }
+
+    .btn.secondary{
+      background:#23232a;
+      color:#fff;
+    }
+
+    .btn-row{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      margin-top:8px;
+    }
+
+    .success{
+      margin-top:12px;
+      color:#9dff87;
+      font-weight:700;
+    }
+
+    .error{
+      margin-top:12px;
+      color:#ff8f8f;
+      font-weight:700;
+    }
+
+    .dashboard{
+      display:none;
+      padding:0 28px 60px;
+    }
+
+    .panel{
+      background:#17171c;
+      border:1px solid rgba(255,255,255,0.08);
+      border-radius:24px;
+      padding:24px;
+      box-shadow:0 14px 28px rgba(0,0,0,0.2);
+      margin-bottom:22px;
+    }
+
+    .panel h2{
+      margin-bottom:10px;
+    }
+
+    .panel p{
+      color:#bdbdbd;
+      line-height:1.6;
+      margin-bottom:16px;
+    }
+
+    .grid{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:22px;
+    }
+
+    .small{
+      font-size:13px;
+      color:#aaa;
+      margin-top:8px;
+    }
+
+    @media (max-width: 900px){
+      .hero h1{
+        font-size:44px;
+      }
+      .hero p{
+        font-size:18px;
+      }
+    }
+
+    @media (max-width: 800px){
+      .grid{
+        grid-template-columns:1fr;
+      }
+    }
+
+    @media (max-width: 640px){
+      .navbar{
+        padding:16px;
+        align-items:flex-start;
+        flex-direction:column;
+      }
+
+      .hero{
+        padding:40px 16px;
+      }
+
+      .hero h1{
+        font-size:34px;
+      }
+
+      .search-box{
+        flex-direction:column;
+      }
+
+      .search-box button{
+        width:100%;
+      }
+
+      .section, .dashboard{
+        padding-left:16px;
+        padding-right:16px;
+      }
+
+      .section h2{
+        font-size:30px;
+      }
+
+      .footer{
+        padding:18px 16px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="navbar">
+    <div class="brand">
+      <div class="brand-icon">🍛</div>
+      <div class="brand-text">
+        <div class="name">Meal Buzz</div>
+        <div class="sub" id="brandSub">Daily mess discovery</div>
+      </div>
+    </div>
+
+    <div class="nav-right">
+      <select id="languageSelect" class="lang-select">
+        <option value="mr">मराठी</option>
+        <option value="en">English</option>
+        <option value="hi">हिन्दी</option>
+        <option value="kn">ಕನ್ನಡ</option>
+      </select>
+
+      <button class="owner-link" id="ownerLoginText" onclick="openLogin()">Owner Login</button>
+    </div>
+  </div>
+
+  <section class="hero">
+    <div class="hero-content">
+      <div class="hero-tag" id="heroTag">🍴 Smart mess food discovery</div>
+
+      <h1 id="heroTitle">
+        तुमच्या जवळचं <span class="accent">best</span> mess food सहज शोधा.
+      </h1>
+
+      <p id="heroDesc">
+        आजचा menu, location, rating आणि starting price एका ठिकाणी पहा.
+      </p>
+
+      <div class="search-box">
+        <input type="text" id="searchInput" placeholder="शहर, भाग, मेस नाव किंवा डिश शोधा..." />
+        <button id="searchBtn">शोधा</button>
+      </div>
+
+      <div class="quick-filters">
+        <button class="filter-btn" onclick="setFilter('Karad')">Karad</button>
+        <button class="filter-btn" onclick="setFilter('Pune')">Pune</button>
+        <button class="filter-btn" onclick="setFilter('Satara')">Satara</button>
+        <button class="filter-btn" onclick="setFilter('Paneer')">Paneer</button>
+        <button class="filter-btn" onclick="setFilter('Bhakri')">Bhakri</button>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <h2 id="sectionTitle">आजचा मेनू / Today’s Menu</h2>
+    <p id="sectionDesc">user ला लगेच काय उपलब्ध आहे ते कळण्यासाठी आजचा menu इथे दाखवला आहे.</p>
+
+    <div class="cards" id="cards"></div>
+    <div class="empty" id="emptyState">No mess found.</div>
+  </section>
+
+  <section class="dashboard" id="dashboard">
+    <div class="panel">
+      <h2>Owner Dashboard</h2>
+      <p>इथे mess owner रोज menu, rating, price, image आणि location update करू शकतो. Save केल्यावर homepage वर update लगेच दिसेल.</p>
+      <div class="btn-row">
+        <button class="btn secondary" onclick="closeDashboard()">Close Dashboard</button>
+      </div>
+    </div>
+
+    <div class="grid">
+      <div class="panel">
+        <h2>Edit Existing Mess</h2>
+
+        <div class="field">
+          <label>Select Mess</label>
+          <select id="messSelect" onchange="loadSelectedMess()"></select>
+        </div>
+
+        <div class="field">
+          <label>Mess Name</label>
+          <input type="text" id="editName">
+        </div>
+
+        <div class="field">
+          <label>Location</label>
+          <input type="text" id="editLocation">
+        </div>
+
+        <div class="field">
+          <label>Rating</label>
+          <input type="text" id="editRating" placeholder="4.5">
+        </div>
+
+        <div class="field">
+          <label>Starting Price</label>
+          <input type="text" id="editPrice" placeholder="₹80">
+        </div>
+
+        <div class="field">
+          <label>Image URL</label>
+          <input type="text" id="editImage">
+        </div>
+
+        <div class="field">
+          <label>Today's Menu (comma separated)</label>
+          <textarea id="editMenu" placeholder="Chapati, Bhaji, Dal, Rice"></textarea>
+        </div>
+
+        <button class="btn" onclick="saveSelectedMess()">Save Changes</button>
+        <div class="success" id="saveMsg"></div>
+      </div>
+
+      <div class="panel">
+        <h2>Add New Mess</h2>
+
+        <div class="field">
+          <label>Mess Name</label>
+          <input type="text" id="newName">
+        </div>
+
+        <div class="field">
+          <label>Location</label>
+          <input type="text" id="newLocation">
+        </div>
+
+        <div class="field">
+          <label>Rating</label>
+          <input type="text" id="newRating" placeholder="4.2">
+        </div>
+
+        <div class="field">
+          <label>Starting Price</label>
+          <input type="text" id="newPrice" placeholder="₹90">
+        </div>
+
+        <div class="field">
+          <label>Image URL</label>
+          <input type="text" id="newImage" placeholder="https://...">
+        </div>
+
+        <div class="field">
+          <label>Today's Menu (comma separated)</label>
+          <textarea id="newMenu" placeholder="Bhakri, Pithla, Rice"></textarea>
+        </div>
+
+        <button class="btn" onclick="addNewMess()">Add Mess</button>
+        <div class="small">Tip: Menu items comma ने वेगळे टाका.</div>
+        <div class="success" id="addMsg"></div>
+      </div>
+    </div>
+  </section>
+
+  <div class="footer">© 2026 Meal Buzz</div>
+
+  <div class="modal" id="loginModal">
+    <div class="modal-box">
+      <h2>Owner Login</h2>
+      <p>Phone number ने login करा. Demo OTP साठी <b>1234</b> वापरा.</p>
+
+      <div class="field">
+        <label>Phone Number</label>
+        <input type="text" id="phoneNumber" placeholder="Enter phone number">
+      </div>
+
+      <div class="field">
+        <label>OTP</label>
+        <input type="text" id="otpValue" placeholder="Enter OTP">
+      </div>
+
+      <div class="btn-row">
+        <button class="btn" onclick="loginWithPhone()">Login</button>
+        <button class="btn secondary" onclick="closeLogin()">Cancel</button>
+      </div>
+
+      <div class="error" id="loginMsg"></div>
+    </div>
+  </div>
+
+  <script>
+    const defaultMesses = [
+      {
+        id: 1,
+        name: "Shree Mess",
+        location: "Karad",
+        rating: "4.5",
+        price: "₹80",
+        image: "https://images.unsplash.com/photo-1546833999-b9f581a1996d?auto=format&fit=crop&w=900&q=80",
+        menu: ["Chapati", "Bhaji", "Dal", "Rice"]
+      },
+      {
+        id: 2,
+        name: "Sai Tiffin",
+        location: "Pune",
+        rating: "4.3",
+        price: "₹70",
+        image: "https://images.unsplash.com/photo-1512058564366-18510be2db19?auto=format&fit=crop&w=900&q=80",
+        menu: ["Bhakri", "Pithla", "Thecha", "Rice"]
+      },
+      {
+        id: 3,
+        name: "Annapurna Mess",
+        location: "Satara",
+        rating: "4.7",
+        price: "₹120",
+        image: "https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=900&q=80",
+        menu: ["Paneer Masala", "Roti", "Jeera Rice", "Salad"]
+      }
+    ];
+
+    function getMesses() {
+      const stored = localStorage.getItem("mealbuzz_messes");
+      if (stored) return JSON.parse(stored);
+      localStorage.setItem("mealbuzz_messes", JSON.stringify(defaultMesses));
+      return defaultMesses;
+    }
+
+    function saveMesses(messes) {
+      localStorage.setItem("mealbuzz_messes", JSON.stringify(messes));
+    }
+
+    const translations = {
+      mr: {
+        brandSub: "Daily mess discovery",
+        ownerLoginText: "Owner Login",
+        heroTag: "🍴 Smart mess food discovery",
+        heroTitle: 'तुमच्या जवळचं <span class="accent">best</span> mess food सहज शोधा.',
+        heroDesc: "आजचा menu, location, rating आणि starting price एका ठिकाणी पहा.",
+        searchPlaceholder: "शहर, भाग, मेस नाव किंवा डिश शोधा...",
+        searchBtn: "शोधा",
+        sectionTitle: "आजचा मेनू / Today’s Menu",
+        sectionDesc: "user ला लगेच काय उपलब्ध आहे ते कळण्यासाठी आजचा menu इथे दाखवला आहे.",
+        menuTitle: "आजचा मेनू",
+        priceLabel: "Starting",
+        viewDetails: "View Details",
+        emptyText: "कोणतीही मेस सापडली नाही."
+      },
+      en: {
+        brandSub: "Daily mess discovery",
+        ownerLoginText: "Owner Login",
+        heroTag: "🍴 Smart mess food discovery",
+        heroTitle: 'Find the <span class="accent">best</span> mess food near you.',
+        heroDesc: "See today’s menu, location, rating and starting price in one place.",
+        searchPlaceholder: "Search city, area, mess name or dish...",
+        searchBtn: "Search",
+        sectionTitle: "Today’s Menu",
+        sectionDesc: "Today’s menu is shown here so users can quickly know what is available.",
+        menuTitle: "Today’s Menu",
+        priceLabel: "Starting",
+        viewDetails: "View Details",
+        emptyText: "No mess found."
+      },
+      hi: {
+        brandSub: "Daily mess discovery",
+        ownerLoginText: "Owner Login",
+        heroTag: "🍴 Smart mess food discovery",
+        heroTitle: 'अपने पास का <span class="accent">best</span> mess food खोजें.',
+        heroDesc: "आज का menu, location, rating और starting price एक ही जगह देखें.",
+        searchPlaceholder: "शहर, एरिया, mess नाम या dish खोजें...",
+        searchBtn: "खोजें",
+        sectionTitle: "आज का Menu",
+        sectionDesc: "user को तुरंत क्या available है यह समझने के लिए आज का menu यहाँ दिखाया गया है.",
+        menuTitle: "आज का Menu",
+        priceLabel: "Starting",
+        viewDetails: "View Details",
+        emptyText: "कोई mess नहीं मिला."
+      },
+      kn: {
+        brandSub: "Daily mess discovery",
+        ownerLoginText: "Owner Login",
+        heroTag: "🍴 Smart mess food discovery",
+        heroTitle: 'ನಿಮ್ಮ ಹತ್ತಿರದ <span class="accent">best</span> mess food ಹುಡುಕಿ.',
+        heroDesc: "ಇಂದಿನ menu, location, rating ಮತ್ತು starting price ಅನ್ನು ಒಂದೇ ಜಾಗದಲ್ಲಿ ನೋಡಿ.",
+        searchPlaceholder: "ನಗರ, ಪ್ರದೇಶ, mess ಹೆಸರು ಅಥವಾ dish ಹುಡುಕಿ...",
+        searchBtn: "ಹುಡುಕಿ",
+        sectionTitle: "ಇಂದಿನ Menu",
+        sectionDesc: "user ಗೆ ಏನು available ಇದೆ ಎಂದು ತಕ್ಷಣ ತಿಳಿಯಲು ಇಂದಿನ menu ಇಲ್ಲಿ ತೋರಿಸಲಾಗಿದೆ.",
+        menuTitle: "ಇಂದಿನ Menu",
+        priceLabel: "Starting",
+        viewDetails: "View Details",
+        emptyText: "ಯಾವುದೇ mess ಸಿಗಲಿಲ್ಲ."
+      }
+    };
+
+    let currentLang = "mr";
+    let messes = getMesses();
+
+    const cardsEl = document.getElementById("cards");
+    const emptyState = document.getElementById("emptyState");
+    const searchInput = document.getElementById("searchInput");
+
+    function applyLanguage(lang) {
+      currentLang = lang;
+      const t = translations[lang];
+
+      document.documentElement.lang = lang;
+      document.getElementById("brandSub").textContent = t.brandSub;
+      document.getElementById("ownerLoginText").textContent = t.ownerLoginText;
+      document.getElementById("heroTag").textContent = t.heroTag;
+      document.getElementById("heroTitle").innerHTML = t.heroTitle;
+      document.getElementById("heroDesc").textContent = t.heroDesc;
+      document.getElementById("searchInput").placeholder = t.searchPlaceholder;
+      document.getElementById("searchBtn").textContent = t.searchBtn;
+      document.getElementById("sectionTitle").textContent = t.sectionTitle;
+      document.getElementById("sectionDesc").textContent = t.sectionDesc;
+      document.getElementById("emptyState").textContent = t.emptyText;
+
+      renderCards(searchInput.value.trim().toLowerCase());
+    }
+
+    function renderCards(query = "") {
+      const t = translations[currentLang];
+      cardsEl.innerHTML = "";
+
+      const filtered = messes.filter(m => {
+        const text = `${m.name} ${m.location} ${m.menu.join(" ")}`.toLowerCase();
+        return text.includes(query);
+      });
+
+      if (!filtered.length) {
+        emptyState.style.display = "block";
+        return;
+      } else {
+        emptyState.style.display = "none";
+      }
+
+      filtered.forEach(m => {
+        const card = document.createElement("div");
+        card.className = "card";
+        card.innerHTML = `
+          <img src="${m.image}" alt="${m.name}">
+          <div class="card-content">
+            <div class="card-top">
+              <h3>${m.name}</h3>
+              <div class="rating">★ ${m.rating}</div>
+            </div>
+
+            <div class="location">📍 ${m.location}</div>
+
+            <div class="menu-box">
+              <h4>${t.menuTitle}</h4>
+              <ul>
+                ${m.menu.map(item => `<li>${item}</li>`).join("")}
+              </ul>
+            </div>
+
+            <div class="bottom-row">
+              <div class="price">${t.priceLabel} ${m.price}</div>
+              <a href="#" class="view-btn">${t.viewDetails}</a>
+            </div>
+          </div>
+        `;
+        cardsEl.appendChild(card);
+      });
+    }
+
+    function setFilter(value) {
+      searchInput.value = value;
+      renderCards(value.toLowerCase());
+    }
+
+    function openLogin() {
+      document.getElementById("loginModal").style.display = "flex";
+      document.getElementById("loginMsg").textContent = "";
+    }
+
+    function closeLogin() {
+      document.getElementById("loginModal").style.display = "none";
+    }
+
+    function loginWithPhone() {
+      const phone = document.getElementById("phoneNumber").value.trim();
+      const otp = document.getElementById("otpValue").value.trim();
+
+      if (phone.length < 10) {
+        document.getElementById("loginMsg").textContent = "Enter valid phone number";
+        return;
+      }
+
+      if (otp !== "1234") {
+        document.getElementById("loginMsg").textContent = "Wrong OTP. Use 1234 for demo.";
+        return;
+      }
+
+      closeLogin();
+      document.getElementById("dashboard").style.display = "block";
+      document.getElementById("dashboard").scrollIntoView({behavior:"smooth"});
+      populateSelect();
+      loadSelectedMess();
+    }
+
+    function closeDashboard() {
+      document.getElementById("dashboard").style.display = "none";
+    }
+
+    function populateSelect() {
+      const select = document.getElementById("messSelect");
+      select.innerHTML = "";
+      messes.forEach((m, index) => {
+        const option = document.createElement("option");
+        option.value = index;
+        option.textContent = m.name;
+        select.appendChild(option);
+      });
+    }
+
+    function loadSelectedMess() {
+      const index = document.getElementById("messSelect").value;
+      const m = messes[index];
+      if (!m) return;
+
+      document.getElementById("editName").value = m.name;
+      document.getElementById("editLocation").value = m.location;
+      document.getElementById("editRating").value = m.rating;
+      document.getElementById("editPrice").value = m.price;
+      document.getElementById("editImage").value = m.image;
+      document.getElementById("editMenu").value = m.menu.join(", ");
+    }
+
+    function saveSelectedMess() {
+      const index = document.getElementById("messSelect").value;
+      messes[index].name = document.getElementById("editName").value.trim();
+      messes[index].location = document.getElementById("editLocation").value.trim();
+      messes[index].rating = document.getElementById("editRating").value.trim();
+      messes[index].price = document.getElementById("editPrice").value.trim();
+      messes[index].image = document.getElementById("editImage").value.trim();
+      messes[index].menu = document.getElementById("editMenu").value.split(",").map(i => i.trim()).filter(Boolean);
+
+      saveMesses(messes);
+      renderCards(searchInput.value.trim().toLowerCase());
+      populateSelect();
+      document.getElementById("saveMsg").textContent = "Mess updated successfully!";
+    }
+
+    function addNewMess() {
+      const name = document.getElementById("newName").value.trim();
+      const location = document.getElementById("newLocation").value.trim();
+      const rating = document.getElementById("newRating").value.trim();
+      const price = document.getElementById("newPrice").value.trim();
+      const image = document.getElementById("newImage").value.trim();
+      const menu = document.getElementById("newMenu").value.split(",").map(i => i.trim()).filter(Boolean);
+
+      if (!name || !location || !rating || !price || !image || !menu.length) {
+        document.getElementById("addMsg").textContent = "Fill all fields first";
+        return;
+      }
+
+      messes.push({
+        id: Date.now(),
+        name,
+        location,
+        rating,
+        price,
+        image,
+        menu
+      });
+
+      saveMesses(messes);
+      renderCards(searchInput.value.trim().toLowerCase());
+      populateSelect();
+
+      document.getElementById("newName").value = "";
+      document.getElementById("newLocation").value = "";
+      document.getElementById("newRating").value = "";
+      document.getElementById("newPrice").value = "";
+      document.getElementById("newImage").value = "";
+      document.getElementById("newMenu").value = "";
+
+      document.getElementById("addMsg").textContent = "New mess added successfully!";
+    }
+
+    document.getElementById("searchBtn").addEventListener("click", () => {
+      renderCards(searchInput.value.trim().toLowerCase());
+    });
+
+    searchInput.addEventListener("keyup", () => {
+      renderCards(searchInput.value.trim().toLowerCase());
+    });
+
+    document.getElementById("languageSelect").addEventListener("change", (e) => {
+      applyLanguage(e.target.value);
+    });
+
+    applyLanguage("mr");
+  </script>
+</body>
+</html>
+Is this right   this is only one file code 
