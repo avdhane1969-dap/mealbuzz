@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Meal Buzz - Owner Login</title>
+  <link rel="icon" href="favicon.png" type="image/png" />
+
+  <style>
+    *{
+      margin:0;
+      padding:0;
+      box-sizing:border-box;
+    }
+
+    :root{
+      --bg:#0d0f14;
+      --card:#171a21;
+      --soft:#20242d;
+      --line:#2b313d;
+      --text:#f5f7fb;
+      --muted:#b9c0cc;
+      --accent:#ff8a00;
+      --accent2:#ffb347;
+      --green:#27c26c;
+      --danger:#ff6b6b;
+    }
+
+    body{
+      font-family:Arial, Helvetica, sans-serif;
+      background:linear-gradient(180deg,#0d0f14 0%, #12151d 100%);
+      color:var(--text);
+      min-height:100vh;
+    }
+
+    a{
+      text-decoration:none;
+      color:inherit;
+    }
+
+    .topbar{
+      position:sticky;
+      top:0;
+      z-index:1000;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+      padding:14px 16px;
+      background:rgba(13,15,20,0.95);
+      backdrop-filter:blur(8px);
+      border-bottom:1px solid var(--line);
+    }
+
+    .top-left{
+      display:flex;
+      align-items:center;
+      gap:12px;
+    }
+
+    .back-btn{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      min-width:44px;
+      height:44px;
+      padding:0 14px;
+      border-radius:12px;
+      background:var(--soft);
+      border:1px solid var(--line);
+      color:#fff;
+      font-size:14px;
+      font-weight:bold;
+    }
+
+    .brand h1{
+      color:var(--accent);
+      font-size:28px;
+      line-height:1;
+    }
+
+    .brand p{
+      color:var(--muted);
+      font-size:12px;
+      margin-top:4px;
+    }
+
+    .section{
+      padding:18px 16px;
+    }
+
+    .wrap{
+      max-width:1100px;
+      margin:0 auto;
+      display:grid;
+      gap:18px;
+    }
+
+    .hero-card,
+    .login-card,
+    .help-card,
+    .panel-card{
+      background:linear-gradient(135deg,#171a21 0%, #1e232d 100%);
+      border:1px solid var(--line);
+      border-radius:24px;
+      box-shadow:0 10px 30px rgba(0,0,0,0.25);
+    }
+
+    .hero-card{
+      padding:22px;
+    }
+
+    .hero-card h2{
+      font-size:30px;
+      margin-bottom:10px;
+    }
+
+    .hero-card p{
+      color:var(--muted);
+      font-size:14px;
+      line-height:1.8;
+    }
+
+    .login-card{
+      padding:20px;
+    }
+
+    .login-card h3{
+      font-size:22px;
+      margin-bottom:8px;
+    }
+
+    .login-card p{
+      color:var(--muted);
+      font-size:14px;
+      line-height:1.6;
+      margin-bottom:16px;
+    }
+
+    .login-form{
+      display:grid;
+      gap:12px;
+    }
+
+    .login-form input,
+    .login-form textarea{
+      width:100%;
+      background:#11151c;
+      color:#fff;
+      border:1px solid var(--line);
+      border-radius:14px;
+      padding:14px;
+      outline:none;
+      font-size:14px;
+      font-family:inherit;
+    }
+
+    .login-btn,
+    .save-btn,
+    .logout-btn{
+      width:100%;
+      padding:14px;
+      border-radius:14px;
+      font-size:15px;
+      font-weight:bold;
+      border:none;
+      cursor:pointer;
+    }
+
+    .login-btn,
+    .save-btn{
+      background:linear-gradient(90deg,var(--accent),var(--accent2));
+      color:#fff;
+    }
+
+    .logout-btn{
+      background:var(--soft);
+      border:1px solid var(--line);
+      color:#fff;
+    }
+
+    .status{
+      min-height:22px;
+      font-size:14px;
+      margin-top:6px;
+      color:#90ee90;
+    }
+
+    .status.error{
+      color:#ff9d9d;
+    }
+
+    .help-card{
+      padding:20px;
+    }
+
+    .help-card h3{
+      font-size:20px;
+      margin-bottom:10px;
+    }
+
+    .help-card ul{
+      padding-left:18px;
+      color:var(--muted);
+      line-height:1.8;
+      font-size:14px;
+    }
+
+    .panel-card{
+      display:none;
+      padding:20px;
+    }
+
+    .panel-card.show{
+      display:block;
+    }
+
+    .panel-card h3{
+      font-size:22px;
+      margin-bottom:10px;
+    }
+
+    .panel-card p{
+      color:var(--muted);
+      font-size:14px;
+      line-height:1.6;
+      margin-bottom:16px;
+    }
+
+    .panel-grid{
+      display:grid;
+      gap:12px;
+    }
+
+    .owner-badge{
+      display:inline-block;
+      background:rgba(39,194,108,0.12);
+      color:#7df0b0;
+      border:1px solid rgba(39,194,108,0.35);
+      padding:6px 10px;
+      border-radius:999px;
+      font-size:12px;
+      font-weight:bold;
+      margin-bottom:14px;
+    }
+
+    .footer{
+      border-top:1px solid var(--line);
+      margin-top:10px;
+      padding:20px 16px 34px;
+      text-align:center;
+      color:var(--muted);
+      font-size:13px;
+    }
+
+    @media (min-width:768px){
+      .section,
+      .footer{
+        padding-left:28px;
+        padding-right:28px;
+      }
+
+      .wrap{
+        grid-template-columns:1.1fr 0.9fr;
+        align-items:start;
+      }
+
+      .hero-card{
+        grid-column:1 / -1;
+      }
+
+      .panel-card{
+        grid-column:1 / -1;
+      }
+    }
+
+    @media (min-width:1100px){
+      .section,
+      .footer{
+        padding-left:48px;
+        padding-right:48px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <header class="topbar">
+    <div class="top-left">
+      <a href="index.html" class="back-btn">← Back</a>
+      <div class="brand">
+        <h1>Meal Buzz</h1>
+        <p>Mess owner login</p>
+      </div>
+    </div>
+  </header>
+
+  <section class="section">
+    <div class="wrap">
+
+      <div class="hero-card">
+        <h2>Manage your mess on Meal Buzz</h2>
+        <p>
+          Login to access your owner panel, update your daily menu,
+          and keep your mess information useful for nearby users.
+        </p>
+      </div>
+
+      <div class="login-card">
+        <h3>Owner Login</h3>
+        <p>Use your registered contact number and password to continue.</p>
+
+        <div class="login-form">
+          <input type="text" id="ownerPhone" placeholder="Registered Contact Number" />
+          <input type="password" id="ownerPassword" placeholder="Password" />
+          <button class="login-btn" onclick="ownerLogin()">Login</button>
+          <div class="status" id="loginStatus"></div>
+        </div>
+      </div>
+
+      <div class="help-card">
+        <h3>Owner access includes</h3>
+        <ul>
+          <li>Quick daily menu update</li>
+          <li>Keep mess details active</li>
+          <li>Simple access for local visibility</li>
+          <li>Useful for regular students and workers nearby</li>
+        </ul>
+      </div>
+
+      <div class="panel-card" id="ownerPanel">
+        <span class="owner-badge">Logged in</span>
+        <h3>Owner Dashboard</h3>
+        <p>Update today’s menu here. This version is a simple local owner panel.</p>
+
+        <div class="panel-grid">
+          <textarea id="todayMenu" placeholder="Enter today's menu"></textarea>
+          <button class="save-btn" onclick="saveMenu()">Save Menu</button>
+          <button class="logout-btn" onclick="logoutOwner()">Logout</button>
+          <div class="status" id="panelStatus"></div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <footer class="footer">
+    © 2026 Meal Buzz
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+  <script>
+    const SUPABASE_URL = "https://iinvhwsbnvmcujyrzlxe.supabase.co";
+    const SUPABASE_KEY = "sb_publishable_fwhxfVqWpDrro8hkQbQQRA_1crMexZv";
+    const sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+    let loggedInOwner = null;
+
+    function setLoginStatus(message, isError = false) {
+      const box = document.getElementById("loginStatus");
+      box.innerText = message;
+      box.className = isError ? "status error" : "status";
+    }
+
+    function setPanelStatus(message, isError = false) {
+      const box = document.getElementById("panelStatus");
+      box.innerText = message;
+      box.className = isError ? "status error" : "status";
+    }
+
+    function ownerLogin() {
+      const phone = document.getElementById("ownerPhone").value.trim();
+      const password = document.getElementById("ownerPassword").value.trim();
+
+      const owners = {
+        "9876543210": { password: "annapurna123", name: "Annapurna Mess" },
+        "9876543211": { password: "owner123", name: "Demo Mess" },
+        "9876543212": { password: "shiv123", name: "Shiv Mess" }
+      };
+
+      if (!owners[phone]) {
+        setLoginStatus("Owner number not found.", true);
+        return;
+      }
+
+      if (owners[phone].password !== password) {
+        setLoginStatus("Wrong password.", true);
+        return;
+      }
+
+      loggedInOwner = owners[phone].name;
+      setLoginStatus("Login successful.");
+      document.getElementById("ownerPanel").classList.add("show");
+      setPanelStatus("Welcome, " + loggedInOwner);
+    }
+
+    async function saveMenu() {
+      const menuText = document.getElementById("todayMenu").value.trim();
+
+      if (!loggedInOwner) {
+        setPanelStatus("Please login first.", true);
+        return;
+      }
+
+      if (!menuText) {
+        setPanelStatus("Please enter today's menu.", true);
+        return;
+      }
+
+      const { error } = await sb
+        .from("mess")
+        .update({ menu: menuText })
+        .eq("name", loggedInOwner);
+
+      if (error) {
+        console.log(error);
+        setPanelStatus("Could not save menu.", true);
+        return;
+      }
+
+      setPanelStatus("Menu updated successfully 🎉");
+      document.getElementById("todayMenu").value = "";
+    }
+
+    function logoutOwner() {
+      loggedInOwner = null;
+      document.getElementById("ownerPhone").value = "";
+      document.getElementById("ownerPassword").value = "";
+      document.getElementById("todayMenu").value = "";
+      document.getElementById("ownerPanel").classList.remove("show");
+      setLoginStatus("");
+      setPanelStatus("");
+    }
+  </script>
+
+</body>
+</html>
