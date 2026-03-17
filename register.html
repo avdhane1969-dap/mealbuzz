@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Meal Buzz - Register Mess</title>
+  <link rel="icon" href="favicon.png" type="image/png" />
+
+  <style>
+    *{
+      margin:0;
+      padding:0;
+      box-sizing:border-box;
+    }
+
+    :root{
+      --bg:#0d0f14;
+      --card:#171a21;
+      --soft:#20242d;
+      --line:#2b313d;
+      --text:#f5f7fb;
+      --muted:#b9c0cc;
+      --accent:#ff8a00;
+      --accent2:#ffb347;
+      --green:#27c26c;
+      --danger:#ff6b6b;
+    }
+
+    body{
+      font-family:Arial, Helvetica, sans-serif;
+      background:linear-gradient(180deg,#0d0f14 0%, #12151d 100%);
+      color:var(--text);
+      min-height:100vh;
+    }
+
+    a{
+      text-decoration:none;
+      color:inherit;
+    }
+
+    .topbar{
+      position:sticky;
+      top:0;
+      z-index:1000;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+      padding:14px 16px;
+      background:rgba(13,15,20,0.95);
+      backdrop-filter:blur(8px);
+      border-bottom:1px solid var(--line);
+    }
+
+    .top-left{
+      display:flex;
+      align-items:center;
+      gap:12px;
+    }
+
+    .back-btn{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      min-width:44px;
+      height:44px;
+      padding:0 14px;
+      border-radius:12px;
+      background:var(--soft);
+      border:1px solid var(--line);
+      color:#fff;
+      font-size:14px;
+      font-weight:bold;
+    }
+
+    .brand h1{
+      color:var(--accent);
+      font-size:28px;
+      line-height:1;
+    }
+
+    .brand p{
+      color:var(--muted);
+      font-size:12px;
+      margin-top:4px;
+    }
+
+    .section{
+      padding:18px 16px;
+    }
+
+    .wrap{
+      max-width:1100px;
+      margin:0 auto;
+      display:grid;
+      gap:18px;
+    }
+
+    .hero-card,
+    .form-card,
+    .info-card{
+      background:linear-gradient(135deg,#171a21 0%, #1e232d 100%);
+      border:1px solid var(--line);
+      border-radius:24px;
+      box-shadow:0 10px 30px rgba(0,0,0,0.25);
+    }
+
+    .hero-card{
+      padding:22px;
+    }
+
+    .hero-card h2{
+      font-size:30px;
+      margin-bottom:10px;
+    }
+
+    .hero-card p{
+      color:var(--muted);
+      font-size:14px;
+      line-height:1.8;
+    }
+
+    .form-card{
+      padding:20px;
+    }
+
+    .form-card h3{
+      font-size:22px;
+      margin-bottom:8px;
+    }
+
+    .form-card p{
+      color:var(--muted);
+      font-size:14px;
+      line-height:1.7;
+      margin-bottom:16px;
+    }
+
+    .form-grid{
+      display:grid;
+      gap:12px;
+    }
+
+    .form-grid input,
+    .form-grid textarea{
+      width:100%;
+      background:#11151c;
+      color:#fff;
+      border:1px solid var(--line);
+      border-radius:14px;
+      padding:14px;
+      outline:none;
+      font-size:14px;
+      font-family:inherit;
+    }
+
+    .form-grid textarea{
+      min-height:110px;
+      resize:vertical;
+    }
+
+    .location-row{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+    }
+
+    .location-btn,
+    .register-btn{
+      width:100%;
+      padding:14px;
+      border-radius:14px;
+      font-size:15px;
+      font-weight:bold;
+      border:none;
+      cursor:pointer;
+    }
+
+    .location-btn{
+      background:var(--soft);
+      border:1px solid var(--line);
+      color:#fff;
+    }
+
+    .register-btn{
+      background:linear-gradient(90deg,var(--accent),var(--accent2));
+      color:#fff;
+      margin-top:4px;
+    }
+
+    .status{
+      min-height:22px;
+      font-size:14px;
+      margin-top:8px;
+      color:#90ee90;
+    }
+
+    .status.error{
+      color:#ff9d9d;
+    }
+
+    .coords-box{
+      margin-top:8px;
+      color:var(--muted);
+      font-size:13px;
+      line-height:1.6;
+      background:#11151c;
+      border:1px solid var(--line);
+      border-radius:14px;
+      padding:12px;
+    }
+
+    .info-card{
+      padding:20px;
+    }
+
+    .info-card h3{
+      font-size:20px;
+      margin-bottom:10px;
+    }
+
+    .info-card ul{
+      padding-left:18px;
+      color:var(--muted);
+      line-height:1.8;
+      font-size:14px;
+    }
+
+    .footer{
+      border-top:1px solid var(--line);
+      margin-top:10px;
+      padding:20px 16px 34px;
+      text-align:center;
+      color:var(--muted);
+      font-size:13px;
+    }
+
+    @media (min-width:768px){
+      .section,
+      .footer{
+        padding-left:28px;
+        padding-right:28px;
+      }
+
+      .wrap{
+        grid-template-columns:1.15fr 0.85fr;
+        align-items:start;
+      }
+
+      .hero-card{
+        grid-column:1 / -1;
+      }
+    }
+
+    @media (min-width:1100px){
+      .section,
+      .footer{
+        padding-left:48px;
+        padding-right:48px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <header class="topbar">
+    <div class="top-left">
+      <a href="index.html" class="back-btn">← Back</a>
+      <div class="brand">
+        <h1>Meal Buzz</h1>
+        <p>Register your mess</p>
+      </div>
+    </div>
+  </header>
+
+  <section class="section">
+    <div class="wrap">
+
+      <div class="hero-card">
+        <h2>Add your mess to Meal Buzz</h2>
+        <p>
+          Register your mess, share your location, menu, price and contact details,
+          and help nearby students and workers discover your food easily.
+        </p>
+      </div>
+
+      <div class="form-card">
+        <h3>Mess Registration Form</h3>
+        <p>Fill the details below. Location is important so nearby users can find your mess.</p>
+
+        <div class="form-grid">
+          <input type="text" id="name" placeholder="Mess Name" />
+          <input type="text" id="location" placeholder="Area / City" />
+          <input type="text" id="price" placeholder="Price (example: ₹3000/month or ₹80 thali)" />
+          <input type="text" id="contact" placeholder="Contact Number" />
+          <textarea id="menu" placeholder="Today's Menu"></textarea>
+
+          <div class="location-row">
+            <button class="location-btn" onclick="captureLocation()">Use Current Location</button>
+          </div>
+
+          <div class="coords-box" id="coordsBox">
+            Latitude: Not captured yet<br>
+            Longitude: Not captured yet
+          </div>
+
+          <button class="register-btn" onclick="saveMess()">Register Mess</button>
+
+          <div class="status" id="statusText"></div>
+        </div>
+      </div>
+
+      <div class="info-card">
+        <h3>Why register?</h3>
+        <ul>
+          <li>Your mess can appear in nearby search results.</li>
+          <li>Users can discover your menu faster.</li>
+          <li>Students and workers can contact you directly.</li>
+          <li>Meal Buzz helps local messes get more visibility.</li>
+        </ul>
+      </div>
+
+    </div>
+  </section>
+
+  <footer class="footer">
+    © 2026 Meal Buzz
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+  <script>
+    const SUPABASE_URL = "https://iinvhwsbnvmcujyrzlxe.supabase.co";
+    const SUPABASE_KEY = "sb_publishable_fwhxfVqWpDrro8hkQbQQRA_1crMexZv";
+    const sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+    let currentLat = null;
+    let currentLon = null;
+
+    function setStatus(message, isError = false) {
+      const status = document.getElementById("statusText");
+      status.innerText = message;
+      status.className = isError ? "status error" : "status";
+    }
+
+    function captureLocation() {
+      if (!navigator.geolocation) {
+        setStatus("Location is not supported on this device.", true);
+        return;
+      }
+
+      setStatus("Getting current location...");
+
+      navigator.geolocation.getCurrentPosition(
+        function(position) {
+          currentLat = position.coords.latitude;
+          currentLon = position.coords.longitude;
+
+          document.getElementById("coordsBox").innerHTML =
+            "Latitude: " + currentLat + "<br>Longitude: " + currentLon;
+
+          setStatus("Location captured successfully.");
+        },
+        function() {
+          setStatus("Could not get location. Please allow location permission.", true);
+        }
+      );
+    }
+
+    async function saveMess() {
+      const name = document.getElementById("name").value.trim();
+      const location = document.getElementById("location").value.trim();
+      const price = document.getElementById("price").value.trim();
+      const contact = document.getElementById("contact").value.trim();
+      const menu = document.getElementById("menu").value.trim();
+
+      if (!name || !location || !menu || !contact) {
+        setStatus("Please fill all important fields.", true);
+        return;
+      }
+
+      if (currentLat === null || currentLon === null) {
+        setStatus("Please capture current location first.", true);
+        return;
+      }
+
+      const payload = {
+        name: name,
+        location: location,
+        price: price,
+        menu: menu,
+        contact: contact,
+        latitude: currentLat,
+        longitude: currentLon
+      };
+
+      const { error } = await sb.from("mess").insert([payload]);
+
+      if (error) {
+        console.log(error);
+        setStatus("Error saving mess data.", true);
+        return;
+      }
+
+      setStatus("Mess registered successfully 🎉");
+
+      document.getElementById("name").value = "";
+      document.getElementById("location").value = "";
+      document.getElementById("price").value = "";
+      document.getElementById("contact").value = "";
+      document.getElementById("menu").value = "";
+
+      currentLat = null;
+      currentLon = null;
+
+      document.getElementById("coordsBox").innerHTML =
+        "Latitude: Not captured yet<br>Longitude: Not captured yet";
+    }
+  </script>
+
+</body>
+</html>
