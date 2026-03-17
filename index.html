@@ -673,7 +673,7 @@
   <section class="section">
     <div class="hero-card">
   <video autoplay muted loop playsinline class="hero-image">
-  <source src="food1.mp4">
+  <source src="food1.mp4" type="video/mp4">
 </video>
 
       <div class="hero-content">
@@ -694,7 +694,19 @@
       </div>
     </div>
   </section>
+<section class="section">
+  <h2>Nearby Mess</h2>
 
+  <a href="mess1.html" class="mess-card">
+    <h3>Shiv Mess</h3>
+    <p>₹80 thali • 4.3 ★</p>
+  </a>
+
+  <a href="mess2.html" class="mess-card">
+    <h3>Annapurna Mess</h3>
+    <p>₹70 thali • 4.1 ★</p>
+  </a>
+</section>
   <section class="section">
     <h2 class="section-title" data-i18n="popularAreas">Popular Areas</h2>
     <p class="section-subtitle" data-i18n="popularAreasText">
@@ -950,34 +962,9 @@ function closeSidebar() {
   sidebar.style.left = "-250px";
 }
 </script>
+
 <script>
-document.getElementById("ownerLoginBtn").addEventListener("click", function () {
-  const phone = document.getElementById("phoneNumber").value.trim();
-  const password = document.getElementById("ownerPassword").value.trim();
-  const status = document.getElementById("loginStatus");
-
-  const owners = {
-    "9876543210": "annapurna123",
-    "9123456780": "shivneri123",
-    "9988776655": "gharachi123"
-  };
-
-  if (!owners[phone]) {
-    status.innerText = "Owner number not found";
-    return;
-  }
-
-  if (owners[phone] !== password) {
-    status.innerText = "Wrong password";
-    return;
-  }
-
-  status.innerText = "Login successful";
-document.getElementById("ownerPanel").style.display = "block";
-});
-<script>
-
-  function ownerLogin() {
+function ownerLogin() {
   const phone = document.getElementById("phoneNumber").value.trim();
   const password = document.getElementById("ownerPassword").value.trim();
   const status = document.getElementById("loginStatus");
@@ -1014,5 +1001,27 @@ function saveMenu() {
 }
 </script>
 
+<script type="module">
+  // Import the functions you need from the SDKs you need
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.10.0/firebase-app.js";
+  // TODO: Add SDKs for Firebase products that you want to use
+  // https://firebase.google.com/docs/web/setup#available-libraries
+
+  // Your web app's Firebase configuration
+  const firebaseConfig = {
+    apiKey: "AIzaSyAVeceLKSY0g3C-M9kYupVVd2YWF93rFnY",
+    authDomain: "meal-buzz.firebaseapp.com",
+    projectId: "meal-buzz",
+    storageBucket: "meal-buzz.firebasestorage.app",
+    messagingSenderId: "447692171615",
+    appId: "1:447692171615:web:d1a44b877795b3cd676eea"
+  };
+
+  // Initialize Firebase
+  const app = initializeApp(firebaseConfig);
+console.log("Firebase connected");
+
+
+</script>
 </body>
 </html>
