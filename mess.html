@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Meal Buzz - Mess Details</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Poppins:wght@700;800&display=swap" rel="stylesheet">
+
+  <style>
+    *{
+      margin:0;
+      padding:0;
+      box-sizing:border-box;
+    }
+
+    :root{
+      --bg:#0d0f14;
+      --card:#171b24;
+      --card-alt:#1c2330;
+      --soft:#222937;
+      --line:#2e3748;
+      --text:#f5f7fb;
+      --muted:#b9c0cc;
+      --accent:#ff8a00;
+      --accent2:#ffb347;
+      --green:#27c26c;
+      --shadow:0 12px 28px rgba(0,0,0,0.22);
+    }
+
+    body{
+      font-family:'Inter', Arial, sans-serif;
+      background:
+        radial-gradient(circle at top right, rgba(255,138,0,0.08), transparent 24%),
+        linear-gradient(180deg,#0b0d12 0%, #121721 100%);
+      color:var(--text);
+      min-height:100vh;
+    }
+
+    a{
+      text-decoration:none;
+      color:inherit;
+    }
+
+    .topbar{
+      position:sticky;
+      top:0;
+      z-index:1000;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+      padding:16px;
+      background:rgba(13,15,20,0.90);
+      backdrop-filter:blur(12px);
+      border-bottom:1px solid rgba(255,255,255,0.06);
+    }
+
+    .topbar-left{
+      display:flex;
+      align-items:center;
+      gap:12px;
+    }
+
+    .back{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      min-width:44px;
+      height:44px;
+      padding:0 14px;
+      border-radius:14px;
+      background:rgba(255,255,255,0.05);
+      border:1px solid rgba(255,255,255,0.08);
+      color:#fff;
+      font-size:14px;
+      font-weight:700;
+      box-shadow:0 8px 18px rgba(0,0,0,0.14);
+    }
+
+    .brand{
+      display:flex;
+      flex-direction:column;
+      justify-content:center;
+    }
+
+    .brand h1{
+      font-family:'Poppins', sans-serif;
+      font-size:28px;
+      line-height:1;
+      letter-spacing:0.2px;
+      background:linear-gradient(90deg,#ffffff 0%, #ffdcb3 32%, #ffb347 60%, #ff8a00 100%);
+      -webkit-background-clip:text;
+      -webkit-text-fill-color:transparent;
+      background-clip:text;
+      text-shadow:0 0 24px rgba(255,138,0,0.12);
+    }
+
+    .brand p{
+      color:#d6dde8;
+      font-size:11px;
+      margin-top:5px;
+      letter-spacing:1.7px;
+      text-transform:uppercase;
+      font-weight:700;
+    }
+
+    .container{
+      padding:18px 16px 28px;
+      max-width:900px;
+      margin:0 auto;
+    }
+
+    .card{
+      background:rgba(24,29,40,0.56);
+      border-radius:24px;
+      overflow:hidden;
+      border:1px solid rgba(255,255,255,0.08);
+      box-shadow:var(--shadow);
+      backdrop-filter:blur(12px);
+      -webkit-backdrop-filter:blur(12px);
+      position:relative;
+    }
+
+    .card::before{
+      content:"";
+      position:absolute;
+      inset:0;
+      background:linear-gradient(135deg, rgba(255,255,255,0.05), rgba(255,255,255,0.01));
+      pointer-events:none;
+    }
+
+    .hero-image{
+      width:100%;
+      height:270px;
+      object-fit:cover;
+      display:block;
+      position:relative;
+      z-index:1;
+    }
+
+    .content{
+      padding:18px;
+      position:relative;
+      z-index:1;
+    }
+
+    .title-row{
+      display:flex;
+      align-items:flex-start;
+      justify-content:space-between;
+      gap:12px;
+      margin-bottom:10px;
+    }
+
+    .title{
+      font-family:'Poppins', sans-serif;
+      font-size:28px;
+      line-height:1.15;
+      color:#fff;
+    }
+
+    .rating{
+      min-width:66px;
+      text-align:center;
+      background:rgba(39,194,108,0.12);
+      color:#7df0b0;
+      border:1px solid rgba(39,194,108,0.28);
+      padding:8px 10px;
+      border-radius:12px;
+      font-size:14px;
+      font-weight:800;
+      box-shadow:inset 0 1px 0 rgba(255,255,255,0.04);
+    }
+
+    .info-grid{
+      display:grid;
+      gap:12px;
+      margin:14px 0 10px;
+    }
+
+    .info-box{
+      background:rgba(255,255,255,0.04);
+      border:1px solid rgba(255,255,255,0.07);
+      border-radius:16px;
+      padding:14px;
+    }
+
+    .info-label{
+      color:#ffbe63;
+      font-size:12px;
+      text-transform:uppercase;
+      letter-spacing:0.7px;
+      margin-bottom:6px;
+      font-weight:700;
+    }
+
+    .info-text{
+      color:#dce2ec;
+      font-size:14px;
+      line-height:1.75;
+    }
+
+    .menu-box{
+      margin-top:14px;
+      background:rgba(255,255,255,0.04);
+      border:1px solid rgba(255,255,255,0.07);
+      border-radius:18px;
+      padding:16px;
+    }
+
+    .menu-title{
+      color:#ffbe63;
+      font-size:12px;
+      text-transform:uppercase;
+      letter-spacing:0.8px;
+      margin-bottom:8px;
+      font-weight:700;
+    }
+
+    .menu{
+      line-height:1.8;
+      color:#d9e0eb;
+      font-size:14px;
+    }
+
+    .btn{
+      display:block;
+      margin-top:16px;
+      padding:14px;
+      text-align:center;
+      background:linear-gradient(90deg,var(--accent),var(--accent2));
+      color:#fff;
+      border-radius:16px;
+      text-decoration:none;
+      font-size:15px;
+      font-weight:800;
+      box-shadow:0 14px 28px rgba(255,138,0,0.18);
+    }
+
+    .not-found{
+      text-align:center;
+      padding:28px 18px;
+      color:var(--muted);
+      font-size:15px;
+      line-height:1.8;
+    }
+
+    @media(min-width:768px){
+      .topbar{
+        padding:16px 28px;
+      }
+
+      .container{
+        padding-left:28px;
+        padding-right:28px;
+      }
+
+      .hero-image{
+        height:340px;
+      }
+
+      .info-grid{
+        grid-template-columns:repeat(2,1fr);
+      }
+    }
+
+    @media(min-width:1100px){
+      .container{
+        padding-left:48px;
+        padding-right:48px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <header class="topbar">
+    <div class="topbar-left">
+      <a href="meals.html" class="back">← Back</a>
+
+      <div class="brand">
+        <h1>Meal Buzz</h1>
+        <p>Mess details</p>
+      </div>
+    </div>
+  </header>
+
+  <div class="container">
+    <div class="card">
+      <img src="thali.jpg" id="image" class="hero-image" alt="Mess image">
+
+      <div class="content">
+        <div class="title-row">
+          <h2 id="name" class="title">Loading...</h2>
+          <div class="rating" id="rating">4.0 ★</div>
+        </div>
+
+        <div class="info-grid">
+          <div class="info-box">
+            <div class="info-label">Location</div>
+            <div class="info-text" id="location">Loading...</div>
+          </div>
+
+          <div class="info-box">
+            <div class="info-label">Price</div>
+            <div class="info-text" id="price">Loading...</div>
+          </div>
+        </div>
+
+        <div class="menu-box">
+          <div class="menu-title">Today Menu</div>
+          <div class="menu" id="menu">Loading...</div>
+        </div>
+
+        <a href="#" id="callBtn" class="btn">Call Now</a>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+  <script>
+    const SUPABASE_URL = "https://iinvhwsbnvmcujyrzlxe.supabase.co";
+    const SUPABASE_KEY = "sb_publishable_fwhxfVqWpDrro8hkQbQQRA_1crMexZv";
+
+    const sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+    const params = new URLSearchParams(window.location.search);
+    const name = params.get("search");
+
+    loadMess();
+
+    async function loadMess(){
+      const { data, error } = await sb
+        .from("mess")
+        .select("*")
+        .ilike("name", name);
+
+      if(error || !data || data.length === 0){
+        document.querySelector(".content").innerHTML = `
+          <div class="not-found">
+            <h2 style="margin-bottom:10px;color:#fff;">Mess not found</h2>
+            <p>This mess details page is not available right now.</p>
+          </div>
+        `;
+        return;
+      }
+
+      const mess = data[0];
+
+      document.getElementById("name").innerText = mess.name || "Mess";
+      document.getElementById("location").innerText = mess.location || "Location not available";
+      document.getElementById("price").innerText = mess.price || "Price not available";
+      document.getElementById("menu").innerText = mess.menu || "Menu not available";
+      document.getElementById("rating").innerText = (mess.rating || "4.0") + " ★";
+      document.getElementById("callBtn").href = "tel:" + (mess.contact || "");
+
+      if (mess.image_url) {
+        document.getElementById("image").src = mess.image_url;
+      }
+    }
+  </script>
+
+</body>
+</html>
