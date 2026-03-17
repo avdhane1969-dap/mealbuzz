@@ -4,6 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Meal Buzz</title>
+  <link rel="icon" href="favicon.png" type="image/png" />
 
   <style>
     *{
@@ -189,15 +190,20 @@
       border-radius:24px;
       overflow:hidden;
       box-shadow:0 10px 30px rgba(0,0,0,0.25);
+      display:flex;
+      align-items:center;
+      gap:30px;
     }
 
     .hero-image{
-      width:100%;
+      width:50%;
       height:320px;
       object-fit:cover;
+      border-radius:15px;
     }
 
     .hero-content{
+      width:50%;
       padding:18px;
     }
 
@@ -214,13 +220,7 @@
       margin-bottom:16px;
     }
 
-    .search-row{
-      display:flex;
-      flex-direction:column;
-      gap:10px;
-    }
-
-    .search-row input{
+    .search-box{
       width:100%;
       padding:14px;
       background:#11151c;
@@ -229,9 +229,11 @@
       border-radius:14px;
       outline:none;
       font-size:14px;
+      margin-top:10px;
     }
 
-    .search-row button{
+    .search-btn{
+      margin-top:10px;
       width:100%;
       padding:14px;
       border-radius:14px;
@@ -239,6 +241,13 @@
       color:#fff;
       font-size:15px;
       font-weight:bold;
+    }
+
+    #locationResult{
+      margin-top:10px;
+      color:#90ee90;
+      font-size:14px;
+      min-height:20px;
     }
 
     .section-title{
@@ -253,229 +262,145 @@
       margin-bottom:16px;
     }
 
-    .chips{
-      display:flex;
-      gap:10px;
-      flex-wrap:wrap;
-    }
-
-    .chip{
-      padding:10px 14px;
-      border-radius:999px;
-      background:var(--soft);
-      border:1px solid var(--line);
-      font-size:13px;
-    }
-
-    .mess-list{
-      display:grid;
-      grid-template-columns:1fr;
-      gap:16px;
-    }
-
-    .mess-card{
-      background:var(--card);
-      border:1px solid var(--line);
-      border-radius:22px;
-      overflow:hidden;
-      box-shadow:0 10px 24px rgba(0,0,0,0.18);
-    }
-
-    .mess-card img{
-      width:100%;
-      height:220px;
-      object-fit:cover;
-    }
-
-    .mess-body{
-      padding:16px;
-    }
-
-    .mess-head{
-      display:flex;
-      justify-content:space-between;
-      align-items:flex-start;
-      gap:12px;
-      margin-bottom:12px;
-    }
-
-    .mess-name{
-      font-size:22px;
-      line-height:1.2;
-    }
-
-    .rating{
-      min-width:60px;
-      text-align:center;
-      background:rgba(39,194,108,0.12);
-      color:#7df0b0;
-      border:1px solid rgba(39,194,108,0.35);
-      padding:8px 10px;
-      border-radius:12px;
-      font-weight:bold;
-      font-size:14px;
-    }
-
-    .menu-tag{
-      color:var(--accent);
-      font-size:13px;
-      margin-bottom:8px;
-      text-transform:uppercase;
-      letter-spacing:0.5px;
-    }
-
-    .menu-preview{
-      color:var(--muted);
-      font-size:14px;
-      line-height:1.7;
-      margin-bottom:14px;
-    }
-
-    .mess-actions{
-      display:flex;
-      gap:10px;
-      flex-wrap:wrap;
-    }
-
-    .primary-btn,
-    .secondary-btn{
-      flex:1;
-      min-width:120px;
-      padding:12px 14px;
-      border-radius:14px;
-      font-size:14px;
-      font-weight:bold;
-      text-align:center;
-    }
-
-    .primary-btn{
-      background:linear-gradient(90deg,var(--accent),var(--accent2));
-      color:#fff;
-    }
-
-    .secondary-btn{
-      background:var(--soft);
-      color:#fff;
-      border:1px solid var(--line);
-    }
-
-    .details-grid{
-      display:grid;
-      grid-template-columns:1fr;
-      gap:14px;
-    }
-
-    .detail-box{
-      background:var(--card);
-      border:1px solid var(--line);
-      border-radius:20px;
-      padding:16px;
-    }
-
-    .detail-box h3{
-      color:var(--accent);
-      font-size:18px;
-      margin-bottom:10px;
-    }
-
-    .detail-box p,
-    .detail-box li{
-      color:var(--muted);
-      font-size:14px;
-      line-height:1.7;
-    }
-
-    .detail-box ul{
-      padding-left:18px;
-    }
-
-    .offer-box{
-      background:linear-gradient(135deg, rgba(255,138,0,0.16), rgba(255,179,71,0.08));
-      border:1px solid rgba(255,138,0,0.28);
-      border-radius:20px;
-      padding:18px;
-    }
-
-    .offer-box h3{
-      font-size:20px;
-      margin-bottom:8px;
-    }
-
-    .offer-box p{
-      color:var(--muted);
-      font-size:14px;
-      line-height:1.7;
-    }
-
-    .contact-list{
+    .nearby-list{
       display:grid;
       gap:12px;
     }
 
-    .contact-item{
+    .nearby-card{
+      display:flex;
+      align-items:center;
+      gap:12px;
       background:var(--card);
       border:1px solid var(--line);
       border-radius:18px;
-      padding:14px;
-    }
-
-    .contact-item strong{
-      display:block;
-      margin-bottom:6px;
-      font-size:15px;
+      padding:10px;
+      text-decoration:none;
       color:#fff;
+      box-shadow:0 8px 18px rgba(0,0,0,0.16);
     }
 
-    .contact-item span{
+    .nearby-card img{
+      width:78px;
+      height:78px;
+      border-radius:14px;
+      object-fit:cover;
+      flex-shrink:0;
+    }
+
+    .nearby-info{
+      flex:1;
+      min-width:0;
+    }
+
+    .nearby-name{
+      font-size:16px;
+      font-weight:bold;
+      margin-bottom:6px;
+      line-height:1.2;
+    }
+
+    .nearby-meta{
+      display:flex;
+      gap:8px;
+      flex-wrap:wrap;
+    }
+
+    .meta-badge{
+      font-size:12px;
+      padding:5px 8px;
+      border-radius:999px;
+      background:var(--soft);
+      border:1px solid var(--line);
       color:var(--muted);
-      font-size:14px;
-      line-height:1.6;
     }
 
-    .login-box{
-      background:var(--card);
+    .rating-badge{
+      color:#7df0b0;
+      border-color:rgba(39,194,108,0.35);
+      background:rgba(39,194,108,0.12);
+    }
+
+    .owner-box{
+      background:linear-gradient(135deg,#171a21 0%, #1e232d 100%);
       border:1px solid var(--line);
       border-radius:22px;
       padding:18px;
+      box-shadow:0 10px 24px rgba(0,0,0,0.18);
     }
 
-    .login-box h3{
-      font-size:20px;
-      margin-bottom:10px;
+    .owner-box h3{
+      font-size:22px;
+      margin-bottom:8px;
     }
 
-    .login-box p{
+    .owner-box p{
       color:var(--muted);
       font-size:14px;
-      line-height:1.6;
+      line-height:1.7;
       margin-bottom:16px;
     }
 
-    .login-form{
-      display:grid;
+    .owner-actions{
+      display:flex;
       gap:12px;
+      flex-wrap:wrap;
     }
 
-    .login-form input,
-    .login-form select,
-    .login-form textarea{
-      width:100%;
-      background:#11151c;
-      color:#fff;
-      border:1px solid var(--line);
+    .owner-actions a{
+      flex:1;
+      min-width:150px;
+      text-align:center;
+      padding:13px 14px;
       border-radius:14px;
-      padding:14px;
-      outline:none;
       font-size:14px;
+      font-weight:bold;
     }
 
-    .login-form button{
-      padding:14px;
-      border-radius:14px;
+    .owner-login-btn{
       background:linear-gradient(90deg,var(--accent),var(--accent2));
       color:#fff;
-      font-size:15px;
-      font-weight:bold;
+    }
+
+    .owner-register-btn{
+      background:var(--soft);
+      border:1px solid var(--line);
+      color:#fff;
+    }
+
+    .why-grid{
+      display:grid;
+      gap:14px;
+    }
+
+    .why-card{
+      background:var(--card);
+      border:1px solid var(--line);
+      border-radius:18px;
+      padding:16px;
+      box-shadow:0 8px 18px rgba(0,0,0,0.16);
+    }
+
+    .why-card h3{
+      color:var(--accent);
+      font-size:18px;
+      margin-bottom:8px;
+    }
+
+    .why-card p{
+      color:var(--muted);
+      font-size:14px;
+      line-height:1.7;
+    }
+
+    .empty-note{
+      background:var(--card);
+      border:1px dashed var(--line);
+      border-radius:16px;
+      padding:16px;
+      color:var(--muted);
+      font-size:14px;
+      line-height:1.6;
     }
 
     .footer{
@@ -498,22 +423,8 @@
         padding-right:28px;
       }
 
-      .hero-card{
-        display:grid;
-        grid-template-columns:1.05fr 1fr;
-        align-items:stretch;
-      }
-
-      .hero-image{
-        height:100%;
-        min-height:420px;
-      }
-
       .hero-content{
         padding:28px;
-        display:flex;
-        flex-direction:column;
-        justify-content:center;
       }
 
       .hero-content h2{
@@ -524,24 +435,12 @@
         font-size:16px;
       }
 
-      .search-row{
-        flex-direction:row;
-      }
-
-      .search-row button{
-        width:160px;
-      }
-
-      .mess-list{
+      .nearby-list{
         grid-template-columns:repeat(2,1fr);
       }
 
-      .details-grid{
+      .why-grid{
         grid-template-columns:repeat(2,1fr);
-      }
-
-      .contact-list{
-        grid-template-columns:repeat(3,1fr);
       }
     }
 
@@ -552,98 +451,46 @@
         padding-right:48px;
       }
 
-      .mess-list{
+      .nearby-list{
         grid-template-columns:repeat(3,1fr);
       }
+
+      .why-grid{
+        grid-template-columns:repeat(4,1fr);
+      }
     }
-.hero-card{
-  display:flex;
-  align-items:center;
-  gap:30px;
-}
 
-.hero-image{
-  width:50%;
-  height:320px;
-  object-fit:cover;
-  border-radius:15px;
-}
+    @media(max-width:768px){
+      .hero-card{
+        flex-direction:column;
+        gap:0;
+      }
 
-.hero-content{
-  width:50%;
-}
+      .hero-image,
+      .hero-content{
+        width:100%;
+      }
 
-@media(max-width:768px){
-  .hero-card{
-    flex-direction:column;
-  }
-
-  .hero-image, .hero-content{
-    width:100%;
-  }
-}
- .login-box{
-  background:#171a21;
-  padding:20px;
-  border-radius:14px;
-  margin-top:20px;
-  display:flex;
-  flex-direction:column;
-  gap:12px;
-  width:100%;
-  max-width:420px;
-}
-
-.login-box h3{
-  color:#f5f7fb;
-  margin-bottom:8px;
-}
-
-.login-box input{
-  display:block;
-  width:100%;
-  padding:12px;
-  border-radius:10px;
-  border:none;
-  outline:none;
-  font-size:16px;
-  background:#20242d;
-  color:#ffffff;
-}
-
-.login-box button{
-  display:block;
-  width:100%;
-  padding:12px;
-  border:none;
-  border-radius:10px;
-  background:#ff8a00;
-  color:white;
-  font-size:16px;
-  cursor:pointer;
-}
-
-#loginStatus{
-  color:#f5f7fb;
-  font-size:14px;
-  min-height:20px;
-}
- </style>
+      .hero-image{
+        border-radius:0;
+      }
+    }
+  </style>
 </head>
 <body>
 
-<aside class="sidebar" id="sidebar">
+  <aside class="sidebar" id="sidebar">
     <div class="sidebar-top">
       <h2>Meal Buzz</h2>
       <button class="close-btn" onclick="closeSidebar()">×</button>
     </div>
 
     <div class="sidebar-links">
-      <a href="#home" onclick="closeSidebar()" data-i18n="navHome">Home</a>
-      <a href="#messes" onclick="closeSidebar()" data-i18n="navMesses">Mess List</a>
-      <a href="#offers" onclick="closeSidebar()" data-i18n="navOffers">Offers</a>
-      <a href="#contact" onclick="closeSidebar()" data-i18n="navContact">Contact</a>
-      <a href="#owner-login" onclick="closeSidebar()" data-i18n="navOwner">Owner Login</a>
+      <a href="#home" onclick="closeSidebar()">Home</a>
+      <a href="meals.html" onclick="closeSidebar()">Browse Meals</a>
+      <a href="#nearbySection" onclick="closeSidebar()">Nearby Messes</a>
+      <a href="owner.html" onclick="closeSidebar()">Owner Login</a>
+      <a href="register.html" onclick="closeSidebar()">Register Your Mess</a>
     </div>
   </aside>
 
@@ -651,7 +498,7 @@
 
   <header class="topbar" id="home">
     <div class="top-left">
-     <button class="menu-btn" onclick="toggleMenu()" type="button">
+      <button class="menu-btn" onclick="toggleMenu()" type="button">
         <span></span>
         <span></span>
         <span></span>
@@ -659,7 +506,7 @@
 
       <div class="brand">
         <h1>Meal Buzz</h1>
-        <p data-i18n="brandTag">Nearby mess menu finder</p>
+        <p>Nearby mess menu finder</p>
       </div>
     </div>
 
@@ -672,9 +519,9 @@
 
   <section class="section">
     <div class="hero-card">
-  <video autoplay muted loop playsinline class="hero-image">
-  <source src="food1.mp4" type="video/mp4">
-</video>
+      <video autoplay muted loop playsinline class="hero-image">
+        <source src="food1.mp4" type="video/mp4" />
+      </video>
 
       <div class="hero-content">
         <h2 id="title">Find today’s nearby mess menu in one place</h2>
@@ -683,345 +530,226 @@
           Perfect for students, workers and anyone looking for tasty home-style meals nearby.
         </p>
 
-        <div class="search-row">
-          <input
-            type="text"
-            data-placeholder="searchPlaceholder"
-            placeholder="Search area, mess name or menu item"
-          />
-          <button type="button" data-i18n="searchBtn">Search</button>
-        </div>
+        <input
+          type="text"
+          id="searchInput"
+          class="search-box"
+          placeholder="Search mess name or menu item"
+          onclick="getLocationFirst()"
+          onfocus="getLocationFirst()"
+        />
+
+        <button class="search-btn" onclick="goToMeals()">Search</button>
+
+        <div id="locationResult"></div>
       </div>
     </div>
   </section>
-<section class="section">
-  <h2>Nearby Mess</h2>
 
-  <a href="mess1.html" class="mess-card">
-    <h3>Shiv Mess</h3>
-    <p>₹80 thali • 4.3 ★</p>
-  </a>
+  <section class="section" id="nearbySection" style="display:none;">
+    <h2 class="section-title">Nearby Messes For You</h2>
+    <p class="section-subtitle">Based on your current location</p>
+    <div id="nearbyMessList" class="nearby-list"></div>
+    <div id="nearbyEmpty" class="empty-note" style="display:none;">
+      No nearby mess found yet. More messes will appear here as owners register and add their location.
+    </div>
+  </section>
 
-  <a href="mess2.html" class="mess-card">
-    <h3>Annapurna Mess</h3>
-    <p>₹70 thali • 4.1 ★</p>
-  </a>
-</section>
   <section class="section">
-    <h2 class="section-title" data-i18n="popularAreas">Popular Areas</h2>
-    <p class="section-subtitle" data-i18n="popularAreasText">
-      Select nearby area to quickly explore mess options around you.
-    </p>
-
-    <div class="chips">
-      <div class="chip">Karad</div>
-      <div class="chip">Pune</div>
-      <div class="chip">Satara</div>
-      <div class="chip">Kolhapur</div>
-      <div class="chip" data-i18n="chipHostel">Hostel Area</div>
-      <div class="chip" data-i18n="chipCollege">College Road</div>
-    </div>
-  </section>
-
-  <section class="section" id="messes">
-    <h2 class="section-title" data-i18n="nearbyMesses">Nearby Messes</h2>
-    <p class="section-subtitle" data-i18n="nearbyMessesText">
-      Front page shows mess name, today menu preview and rating. Full details are below.
-    </p>
-
-    <div class="mess-list">
-      <div class="mess-card">
-        <img src="https://images.unsplash.com/photo-1546833999-b9f581a1996d?auto=format&fit=crop&w=1200&q=80" alt="Mess food">
-        <div class="mess-body">
-          <div class="mess-head">
-            <h3 class="mess-name">Annapurna Mess</h3>
-            <div class="rating">4.6 ★</div>
-          </div>
-
-          <div class="menu-tag" data-i18n="todayMenu">Today Menu</div>
-          <p class="menu-preview" data-i18n="annapurnaPreview">
-            Chapati, Varan-Bhat, Aloo Bhaji, Koshimbir, Papad.
-          </p>
-
-          <div class="mess-actions">
-            <a class="primary-btn" href="#details-annapurna" data-i18n="viewDetails">View Details</a>
-            <button class="secondary-btn" type="button" data-i18n="saveBtn">Save</button>
-          </div>
-        </div>
-      </div>
-
-      <div class="mess-card">
-        <img src="thali2.jpg" alt="Mess food">
-        <div class="mess-body">
-          <div class="mess-head">
-            <h3 class="mess-name">Shivneri Mess</h3>
-            <div class="rating">4.4 ★</div>
-          </div>
-
-          <div class="menu-tag" data-i18n="todayMenu">Today Menu</div>
-          <p class="menu-preview" data-i18n="shivneriPreview">
-            Bhakri, Pithla, Thecha, Rice, Dal, Onion Salad.
-          </p>
-
-          <div class="mess-actions">
-            <a class="primary-btn" href="#details-shivneri" data-i18n="viewDetails">View Details</a>
-            <button class="secondary-btn" type="button" data-i18n="saveBtn">Save</button>
-          </div>
-        </div>
-      </div>
-
-      <div class="mess-card">
-        <img src="thali.jpg" alt="Mess food">
-        <div class="mess-body">
-          <div class="mess-head">
-            <h3 class="mess-name">Gharachi Chav Mess</h3>
-            <div class="rating">4.8 ★</div>
-          </div>
-
-          <div class="menu-tag" data-i18n="todayMenu">Today Menu</div>
-          <p class="menu-preview" data-i18n="gharachiPreview">
-            3 Chapati, Paneer Bhaji, Dal Fry, Rice, Sweet.
-          </p>
-
-          <div class="mess-actions">
-            <a class="primary-btn" href="#details-gharachi" data-i18n="viewDetails">View Details</a>
-            <button class="secondary-btn" type="button" data-i18n="saveBtn">Save</button>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section class="section" id="details-annapurna">
-    <h2 class="section-title">Annapurna Mess Details</h2>
-    <div class="details-grid">
-      <div class="detail-box">
-        <h3 data-i18n="messInfo">Mess Information</h3>
-        <p data-i18n="annapurnaInfo1"><strong>Location:</strong> Near College Road, Karad</p>
-        <p data-i18n="annapurnaInfo2"><strong>Rating:</strong> 4.6 / 5</p>
-        <p data-i18n="annapurnaInfo3"><strong>Today Rate:</strong> ₹70 Full Thali</p>
-        <p data-i18n="annapurnaInfo4"><strong>Owner:</strong> S. Patil</p>
-      </div>
-
-      <div class="detail-box">
-        <h3 data-i18n="fullTodayMenu">Full Today Menu</h3>
-        <ul>
-          <li data-i18n="a1">4 Chapati</li>
-          <li data-i18n="a2">Varan-Bhat</li>
-          <li data-i18n="a3">Aloo Bhaji</li>
-          <li data-i18n="a4">Koshimbir</li>
-          <li data-i18n="a5">Papad</li>
-          <li data-i18n="a6">Pickle</li>
-        </ul>
-      </div>
-    </div>
-  </section>
-
-  <section class="section" id="details-shivneri">
-    <h2 class="section-title">Shivneri Mess Details</h2>
-    <div class="details-grid">
-      <div class="detail-box">
-        <h3 data-i18n="messInfo">Mess Information</h3>
-        <p data-i18n="shivneriInfo1"><strong>Location:</strong> Hostel Area, Karad</p>
-        <p data-i18n="shivneriInfo2"><strong>Rating:</strong> 4.4 / 5</p>
-        <p data-i18n="shivneriInfo3"><strong>Today Rate:</strong> ₹60 Thali</p>
-        <p data-i18n="shivneriInfo4"><strong>Owner:</strong> K. Jadhav</p>
-      </div>
-
-      <div class="detail-box">
-        <h3 data-i18n="fullTodayMenu">Full Today Menu</h3>
-        <ul>
-          <li data-i18n="s1">Bhakri</li>
-          <li data-i18n="s2">Pithla</li>
-          <li data-i18n="s3">Thecha</li>
-          <li data-i18n="s4">Rice</li>
-          <li data-i18n="s5">Dal</li>
-          <li data-i18n="s6">Onion Salad</li>
-        </ul>
-      </div>
-    </div>
-  </section>
-
-  <section class="section" id="details-gharachi">
-    <h2 class="section-title">Gharachi Chav Mess Details</h2>
-    <div class="details-grid">
-      <div class="detail-box">
-        <h3 data-i18n="messInfo">Mess Information</h3>
-        <p data-i18n="gharachiInfo1"><strong>Location:</strong> Market Road, Pune</p>
-        <p data-i18n="gharachiInfo2"><strong>Rating:</strong> 4.8 / 5</p>
-        <p data-i18n="gharachiInfo3"><strong>Today Rate:</strong> ₹90 Special Thali</p>
-        <p data-i18n="gharachiInfo4"><strong>Owner:</strong> P. Kulkarni</p>
-      </div>
-
-      <div class="detail-box">
-        <h3 data-i18n="fullTodayMenu">Full Today Menu</h3>
-        <ul>
-          <li data-i18n="g1">3 Chapati</li>
-          <li data-i18n="g2">Paneer Bhaji</li>
-          <li data-i18n="g3">Rice</li>
-          <li data-i18n="g4">Dal Fry</li>
-          <li data-i18n="g5">Sweet Dish</li>
-          <li data-i18n="g6">Salad</li>
-        </ul>
-      </div>
-    </div>
-  </section>
-
-  <section class="section" id="offers">
-    <h2 class="section-title" data-i18n="offersTitle">Offers</h2>
-    <div class="offer-box">
-      <h3 data-i18n="offersHeading">Special Student Meal Plans</h3>
-      <p data-i18n="offersText">
-        Weekly and monthly mess plans can be shown here later. Special discounts,
-        festival menus, combo offers and subscription plans can also be added.
+    <div class="owner-box">
+      <h3>Are you a mess owner?</h3>
+      <p>
+        Add your mess on Meal Buzz, update your daily menu, reach nearby students and workers,
+        and grow your visibility in your area.
       </p>
-    </div>
-  </section>
 
-  <section class="section" id="contact">
-    <h2 class="section-title" data-i18n="contactTitle">Contact & Owner Info</h2>
-    <div class="contact-list">
-      <div class="contact-item">
-        <strong>Annapurna Mess</strong>
-        <span data-i18n="contact1">College Road, Karad<br>Phone: +91 98765 43210</span>
-      </div>
-
-      <div class="contact-item">
-        <strong>Shivneri Mess</strong>
-        <span data-i18n="contact2">Hostel Area, Karad<br>Phone: +91 91234 56780</span>
-      </div>
-
-      <div class="contact-item">
-        <strong>Gharachi Chav Mess</strong>
-        <span data-i18n="contact3">Market Road, Pune<br>Phone: +91 99887 76655</span>
+      <div class="owner-actions">
+        <a href="owner.html" class="owner-login-btn">Mess Owner Login</a>
+        <a href="register.html" class="owner-register-btn">New Registration</a>
       </div>
     </div>
   </section>
 
-  <section class="section" id="owner-login">
-  <h2 class="section-title">Owner Login</h2>
-  <p class="section-subtitle">
-    Mess owner can use this section to update the daily menu later.
-  </p>
+  <section class="section">
+    <h2 class="section-title">Why Meal Buzz?</h2>
+    <p class="section-subtitle">Built to make local mess discovery easy and useful</p>
 
-  <div class="login-box">
-    <h3>Owner Login</h3>
+    <div class="why-grid">
+      <div class="why-card">
+        <h3>Nearby Discovery</h3>
+        <p>Find messes around your current location without wasting time asking around.</p>
+      </div>
 
-    <input id="phoneNumber" type="tel" placeholder="Enter phone number">
-    <input id="ownerPassword" type="password" placeholder="Enter password">
+      <div class="why-card">
+        <h3>Menu Before Visit</h3>
+        <p>Check what is available today before going to a mess or calling the owner.</p>
+      </div>
 
-    <button id="ownerLoginBtn" onclick="ownerLogin()">Login</button>
+      <div class="why-card">
+        <h3>Fast Search</h3>
+        <p>Search by mess name or by food item like paneer, bhakri, rice, or thali.</p>
+      </div>
 
-    <p id="loginStatus"></p>
-
-    <div id="ownerPanel" style="display:none; margin-top:20px;">
-      <h3>Owner Dashboard</h3>
-      <textarea id="todayMenu" placeholder="Enter today menu" style="width:100%; height:100px; padding:10px; border-radius:10px;"></textarea>
-      <button id="saveMenuBtn" onclick="saveMenu()" style="margin-top:10px;">Save Menu</button>
+      <div class="why-card">
+        <h3>Helpful for Students</h3>
+        <p>Perfect for hostel students, workers, and anyone searching for homestyle food nearby.</p>
+      </div>
     </div>
-  </div>
-</section>
+  </section>
 
-<script>
-function changeLanguage(lang) {
+  <footer class="footer">
+    © 2026 Meal Buzz
+  </footer>
 
-  if (lang === "en") {
-    document.getElementById("title").innerText =
-      "Find today’s nearby mess menu in one place";
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
-    document.getElementById("desc").innerText =
-      "Check nearby mess names, today’s menu, ratings, prices and full details.";
-  }
+  <script>
+    const SUPABASE_URL = "https://iinvhwsbnvmcujyrzlxe.supabase.co";
+    const SUPABASE_KEY = "sb_publishable_fwhxfVqWpDrro8hkQbQQRA_1crMexZv";
+    const sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
-  if (lang === "mr") {
-    document.getElementById("title").innerText =
-      "तुमच्या जवळच्या मेसचे आजचे स्वादिष्ट मेनू पाहा";
+    let locationAsked = false;
 
-    document.getElementById("desc").innerText =
-      "जवळच्या मेसची नावे, आजचा मेनू, रेटिंग, किंमती आणि संपूर्ण माहिती इथे मिळवा.";
-  }
+    function toggleMenu() {
+      document.getElementById("sidebar").classList.add("open");
+      document.getElementById("overlay").classList.add("show");
+    }
 
-  if (lang === "hi") {
-    document.getElementById("title").innerText =
-      "आपके पास की मेस का आज का स्वादिष्ट मेनू देखें";
+    function closeSidebar() {
+      document.getElementById("sidebar").classList.remove("open");
+      document.getElementById("overlay").classList.remove("show");
+    }
 
-    document.getElementById("desc").innerText =
-      "पास की मेस के नाम, आज का मेनू, रेटिंग, कीमतें और पूरी जानकारी यहाँ पाएँ।";
-  }
+    function changeLanguage(lang) {
+      const title = document.getElementById("title");
+      const desc = document.getElementById("desc");
 
-}
-</script>
-<script>
-function toggleMenu() {
-  var sidebar = document.getElementById("sidebar");
-  sidebar.style.left = "0px";
-}
+      if (lang === "en") {
+        title.innerText = "Find today’s nearby mess menu in one place";
+        desc.innerText = "Check nearby mess names, today’s menu preview, ratings, prices and full details. Perfect for students, workers and anyone looking for tasty home-style meals nearby.";
+      }
 
-function closeSidebar() {
-  var sidebar = document.getElementById("sidebar");
-  sidebar.style.left = "-250px";
-}
-</script>
+      if (lang === "mr") {
+        title.innerText = "तुमच्या जवळच्या मेसचे आजचे स्वादिष्ट मेनू पाहा";
+        desc.innerText = "जवळच्या मेसची नावे, आजचा मेनू, रेटिंग, किंमती आणि संपूर्ण माहिती इथे मिळवा.";
+      }
 
-<script>
-function ownerLogin() {
-  const phone = document.getElementById("phoneNumber").value.trim();
-  const password = document.getElementById("ownerPassword").value.trim();
-  const status = document.getElementById("loginStatus");
+      if (lang === "hi") {
+        title.innerText = "आपके पास की मेस का आज का स्वादिष्ट मेनू देखें";
+        desc.innerText = "पास की मेस के नाम, आज का मेनू, रेटिंग, कीमतें और पूरी जानकारी यहाँ पाएँ।";
+      }
+    }
 
-  const owners = {
-    "9876543210": "annapurna123",
-    "9123456780": "shivneri123",
-    "9988776655": "gharachi123"
-  };
+    function goToMeals() {
+      const searchValue = document.getElementById("searchInput").value.trim();
+      window.location.href = "meals.html?search=" + encodeURIComponent(searchValue);
+    }
 
-  if (!owners[phone]) {
-    status.innerText = "Owner number not found";
-    return;
-  }
+    function getLocationFirst() {
+      if (locationAsked) return;
+      locationAsked = true;
+      getLocation();
+    }
 
-  if (owners[phone] !== password) {
-    status.innerText = "Wrong password";
-    return;
-  }
+    function getLocation() {
+      const result = document.getElementById("locationResult");
 
-  status.innerText = "Login successful";
-  document.getElementById("ownerPanel").style.display = "block";
-}
+      if (!navigator.geolocation) {
+        result.innerHTML = "Location not supported on this device.";
+        return;
+      }
 
-function saveMenu() {
-  const menu = document.getElementById("todayMenu").value.trim();
+      result.innerHTML = "Getting location...";
 
-  if (menu === "") {
-    alert("Menu enter kara");
-    return;
-  }
+      navigator.geolocation.getCurrentPosition(
+        function(position) {
+          const lat = position.coords.latitude;
+          const lon = position.coords.longitude;
 
-  alert("Menu saved");
-}
-</script>
+          result.innerHTML = "📍 Location detected";
+          loadNearbyMesses(lat, lon);
+        },
+        function() {
+          result.innerHTML = "Location permission denied. You can still search manually.";
+        }
+      );
+    }
 
-<script type="module">
-  // Import the functions you need from the SDKs you need
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.10.0/firebase-app.js";
-  // TODO: Add SDKs for Firebase products that you want to use
-  // https://firebase.google.com/docs/web/setup#available-libraries
+    async function loadNearbyMesses(userLat, userLon) {
+      const { data, error } = await sb
+        .from("mess")
+        .select("*");
 
-  // Your web app's Firebase configuration
-  const firebaseConfig = {
-    apiKey: "AIzaSyAVeceLKSY0g3C-M9kYupVVd2YWF93rFnY",
-    authDomain: "meal-buzz.firebaseapp.com",
-    projectId: "meal-buzz",
-    storageBucket: "meal-buzz.firebasestorage.app",
-    messagingSenderId: "447692171615",
-    appId: "1:447692171615:web:d1a44b877795b3cd676eea"
-  };
+      if (error) {
+        console.log("MESS ERROR", error);
+        return;
+      }
 
-  // Initialize Firebase
-  const app = initializeApp(firebaseConfig);
-console.log("Firebase connected");
+      const list = document.getElementById("nearbyMessList");
+      const section = document.getElementById("nearbySection");
+      const empty = document.getElementById("nearbyEmpty");
 
+      if (!list || !section || !empty) return;
 
-</script>
+      list.innerHTML = "";
+
+      if (!data || data.length === 0) {
+        section.style.display = "block";
+        empty.style.display = "block";
+        return;
+      }
+
+      let found = false;
+
+      data.forEach(mess => {
+        const messLat = Number(mess.latitude);
+        const messLon = Number(mess.longitude);
+
+        if (isNaN(messLat) || isNaN(messLon)) return;
+
+        const distance = getDistance(userLat, userLon, messLat, messLon);
+
+        if (distance < 1000) {
+          found = true;
+
+          const card = document.createElement("a");
+          card.className = "nearby-card";
+          card.href = `meals.html?search=${encodeURIComponent(mess.name || "")}`;
+
+          card.innerHTML = `
+            <img src="thali.jpg" alt="${mess.name || "Mess"}">
+            <div class="nearby-info">
+              <div class="nearby-name">${mess.name || "Mess"}</div>
+              <div class="nearby-meta">
+                <span class="meta-badge">${distance.toFixed(1)} km</span>
+                <span class="meta-badge rating-badge">⭐ ${mess.rating || "4.0"}</span>
+              </div>
+            </div>
+          `;
+
+          list.appendChild(card);
+        }
+      });
+
+      section.style.display = "block";
+      empty.style.display = found ? "none" : "block";
+    }
+
+    function getDistance(lat1, lon1, lat2, lon2) {
+      const R = 6371;
+      const dLat = (lat2 - lat1) * Math.PI / 180;
+      const dLon = (lon2 - lon1) * Math.PI / 180;
+
+      const a =
+        Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+        Math.cos(lat1 * Math.PI / 180) *
+        Math.cos(lat2 * Math.PI / 180) *
+        Math.sin(dLon / 2) * Math.sin(dLon / 2);
+
+      const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+      return R * c;
+    }
+  </script>
+
 </body>
 </html>
