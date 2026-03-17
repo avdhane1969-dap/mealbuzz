@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Meal Buzz - Meals</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <style>
+    *{
+      margin:0;
+      padding:0;
+      box-sizing:border-box;
+    }
+
+    :root{
+      --bg:#0d0f14;
+      --card:#171a21;
+      --soft:#20242d;
+      --line:#2b313d;
+      --text:#f5f7fb;
+      --muted:#b9c0cc;
+      --accent:#ff8a00;
+      --accent2:#ffb347;
+      --green:#27c26c;
+    }
+
+    body{
+      font-family:Arial, sans-serif;
+      background:linear-gradient(180deg,#0d0f14 0%, #12151d 100%);
+      color:var(--text);
+    }
+
+    a{
+      text-decoration:none;
+      color:inherit;
+    }
+
+    .topbar{
+      position:sticky;
+      top:0;
+      z-index:1000;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+      padding:16px;
+      background:rgba(13,15,20,0.95);
+      backdrop-filter:blur(8px);
+      border-bottom:1px solid var(--line);
+    }
+
+    .topbar-left{
+      display:flex;
+      align-items:center;
+      gap:12px;
+    }
+
+    .back-btn{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      min-width:42px;
+      height:42px;
+      padding:0 14px;
+      border-radius:12px;
+      background:var(--soft);
+      border:1px solid var(--line);
+      color:#fff;
+      font-size:14px;
+      font-weight:bold;
+    }
+
+    .brand h1{
+      color:var(--accent);
+      font-size:26px;
+      line-height:1;
+    }
+
+    .brand p{
+      color:var(--muted);
+      font-size:12px;
+      margin-top:4px;
+    }
+
+    .search-info{
+      padding:14px 16px 4px;
+      color:var(--muted);
+      font-size:14px;
+      line-height:1.6;
+    }
+
+    .container{
+      padding:16px;
+      display:grid;
+      gap:16px;
+    }
+
+    .card{
+      display:block;
+      text-decoration:none;
+      color:#fff;
+      background:var(--card);
+      border-radius:20px;
+      overflow:hidden;
+      border:1px solid var(--line);
+      box-shadow:0 10px 24px rgba(0,0,0,0.18);
+      transition:transform 0.2s ease;
+    }
+
+    .card:hover{
+      transform:translateY(-2px);
+    }
+
+    .card img{
+      width:100%;
+      height:210px;
+      object-fit:cover;
+      display:block;
+    }
+
+    .card-body{
+      padding:15px;
+    }
+
+    .title-row{
+      display:flex;
+      justify-content:space-between;
+      align-items:flex-start;
+      gap:12px;
+      margin-bottom:8px;
+    }
+
+    .mess-name{
+      font-size:20px;
+      font-weight:bold;
+      line-height:1.2;
+    }
+
+    .rating{
+      min-width:58px;
+      text-align:center;
+      background:rgba(39,194,108,0.12);
+      color:#7df0b0;
+      border:1px solid rgba(39,194,108,0.35);
+      padding:7px 10px;
+      border-radius:12px;
+      font-size:14px;
+      font-weight:bold;
+    }
+
+    .menu-label{
+      color:var(--accent);
+      font-size:12px;
+      text-transform:uppercase;
+      letter-spacing:0.5px;
+      margin-bottom:6px;
+    }
+
+    .menu{
+      color:#c7cfdb;
+      font-size:14px;
+      line-height:1.7;
+    }
+
+    .hidden{
+      display:none;
+    }
+
+    .no-result{
+      display:none;
+      text-align:center;
+      margin:16px;
+      padding:18px;
+      color:#aaa;
+      background:var(--card);
+      border:1px solid var(--line);
+      border-radius:16px;
+    }
+
+    @media(min-width:768px){
+      .topbar{
+        padding:16px 28px;
+      }
+
+      .search-info,
+      .container{
+        padding-left:28px;
+        padding-right:28px;
+      }
+
+      .container{
+        grid-template-columns:repeat(2,1fr);
+      }
+    }
+
+    @media(min-width:1100px){
+      .search-info,
+      .container{
+        padding-left:48px;
+        padding-right:48px;
+      }
+
+      .container{
+        grid-template-columns:repeat(3,1fr);
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <header class="topbar">
+    <div class="topbar-left">
+      <a href="index.html" class="back-btn">← Back</a>
+
+      <div class="brand">
+        <h1>Meal Buzz</h1>
+        <p>Browse meals and menus</p>
+      </div>
+    </div>
+  </header>
+
+  <div class="search-info" id="searchText"></div>
+
+  <div class="no-result" id="noResult">
+    No mess found 😢
+  </div>
+
+  <div class="container">
+
+    <a href="mess1.html" class="card" data-name="annapurna mess annapurna" data-menu="chapati rice dal paneer aloo sabji">
+      <img src="thali.jpg" alt="Annapurna Mess" />
+      <div class="card-body">
+        <div class="title-row">
+          <div class="mess-name">Annapurna Mess</div>
+          <div class="rating">4.6 ★</div>
+        </div>
+        <div class="menu-label">Today Menu</div>
+        <div class="menu">Chapati, Rice, Dal, Paneer</div>
+      </div>
+    </a>
+
+    <a href="mess2.html" class="card" data-name="shiv mess shiv" data-menu="bhakri pithla rice dal thecha">
+      <img src="thali2.jpg" alt="Shiv Mess" />
+      <div class="card-body">
+        <div class="title-row">
+          <div class="mess-name">Shiv Mess</div>
+          <div class="rating">4.2 ★</div>
+        </div>
+        <div class="menu-label">Today Menu</div>
+        <div class="menu">Bhakri, Pithla, Rice, Dal</div>
+      </div>
+    </a>
+
+    <a href="mess1.html" class="card" data-name="gharachi chav gharachi" data-menu="paneer chapati rice sweet dal fry">
+      <img src="thali.jpg" alt="Gharachi Chav" />
+      <div class="card-body">
+        <div class="title-row">
+          <div class="mess-name">Gharachi Chav</div>
+          <div class="rating">4.8 ★</div>
+        </div>
+        <div class="menu-label">Today Menu</div>
+        <div class="menu">Paneer Bhaji, Chapati, Rice, Sweet</div>
+      </div>
+    </a>
+
+  </div>
+
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    const search = (params.get("search") || "").trim().toLowerCase();
+
+    const cards = document.querySelectorAll(".card");
+    const searchText = document.getElementById("searchText");
+    const noResult = document.getElementById("noResult");
+
+    if (!search) {
+      searchText.innerText = "Please enter a mess name or menu item.";
+      cards.forEach(card => card.classList.add("hidden"));
+      noResult.style.display = "none";
+    } else {
+      searchText.innerText = "Showing results for: " + search;
+
+      let visibleCount = 0;
+
+      cards.forEach(card => {
+        const name = (card.dataset.name || "").toLowerCase();
+        const menu = (card.dataset.menu || "").toLowerCase();
+
+        if (name.includes(search) || menu.includes(search)) {
+          card.classList.remove("hidden");
+          visibleCount++;
+        } else {
+          card.classList.add("hidden");
+        }
+      });
+
+      noResult.style.display = visibleCount === 0 ? "block" : "none";
+    }
+  </script>
+
+</body>
+</html>
