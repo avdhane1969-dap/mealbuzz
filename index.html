@@ -17,17 +17,17 @@
     }
 
     :root{
-      --bg:#0d0f14;
-      --card:#171b24;
-      --card-alt:#1c2330;
-      --soft:#222937;
-      --line:#2e3748;
+      --bg:#0b0d12;
+      --bg2:#141925;
+      --card:rgba(23,27,36,0.72);
+      --soft:rgba(255,255,255,0.06);
+      --line:rgba(255,255,255,0.10);
       --text:#f5f7fb;
       --muted:#b9c0cc;
       --accent:#ff8a00;
       --accent2:#ffb347;
       --green:#27c26c;
-      --shadow:0 12px 28px rgba(0,0,0,0.22);
+      --shadow:0 14px 30px rgba(0,0,0,0.24);
     }
 
     html{
@@ -35,11 +35,13 @@
     }
 
     body{
-      font-family:'Inter', Arial, Helvetica, sans-serif;
-      background:
-        radial-gradient(circle at top right, rgba(255,138,0,0.08), transparent 24%),
-        linear-gradient(180deg,#0b0d12 0%, #121721 100%);
+      font-family:'Inter', Arial, sans-serif;
       color:var(--text);
+      background:
+        radial-gradient(circle at top right, rgba(255,138,0,0.10), transparent 22%),
+        radial-gradient(circle at top left, rgba(255,255,255,0.04), transparent 18%),
+        linear-gradient(180deg, #0b0d12 0%, #141925 100%);
+      min-height:100vh;
     }
 
     a{
@@ -53,9 +55,161 @@
       font-family:inherit;
     }
 
-    img{
+    img, video{
       display:block;
       max-width:100%;
+    }
+
+    /* INTRO SCREEN */
+    #introScreen{
+      position:fixed;
+      inset:0;
+      z-index:5000;
+      overflow:hidden;
+      background:#000;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      transition:transform 0.55s ease, opacity 0.55s ease;
+    }
+
+    #introScreen.hide{
+      transform:translateX(-100%);
+      opacity:0;
+      pointer-events:none;
+    }
+
+    .intro-video{
+      position:absolute;
+      inset:0;
+      width:100%;
+      height:100%;
+      object-fit:cover;
+    }
+
+    .intro-overlay{
+      position:absolute;
+      inset:0;
+      background:
+        linear-gradient(to bottom, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0.18) 32%, rgba(0,0,0,0.40) 68%, rgba(0,0,0,0.76) 100%);
+    }
+
+    .intro-content{
+      position:relative;
+      z-index:2;
+      width:100%;
+      max-width:540px;
+      height:100vh;
+      display:flex;
+      flex-direction:column;
+      justify-content:space-between;
+      padding:34px 22px 28px;
+    }
+
+    .intro-top{
+      margin-top:18px;
+    }
+
+    .intro-brand{
+      font-family:'Poppins', sans-serif;
+      font-size:20px;
+      font-weight:800;
+      margin-bottom:18px;
+      text-shadow:0 6px 18px rgba(0,0,0,0.35);
+    }
+
+    .intro-title{
+      font-family:'Poppins', sans-serif;
+      font-size:clamp(34px, 6vw, 54px);
+      line-height:1.1;
+      max-width:92%;
+      text-shadow:0 8px 24px rgba(0,0,0,0.35);
+    }
+
+    .intro-subtitle{
+      margin-top:14px;
+      font-size:15px;
+      line-height:1.7;
+      color:rgba(255,255,255,0.92);
+      max-width:92%;
+      text-shadow:0 6px 18px rgba(0,0,0,0.35);
+    }
+
+    .intro-bottom{
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      gap:22px;
+      width:100%;
+    }
+
+    .dots{
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      gap:12px;
+    }
+
+    .dot{
+      width:12px;
+      height:12px;
+      border-radius:50%;
+      background:rgba(255,255,255,0.76);
+    }
+
+    .dot.active{
+      width:20px;
+      height:20px;
+      background:#fff;
+      box-shadow:0 0 0 7px rgba(255,255,255,0.18);
+    }
+
+    .slide-btn{
+      width:100%;
+      max-width:420px;
+      background:rgba(255,255,255,0.96);
+      border-radius:999px;
+      padding:10px 10px 10px 26px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      box-shadow:0 16px 34px rgba(0,0,0,0.26);
+      user-select:none;
+    }
+
+    .slide-text{
+      color:#111;
+      font-size:20px;
+      font-weight:800;
+      flex:1;
+      text-align:center;
+      transform:translateX(10px);
+    }
+
+    .slide-arrow{
+      width:62px;
+      height:62px;
+      border-radius:50%;
+      background:linear-gradient(135deg, #ff7b2c, #d85b24);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      color:#fff;
+      font-size:30px;
+      font-weight:700;
+      box-shadow:0 10px 24px rgba(216,91,36,0.38);
+      flex-shrink:0;
+    }
+
+    .intro-hint{
+      font-size:13px;
+      color:rgba(255,255,255,0.78);
+    }
+
+    /* MAIN APP */
+    #mainApp{
+      min-height:100vh;
+      padding-bottom:90px;
     }
 
     .topbar{
@@ -66,61 +220,26 @@
       justify-content:space-between;
       align-items:center;
       gap:12px;
-      padding:14px 16px;
-      background:rgba(13,15,20,0.88);
+      padding:16px;
+      background:rgba(11,13,18,0.82);
       backdrop-filter:blur(12px);
       border-bottom:1px solid rgba(255,255,255,0.06);
     }
 
-    .top-left{
-      display:flex;
-      align-items:center;
-      gap:14px;
-    }
-
-    .menu-btn{
-      width:46px;
-      height:46px;
-      border-radius:14px;
-      background:rgba(255,255,255,0.05);
-      border:1px solid rgba(255,255,255,0.08);
-      display:flex;
-      flex-direction:column;
-      justify-content:center;
-      gap:5px;
-      padding:0 10px;
-      box-shadow:0 8px 18px rgba(0,0,0,0.16);
-    }
-
-    .menu-btn span{
-      width:100%;
-      height:2px;
-      background:#fff;
-      border-radius:999px;
-    }
-
-    .brand{
-      display:flex;
-      flex-direction:column;
-      justify-content:center;
-    }
-
     .brand h1{
       font-family:'Poppins', sans-serif;
-      font-size:31px;
+      font-size:30px;
       line-height:1;
-      letter-spacing:0.2px;
-      background:linear-gradient(90deg,#ffffff 0%, #ffdcb3 32%, #ffb347 60%, #ff8a00 100%);
+      background:linear-gradient(90deg,#ffffff 0%, #ffdcb3 35%, #ffb347 62%, #ff8a00 100%);
       -webkit-background-clip:text;
       -webkit-text-fill-color:transparent;
       background-clip:text;
-      text-shadow:0 0 24px rgba(255,138,0,0.12);
     }
 
     .brand p{
       color:#d6dde8;
       font-size:11px;
-      margin-top:5px;
+      margin-top:6px;
       letter-spacing:1.7px;
       text-transform:uppercase;
       font-weight:700;
@@ -136,162 +255,101 @@
       font-size:14px;
     }
 
-    .sidebar{
-      position:fixed;
-      top:0;
-      left:-290px;
-      width:280px;
-      height:100vh;
-      background:linear-gradient(180deg,#10131a 0%, #0d1118 100%);
-      border-right:1px solid rgba(255,255,255,0.08);
-      z-index:1200;
-      transition:0.3s;
-      padding:18px;
-      box-shadow:18px 0 36px rgba(0,0,0,0.28);
-    }
-
-    .sidebar.open{
-      left:0;
-    }
-
-    .sidebar-top{
-      display:flex;
-      justify-content:space-between;
-      align-items:center;
-      margin-bottom:20px;
-    }
-
-    .sidebar-top h2{
-      font-family:'Poppins', sans-serif;
-      font-size:24px;
-      background:linear-gradient(90deg,#fff 0%, #ffcf9c 40%, #ff8a00 100%);
-      -webkit-background-clip:text;
-      -webkit-text-fill-color:transparent;
-      background-clip:text;
-    }
-
-    .close-btn{
-      width:40px;
-      height:40px;
-      border-radius:12px;
-      background:rgba(255,255,255,0.05);
-      color:#fff;
-      border:1px solid rgba(255,255,255,0.08);
-      font-size:20px;
-    }
-
-    .sidebar-links{
-      display:flex;
-      flex-direction:column;
-      gap:12px;
-    }
-
-    .sidebar-links a{
-      background:rgba(255,255,255,0.04);
-      border:1px solid rgba(255,255,255,0.06);
-      border-radius:15px;
-      padding:14px;
-      font-size:15px;
-      color:#eef2f7;
-      box-shadow:0 8px 18px rgba(0,0,0,0.12);
-    }
-
-    .overlay{
-      position:fixed;
-      inset:0;
-      background:rgba(0,0,0,0.45);
-      opacity:0;
-      pointer-events:none;
-      transition:0.3s;
-      z-index:1100;
-    }
-
-    .overlay.show{
-      opacity:1;
-      pointer-events:auto;
-    }
-
     .section{
       padding:18px 16px;
     }
 
     .hero-card{
-      background:rgba(24,29,40,0.55);
-      border:1px solid rgba(255,255,255,0.08);
+      background:var(--card);
+      border:1px solid var(--line);
       border-radius:28px;
       overflow:hidden;
-      box-shadow:0 14px 34px rgba(0,0,0,0.24);
-      display:flex;
-      align-items:center;
-      gap:26px;
+      box-shadow:var(--shadow);
       backdrop-filter:blur(14px);
       -webkit-backdrop-filter:blur(14px);
       position:relative;
-    }
-
-    .hero-card::before{
-      content:"";
-      position:absolute;
-      inset:0;
-      background:linear-gradient(135deg, rgba(255,255,255,0.06), rgba(255,255,255,0.01));
-      pointer-events:none;
-    }
-
-    .hero-image{
-      width:50%;
-      height:330px;
-      object-fit:cover;
-      border-radius:18px;
-      margin:14px;
-      box-shadow:0 14px 28px rgba(0,0,0,0.18);
-      position:relative;
-      z-index:1;
-    }
-
-    .hero-content{
-      width:50%;
-      padding:18px 24px 18px 0;
-      position:relative;
-      z-index:1;
+      padding:22px 18px;
     }
 
     .hero-content h2{
       font-family:'Poppins', sans-serif;
-      font-size:36px;
-      line-height:1.12;
-      margin-bottom:12px;
-      color:#ffffff;
+      font-size:28px;
+      line-height:1.15;
+      margin-bottom:10px;
+      max-width:95%;
     }
 
     .hero-content p{
-      font-size:15px;
-      line-height:1.8;
-      color:var(--muted);
-      margin-bottom:16px;
+      color:#e3e8f1;
+      font-size:14px;
+      line-height:1.7;
+      max-width:95%;
+    }
+
+    .search-panel{
+      background:var(--card);
+      border:1px solid var(--line);
+      border-radius:24px;
+      padding:16px;
+      box-shadow:var(--shadow);
+      backdrop-filter:blur(14px);
+      -webkit-backdrop-filter:blur(14px);
+      margin-top:16px;
+    }
+
+    .search-row{
+      display:flex;
+      gap:10px;
+      align-items:center;
+      position:relative;
+    }
+
+    .search-box-wrap{
+      flex:1;
+      display:flex;
+      align-items:center;
+      gap:10px;
+      background:rgba(12,15,22,0.88);
+      border:1px solid rgba(255,255,255,0.08);
+      border-radius:18px;
+      padding:0 14px;
+      min-height:56px;
+    }
+
+    .search-icon{
+      font-size:18px;
+      opacity:0.85;
     }
 
     .search-box{
       width:100%;
-      padding:15px 16px;
-      background:rgba(17,21,28,0.85);
-      color:#fff;
-      border:1px solid var(--line);
-      border-radius:16px;
+      background:transparent;
+      border:none;
       outline:none;
-      font-size:14px;
-      margin-top:10px;
-      box-shadow:inset 0 1px 0 rgba(255,255,255,0.03);
+      color:#fff;
+      font-size:15px;
     }
 
     .search-box::placeholder{
       color:#9098a6;
     }
 
-    .search-btn{
+    .location-btn{
+      min-width:56px;
+      height:56px;
+      border-radius:18px;
+      background:linear-gradient(135deg,var(--accent),var(--accent2));
+      color:#fff;
+      font-size:22px;
+      font-weight:800;
+      box-shadow:0 12px 24px rgba(255,138,0,0.20);
+    }
+
+    .search-action{
       margin-top:12px;
       width:100%;
-      padding:14px;
-      border-radius:16px;
+      padding:15px;
+      border-radius:18px;
       background:linear-gradient(90deg,var(--accent),var(--accent2));
       color:#fff;
       font-size:15px;
@@ -306,9 +364,69 @@
       min-height:20px;
     }
 
+    .chips{
+      display:flex;
+      gap:10px;
+      overflow-x:auto;
+      padding-bottom:4px;
+      margin-top:16px;
+      scrollbar-width:none;
+    }
+
+    .chips::-webkit-scrollbar{
+      display:none;
+    }
+
+    .chip{
+      flex:0 0 auto;
+      padding:11px 16px;
+      border-radius:999px;
+      background:rgba(255,255,255,0.05);
+      border:1px solid rgba(255,255,255,0.08);
+      color:#e9edf5;
+      font-weight:600;
+      font-size:14px;
+    }
+
+    .chip.active{
+      background:linear-gradient(90deg,var(--accent),var(--accent2));
+      color:#111;
+      border-color:transparent;
+    }
+
+    .suggestions-box{
+      display:none;
+      position:absolute;
+      top:62px;
+      left:0;
+      right:66px;
+      background:#141925;
+      border:1px solid rgba(255,255,255,0.08);
+      border-radius:16px;
+      overflow:hidden;
+      box-shadow:0 16px 34px rgba(0,0,0,0.28);
+      z-index:20;
+    }
+
+    .suggestion-item{
+      padding:12px 14px;
+      border-bottom:1px solid rgba(255,255,255,0.06);
+      font-size:14px;
+      color:#f2f5fa;
+      cursor:pointer;
+    }
+
+    .suggestion-item:last-child{
+      border-bottom:none;
+    }
+
+    .suggestion-item:hover{
+      background:rgba(255,255,255,0.05);
+    }
+
     .section-title{
       font-family:'Poppins', sans-serif;
-      font-size:26px;
+      font-size:24px;
       margin-bottom:8px;
       color:#fff;
     }
@@ -320,6 +438,57 @@
       margin-bottom:16px;
     }
 
+    .recommend-row{
+      display:flex;
+      gap:14px;
+      overflow-x:auto;
+      padding-bottom:4px;
+      scrollbar-width:none;
+    }
+
+    .recommend-row::-webkit-scrollbar{
+      display:none;
+    }
+
+    .recommend-card{
+      flex:0 0 260px;
+      background:var(--card);
+      border:1px solid var(--line);
+      border-radius:22px;
+      overflow:hidden;
+      box-shadow:var(--shadow);
+      backdrop-filter:blur(12px);
+      -webkit-backdrop-filter:blur(12px);
+    }
+
+    .recommend-card img{
+      width:100%;
+      height:165px;
+      object-fit:cover;
+    }
+
+    .recommend-body{
+      padding:14px;
+    }
+
+    .recommend-name{
+      font-size:18px;
+      font-weight:700;
+      margin-bottom:8px;
+    }
+
+    .recommend-meta{
+      color:var(--muted);
+      font-size:14px;
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+    }
+
+    #nearbySection{
+      display:none;
+    }
+
     .nearby-list{
       display:grid;
       gap:14px;
@@ -329,47 +498,31 @@
       display:flex;
       align-items:center;
       gap:12px;
-      background:rgba(24,29,40,0.56);
-      border:1px solid rgba(255,255,255,0.08);
-      border-radius:20px;
+      background:var(--card);
+      border:1px solid var(--line);
+      border-radius:22px;
       padding:12px;
-      text-decoration:none;
       color:#fff;
       box-shadow:var(--shadow);
       backdrop-filter:blur(12px);
       -webkit-backdrop-filter:blur(12px);
-      position:relative;
-      overflow:hidden;
-    }
-
-    .nearby-card::before{
-      content:"";
-      position:absolute;
-      inset:0;
-      background:linear-gradient(135deg, rgba(255,255,255,0.05), rgba(255,255,255,0.01));
-      pointer-events:none;
     }
 
     .nearby-card img{
-      width:82px;
-      height:82px;
+      width:88px;
+      height:88px;
       border-radius:16px;
       object-fit:cover;
       flex-shrink:0;
-      box-shadow:0 10px 20px rgba(0,0,0,0.14);
-      position:relative;
-      z-index:1;
     }
 
     .nearby-info{
       flex:1;
       min-width:0;
-      position:relative;
-      z-index:1;
     }
 
     .nearby-name{
-      font-size:16px;
+      font-size:17px;
       font-weight:700;
       margin-bottom:8px;
       line-height:1.2;
@@ -383,47 +536,33 @@
 
     .meta-badge{
       font-size:12px;
-      padding:6px 9px;
+      padding:6px 10px;
       border-radius:999px;
-      background:rgba(255,255,255,0.04);
+      background:rgba(255,255,255,0.05);
       border:1px solid rgba(255,255,255,0.08);
       color:var(--muted);
     }
 
     .rating-badge{
       color:#7df0b0;
-      border-color:rgba(39,194,108,0.26);
+      border-color:rgba(39,194,108,0.28);
       background:rgba(39,194,108,0.12);
     }
 
     .owner-box{
-      background:rgba(24,29,40,0.56);
-      border:1px solid rgba(255,255,255,0.08);
+      background:var(--card);
+      border:1px solid var(--line);
       border-radius:24px;
       padding:20px;
-      box-shadow:0 12px 28px rgba(0,0,0,0.18);
+      box-shadow:var(--shadow);
       backdrop-filter:blur(16px);
       -webkit-backdrop-filter:blur(16px);
-      position:relative;
-      overflow:hidden;
-    }
-
-    .owner-box::before{
-      content:"";
-      position:absolute;
-      inset:0;
-      background:
-        linear-gradient(135deg, rgba(255,255,255,0.07), rgba(255,255,255,0.01)),
-        radial-gradient(circle at top right, rgba(255,138,0,0.08), transparent 28%);
-      pointer-events:none;
     }
 
     .owner-box h3{
       font-family:'Poppins', sans-serif;
       font-size:24px;
       margin-bottom:8px;
-      position:relative;
-      z-index:1;
     }
 
     .owner-box p{
@@ -431,24 +570,20 @@
       font-size:14px;
       line-height:1.8;
       margin-bottom:16px;
-      position:relative;
-      z-index:1;
     }
 
     .owner-actions{
       display:flex;
       gap:12px;
       flex-wrap:wrap;
-      position:relative;
-      z-index:1;
     }
 
     .owner-actions a{
       flex:1;
       min-width:150px;
       text-align:center;
-      padding:14px 14px;
-      border-radius:15px;
+      padding:14px;
+      border-radius:16px;
       font-size:14px;
       font-weight:800;
     }
@@ -460,7 +595,7 @@
     }
 
     .owner-register-btn{
-      background:rgba(255,255,255,0.04);
+      background:rgba(255,255,255,0.05);
       border:1px solid rgba(255,255,255,0.08);
       color:#fff;
     }
@@ -471,48 +606,13 @@
     }
 
     .why-card{
-      background:rgba(24,29,40,0.56);
-      border:1px solid rgba(255,255,255,0.08);
+      background:var(--card);
+      border:1px solid var(--line);
       border-radius:20px;
       padding:18px;
       box-shadow:var(--shadow);
       backdrop-filter:blur(12px);
       -webkit-backdrop-filter:blur(12px);
-      position:relative;
-      overflow:hidden;
-    }
-
-    .why-card::before{
-      content:"";
-      position:absolute;
-      inset:0;
-      background:linear-gradient(135deg, rgba(255,255,255,0.05), rgba(255,255,255,0.01));
-      pointer-events:none;
-    }
-
-    .why-icon{
-      width:46px;
-      height:46px;
-      border-radius:14px;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      margin-bottom:14px;
-      background:rgba(255,138,0,0.10);
-      border:1px solid rgba(255,179,71,0.18);
-      box-shadow:inset 0 1px 0 rgba(255,255,255,0.06);
-      position:relative;
-      z-index:1;
-    }
-
-    .why-icon svg{
-      width:22px;
-      height:22px;
-      stroke:#ffbe63;
-      fill:none;
-      stroke-width:2;
-      stroke-linecap:round;
-      stroke-linejoin:round;
     }
 
     .why-card h3{
@@ -520,21 +620,17 @@
       font-size:18px;
       margin-bottom:8px;
       font-family:'Poppins', sans-serif;
-      position:relative;
-      z-index:1;
     }
 
     .why-card p{
       color:var(--muted);
       font-size:14px;
       line-height:1.75;
-      position:relative;
-      z-index:1;
     }
 
     .empty-note{
-      background:rgba(24,29,40,0.56);
-      border:1px dashed rgba(255,255,255,0.11);
+      background:var(--card);
+      border:1px dashed rgba(255,255,255,0.12);
       border-radius:18px;
       padding:16px;
       color:var(--muted);
@@ -544,10 +640,46 @@
       -webkit-backdrop-filter:blur(12px);
     }
 
+    .bottom-nav{
+      position:fixed;
+      left:12px;
+      right:12px;
+      bottom:12px;
+      z-index:999;
+      display:grid;
+      grid-template-columns:repeat(4,1fr);
+      gap:8px;
+      padding:10px 12px;
+      background:rgba(18,22,31,0.88);
+      border:1px solid rgba(255,255,255,0.08);
+      border-radius:24px;
+      backdrop-filter:blur(16px);
+      -webkit-backdrop-filter:blur(16px);
+      box-shadow:0 18px 34px rgba(0,0,0,0.26);
+    }
+
+    .nav-item{
+      text-align:center;
+      color:#d7deea;
+      font-size:12px;
+      font-weight:600;
+      padding:6px 2px;
+    }
+
+    .nav-item span{
+      display:block;
+      font-size:19px;
+      margin-bottom:5px;
+    }
+
+    .nav-item.active{
+      color:#ffb347;
+    }
+
     .footer{
       border-top:1px solid rgba(255,255,255,0.06);
       margin-top:10px;
-      padding:22px 16px 34px;
+      padding:22px 16px 10px;
       text-align:center;
       color:var(--muted);
       font-size:13px;
@@ -564,16 +696,14 @@
         padding-right:28px;
       }
 
-      .hero-content{
-        padding:24px 26px 24px 0;
-      }
-
       .hero-content h2{
-        font-size:52px;
+        font-size:42px;
+        max-width:75%;
       }
 
       .hero-content p{
         font-size:16px;
+        max-width:70%;
       }
 
       .nearby-list{
@@ -601,208 +731,250 @@
       }
     }
 
-    @media(max-width:768px){
-      .hero-card{
-        flex-direction:column;
-        gap:0;
+    @media (max-width:480px){
+      .intro-content{
+        padding:28px 18px 26px;
       }
 
-      .hero-image,
-      .hero-content{
-        width:100%;
+      .slide-text{
+        font-size:18px;
       }
 
-      .hero-image{
-        border-radius:0;
-        margin:0;
-        height:250px;
-      }
-
-      .hero-content{
-        padding:20px;
-      }
-
-      .brand h1{
-        font-size:27px;
+      .slide-arrow{
+        width:58px;
+        height:58px;
+        font-size:28px;
       }
     }
   </style>
 </head>
 <body>
 
-  <aside class="sidebar" id="sidebar">
-    <div class="sidebar-top">
-      <h2>Meal Buzz</h2>
-      <button class="close-btn" onclick="closeSidebar()">×</button>
+  <!-- INTRO -->
+  <section id="introScreen">
+    <video class="intro-video" autoplay muted loop playsinline>
+      <source src="food1.mp4" type="video/mp4" />
+    </video>
+    <div class="intro-overlay"></div>
+
+    <div class="intro-content">
+      <div class="intro-top">
+        <div class="intro-brand">Meal Buzz</div>
+        <h1 class="intro-title">Gharghuti jevan, ata fakt ek tap dur 🍛</h1>
+        <p class="intro-subtitle">Simple • Affordable • Daily updated</p>
+      </div>
+
+      <div class="intro-bottom">
+        <div class="dots">
+          <span class="dot"></span>
+          <span class="dot active"></span>
+          <span class="dot"></span>
+          <span class="dot"></span>
+          <span class="dot"></span>
+        </div>
+
+        <div class="slide-btn" onclick="openMainApp()">
+          <span class="slide-text">Explore Meals</span>
+          <span class="slide-arrow">›</span>
+        </div>
+
+        <div class="intro-hint">Tap to continue</div>
+      </div>
     </div>
+  </section>
 
-    <div class="sidebar-links">
-      <a href="#home" onclick="closeSidebar()">Home</a>
-      <a href="meals.html" onclick="closeSidebar()">Browse Meals</a>
-      <a href="#nearbySection" onclick="closeSidebar()">Nearby Messes</a>
-      <a href="owner.html" onclick="closeSidebar()">Owner Login</a>
-      <a href="register.html" onclick="closeSidebar()">Register Your Mess</a>
-    </div>
-  </aside>
-
-  <div class="overlay" id="overlay" onclick="closeSidebar()"></div>
-
-  <header class="topbar" id="home">
-    <div class="top-left">
-      <button class="menu-btn" onclick="toggleMenu()" type="button">
-        <span></span>
-        <span></span>
-        <span></span>
-      </button>
-
+  <!-- MAIN APP -->
+  <div id="mainApp">
+    <header class="topbar" id="home">
       <div class="brand">
         <h1>Meal Buzz</h1>
         <p>DISCOVER • DECIDE • DINE</p>
       </div>
-    </div>
 
-    <select class="language-select" onchange="changeLanguage(this.value)">
-      <option value="en">English</option>
-      <option value="mr">मराठी</option>
-      <option value="hi">हिंदी</option>
-    </select>
-  </header>
+      <select class="language-select" onchange="changeLanguage(this.value)">
+        <option value="en">English</option>
+        <option value="mr">मराठी</option>
+        <option value="hi">हिंदी</option>
+      </select>
+    </header>
 
-  <section class="section">
-    <div class="hero-card">
-      <video autoplay muted loop playsinline class="hero-image">
-        <source src="food1.mp4" type="video/mp4" />
-      </video>
+    <section class="section">
+      <div class="hero-card">
+        <div class="hero-content">
+          <h2 id="title">Find today’s nearby mess menu in one place</h2>
+          <p id="desc">
+            Check nearby mess names, today’s menu preview, ratings, prices and full details.
+            Perfect for students, workers and anyone looking for tasty home-style meals nearby.
+          </p>
+        </div>
+      </div>
 
-      <div class="hero-content">
-        <h2 id="title">Find today’s nearby mess menu in one place</h2>
-        <p id="desc">
-          Check nearby mess names, today’s menu preview, ratings, prices and full details.
-          Perfect for students, workers and anyone looking for tasty home-style meals nearby.
+      <div class="search-panel">
+        <div class="search-row">
+          <div class="search-box-wrap">
+            <span class="search-icon">🔍</span>
+            <input
+              type="text"
+              id="searchInput"
+              class="search-box"
+              placeholder="Search mess name or menu item"
+              oninput="showSuggestions(this.value)"
+            />
+          </div>
+
+          <button class="location-btn" onclick="getLocation()" title="Detect location">📍</button>
+
+          <div class="suggestions-box" id="suggestionsBox"></div>
+        </div>
+
+        <button class="search-action" onclick="goToMeals()">Explore Meals</button>
+        <div id="locationResult"></div>
+
+        <div class="chips">
+          <div class="chip active" onclick="applyFilter('veg', this)">Veg</div>
+          <div class="chip" onclick="applyFilter('nonveg', this)">Non-veg</div>
+          <div class="chip" onclick="applyFilter('budget', this)">Budget</div>
+          <div class="chip" onclick="applyFilter('toprated', this)">Top Rated</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2 class="section-title">Recommended for you</h2>
+      <p class="section-subtitle">Popular meal suggestions inspired by your idea layout</p>
+
+      <div class="recommend-row" id="recommendRow">
+        <div class="recommend-card" data-type="veg" data-price="120" data-rating="4.4">
+          <img src="thali.jpg" alt="Veg Thali">
+          <div class="recommend-body">
+            <div class="recommend-name">Veg Thali</div>
+            <div class="recommend-meta">
+              <span>₹120</span>
+              <span>0.8 km</span>
+              <span>⭐ 4.4</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="recommend-card" data-type="nonveg" data-price="150" data-rating="4.5">
+          <img src="thali.jpg" alt="Chicken Meal">
+          <div class="recommend-body">
+            <div class="recommend-name">Chicken Meal</div>
+            <div class="recommend-meta">
+              <span>₹150</span>
+              <span>1.2 km</span>
+              <span>⭐ 4.5</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="recommend-card" data-type="veg" data-price="80" data-rating="4.2">
+          <img src="thali.jpg" alt="Budget Meal">
+          <div class="recommend-body">
+            <div class="recommend-name">Budget Meal</div>
+            <div class="recommend-meta">
+              <span>₹80</span>
+              <span>0.5 km</span>
+              <span>⭐ 4.2</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="nearbySection" style="display:none;">
+      <h2 class="section-title">Nearby Messes For You</h2>
+      <p class="section-subtitle">Based on your current location</p>
+
+  <div id="nearbyMessList" class="nearby-list"></div>
+
+      <div id="nearbyEmpty" class="empty-note" style="display:none;">
+        No nearby mess found yet. More messes will appear here as owners register and add their location.
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="owner-box">
+        <h3>Are you a mess owner?</h3>
+        <p>
+          Add your mess on Meal Buzz, update your daily menu, reach nearby students and workers,
+          and grow your visibility in your area.
         </p>
 
-        <input
-          type="text"
-          id="searchInput"
-          class="search-box"
-          placeholder="Search mess name or menu item"
-          onclick="getLocationFirst()"
-          onfocus="getLocationFirst()"
-        />
-
-        <button class="search-btn" onclick="goToMeals()">Search</button>
-
-        <div id="locationResult"></div>
-      </div>
-    </div>
-  </section>
-
-  <section class="section" id="nearbySection" style="display:none;">
-    <h2 class="section-title">Nearby Messes For You</h2>
-    <p class="section-subtitle">Based on your current location</p>
-    <div id="nearbyMessList" class="nearby-list"></div>
-    <div id="nearbyEmpty" class="empty-note" style="display:none;">
-      No nearby mess found yet. More messes will appear here as owners register and add their location.
-    </div>
-  </section>
-
-  <section class="section">
-    <div class="owner-box">
-      <h3>Are you a mess owner?</h3>
-      <p>
-        Add your mess on Meal Buzz, update your daily menu, reach nearby students and workers,
-        and grow your visibility in your area.
-      </p>
-
-      <div class="owner-actions">
-        <a href="owner.html" class="owner-login-btn">Mess Owner Login</a>
-        <a href="register.html" class="owner-register-btn">New Registration</a>
-      </div>
-    </div>
-  </section>
-
-  <section class="section">
-    <h2 class="section-title">Why Meal Buzz?</h2>
-    <p class="section-subtitle">Built to make local mess discovery easy and useful</p>
-
-    <div class="why-grid">
-      <div class="why-card">
-        <div class="why-icon">
-          <svg viewBox="0 0 24 24">
-            <circle cx="12" cy="12" r="7"></circle>
-            <path d="M12 2v2"></path>
-            <path d="M12 20v2"></path>
-            <path d="M2 12h2"></path>
-            <path d="M20 12h2"></path>
-            <path d="M12 12l4-2"></path>
-          </svg>
+        <div class="owner-actions">
+          <a href="owner.html" class="owner-login-btn">Mess Owner Login</a>
+          <a href="register.html" class="owner-register-btn">New Registration</a>
         </div>
-        <h3>Nearby Discovery</h3>
-        <p>Find messes around your current location without wasting time asking around.</p>
       </div>
+    </section>
 
-      <div class="why-card">
-        <div class="why-icon">
-          <svg viewBox="0 0 24 24">
-            <path d="M4 6h16"></path>
-            <path d="M6 10h12"></path>
-            <path d="M8 14h8"></path>
-            <path d="M10 18h4"></path>
-          </svg>
+    <section class="section" id="whySection">
+      <h2 class="section-title">Why Meal Buzz?</h2>
+      <p class="section-subtitle">Built to make local mess discovery easy and useful</p>
+
+      <div class="why-grid">
+        <div class="why-card">
+          <h3>Nearby Discovery</h3>
+          <p>Find messes around your current location without wasting time asking around.</p>
         </div>
-        <h3>Menu Before Visit</h3>
-        <p>Check what is available today before going to a mess or calling the owner.</p>
-      </div>
 
-      <div class="why-card">
-        <div class="why-icon">
-          <svg viewBox="0 0 24 24">
-            <circle cx="11" cy="11" r="6"></circle>
-            <path d="M20 20l-4.2-4.2"></path>
-          </svg>
+        <div class="why-card">
+          <h3>Menu Before Visit</h3>
+          <p>Check what is available today before going to a mess or calling the owner.</p>
         </div>
-        <h3>Fast Search</h3>
-        <p>Search by mess name or by food item like paneer, bhakri, rice, or thali.</p>
-      </div>
 
-      <div class="why-card">
-        <div class="why-icon">
-          <svg viewBox="0 0 24 24">
-            <path d="M4 8l8-4 8 4"></path>
-            <path d="M7 10v4"></path>
-            <path d="M17 10v4"></path>
-            <path d="M12 12v6"></path>
-            <path d="M5 18h14"></path>
-          </svg>
+        <div class="why-card">
+          <h3>Fast Search</h3>
+          <p>Search by mess name or by food item like paneer, bhakri, rice, or thali.</p>
         </div>
-        <h3>Helpful for Students</h3>
-        <p>Perfect for hostel students, workers, and anyone searching for homestyle food nearby.</p>
-      </div>
-    </div>
-  </section>
 
-  <footer class="footer">
-    © 2026 Meal Buzz
-  </footer>
+        <div class="why-card">
+          <h3>Helpful for Students</h3>
+          <p>Perfect for hostel students, workers, and anyone searching for homestyle food nearby.</p>
+        </div>
+      </div>
+    </section>
+
+    <footer class="footer">
+      © 2026 Meal Buzz
+    </footer>
+
+    <nav class="bottom-nav">
+      <a href="#home" class="nav-item active"><span>🏠</span>Home</a>
+      <a href="#nearbySection" class="nav-item"><span>📍</span>Nearby</a>
+      <a href="special.html" class="nav-item"><span>⭐</span>Special</a>
+      <a href="profile.html" class="nav-item"><span>👤</span>Profile</a>
+    </nav>
+  </div>
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
   <script>
     const SUPABASE_URL = "https://iinvhwsbnvmcujyrzlxe.supabase.co";
     const SUPABASE_KEY = "sb_publishable_fwhxfVqWpDrro8hkQbQQRA_1crMexZv";
     const sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
-    let locationAsked = false;
+    const suggestionData = [
+      "Veg Thali",
+      "Chicken Meal",
+      "Budget Meal",
+      "Shree Datta Mess",
+      "Ganesh Mess",
+      "Paneer Thali",
+      "Rice Plate",
+      "Bhakri Meal"
+    ];
 
-    function toggleMenu() {
-      document.getElementById("sidebar").classList.add("open");
-      document.getElementById("overlay").classList.add("show");
+    function openMainApp() {
+      document.getElementById("introScreen").classList.add("hide");
+      localStorage.setItem("mealbuzz_intro_seen", "yes");
     }
 
-    function closeSidebar() {
-      document.getElementById("sidebar").classList.remove("open");
-      document.getElementById("overlay").classList.remove("show");
-    }
+    window.addEventListener("load", () => {
+      const introSeen = localStorage.getItem("mealbuzz_intro_seen");
+      if (introSeen === "yes") {
+        document.getElementById("introScreen").style.display = "none";
+      }
+    });
 
     function changeLanguage(lang) {
       const title = document.getElementById("title");
@@ -824,118 +996,163 @@
       }
     }
 
-   function goToMeals() {
-  const searchValue = document.getElementById("searchInput").value.trim();
-  window.location.href = "meals.html?search=" + encodeURIComponent(searchValue);
-}
-
-function getLocationFirst() {
-  if (locationAsked) return;
-  locationAsked = true;
-  getLocation();
-}
-
-function getLocation() {
-  const result = document.getElementById("locationResult");
-
-  if (!navigator.geolocation) {
-    result.innerHTML = "Location not supported on this device.";
-    return;
-  }
-
-  result.innerHTML = "Getting location...";
-
-  navigator.geolocation.getCurrentPosition(
-    function(position) {
-      const lat = position.coords.latitude;
-      const lon = position.coords.longitude;
-
-      localStorage.setItem("userLat", lat);
-      localStorage.setItem("userLon", lon);
-
-      result.innerHTML = "📍 Location detected";
-      loadNearbyMesses(lat, lon);
-    },
-    function() {
-      result.innerHTML = "Location permission denied. You can still search manually.";
+    function goToMeals(searchText) {
+      const searchValue = searchText || document.getElementById("searchInput").value.trim();
+      window.location.href = "meals.html?search=" + encodeURIComponent(searchValue);
     }
-  );
-}
 
-async function loadNearbyMesses(userLat, userLon) {
-  const { data, error } = await sb
-    .from("mess")
-    .select("*");
+    function showSuggestions(value) {
+      const box = document.getElementById("suggestionsBox");
+      const term = value.trim().toLowerCase();
 
-  if (error) {
-    console.log("MESS ERROR", error);
-    return;
-  }
+      if (!term) {
+        box.style.display = "none";
+        box.innerHTML = "";
+        return;
+      }
 
-  const list = document.getElementById("nearbyMessList");
-  const section = document.getElementById("nearbySection");
-  const empty = document.getElementById("nearbyEmpty");
+      const matches = suggestionData.filter(item => item.toLowerCase().includes(term)).slice(0, 6);
 
-  if (!list || !section || !empty) return;
+      if (matches.length === 0) {
+        box.style.display = "none";
+        box.innerHTML = "";
+        return;
+      }
 
-  list.innerHTML = "";
+      box.innerHTML = matches.map(item =>
+        `<div class="suggestion-item" onclick="goToMeals('${item.replace(/'/g, "\\'")}')">${item}</div>`
+      ).join("");
 
-  if (!data || data.length === 0) {
-    section.style.display = "block";
-    empty.style.display = "block";
-    return;
-  }
-
-  let found = false;
-
-  data.forEach(mess => {
-    const messLat = Number(mess.latitude);
-    const messLon = Number(mess.longitude);
-
-    if (isNaN(messLat) || isNaN(messLon)) return;
-
-    const distance = getDistance(userLat, userLon, messLat, messLon);
-
-    if (distance < 1000) {
-      found = true;
-
-      const card = document.createElement("a");
-      card.className = "nearby-card";
-      card.href = `meals.html?search=${encodeURIComponent(mess.name || "")}`;
-
-      card.innerHTML = `
-        <img src="thali.jpg" alt="${mess.name || "Mess"}">
-        <div class="nearby-info">
-          <div class="nearby-name">${mess.name || "Mess"}</div>
-          <div class="nearby-meta">
-            <span class="meta-badge">${distance.toFixed(1)} km</span>
-            <span class="meta-badge rating-badge">⭐ ${mess.rating || "4.0"}</span>
-          </div>
-        </div>
-      `;
-
-      list.appendChild(card);
+      box.style.display = "block";
     }
-  });
 
-  section.style.display = "block";
-  empty.style.display = found ? "none" : "block";
-}
+    document.addEventListener("click", function(e) {
+      const searchRow = document.querySelector(".search-row");
+      const box = document.getElementById("suggestionsBox");
+      if (searchRow && !searchRow.contains(e.target)) {
+        box.style.display = "none";
+      }
+    });
 
-function getDistance(lat1, lon1, lat2, lon2) {
-  const R = 6371;
-  const dLat = (lat2 - lat1) * Math.PI / 180;
-  const dLon = (lon2 - lon1) * Math.PI / 180;
+    function applyFilter(type, element) {
+      document.querySelectorAll(".chip").forEach(chip => chip.classList.remove("active"));
+      element.classList.add("active");
 
-  const a =
-    Math.sin(dLat / 2) * Math.sin(dLat / 2) +
-    Math.cos(lat1 * Math.PI / 180) *
-    Math.cos(lat2 * Math.PI / 180) *
-    Math.sin(dLon / 2) * Math.sin(dLon / 2);
+      const cards = document.querySelectorAll(".recommend-card");
 
-  const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-  return R * c;
-}
-</script>
+      cards.forEach(card => {
+        const cardType = card.dataset.type;
+        const price = Number(card.dataset.price);
+        const rating = Number(card.dataset.rating);
+
+        let show = false;
+
+        if (type === "veg") show = cardType === "veg";
+        if (type === "nonveg") show = cardType === "nonveg";
+        if (type === "budget") show = price <= 100;
+        if (type === "toprated") show = rating >= 4.4;
+
+        card.style.display = show ? "block" : "none";
+      });
+    }
+
+    function getLocation() {
+      const result = document.getElementById("locationResult");
+
+      if (!navigator.geolocation) {
+        result.innerHTML = "Location not supported on this device.";
+        return;
+      }
+
+      result.innerHTML = "Getting location...";
+
+      navigator.geolocation.getCurrentPosition(
+        function(position) {
+          const lat = position.coords.latitude;
+          const lon = position.coords.longitude;
+
+          localStorage.setItem("userLat", lat);
+          localStorage.setItem("userLon", lon);
+
+          result.innerHTML = "📍 Location detected";
+          loadNearbyMesses(lat, lon);
+        },
+        function() {
+          result.innerHTML = "Location permission denied. You can still search manually.";
+        }
+      );
+    }
+
+    async function loadNearbyMesses(userLat, userLon) {
+      const { data, error } = await sb.from("mess").select("*");
+
+      if (error) {
+        console.log("MESS ERROR", error);
+        return;
+      }
+
+      const list = document.getElementById("nearbyMessList");
+      const section = document.getElementById("nearbySection");
+      const empty = document.getElementById("nearbyEmpty");
+
+      if (!list || !section || !empty) return;
+
+      list.innerHTML = "";
+
+      if (!data || data.length === 0) {
+        section.style.display = "block";
+        empty.style.display = "block";
+        return;
+      }
+
+      let found = false;
+
+      data.forEach(mess => {
+        const messLat = Number(mess.latitude);
+        const messLon = Number(mess.longitude);
+
+        if (isNaN(messLat) || isNaN(messLon)) return;
+
+        const distance = getDistance(userLat, userLon, messLat, messLon);
+
+        if (distance < 1000) {
+          found = true;
+
+          const card = document.createElement("a");
+          card.className = "nearby-card";
+          card.href = `meals.html?search=${encodeURIComponent(mess.name || "")}`;
+          card.innerHTML = `
+            <img src="thali.jpg" alt="${mess.name || "Mess"}">
+            <div class="nearby-info">
+              <div class="nearby-name">${mess.name || "Mess"}</div>
+              <div class="nearby-meta">
+                <span class="meta-badge">${distance.toFixed(1)} km</span>
+                <span class="meta-badge rating-badge">⭐ ${mess.rating || "4.0"}</span>
+              </div>
+            </div>
+          `;
+          list.appendChild(card);
+        }
+      });
+
+      section.style.display = "block";
+      empty.style.display = found ? "none" : "block";
+    }
+
+    function getDistance(lat1, lon1, lat2, lon2) {
+      const R = 6371;
+      const dLat = (lat2 - lat1) * Math.PI / 180;
+      const dLon = (lon2 - lon1) * Math.PI / 180;
+
+      const a =
+        Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+        Math.cos(lat1 * Math.PI / 180) *
+        Math.cos(lat2 * Math.PI / 180) *
+        Math.sin(dLon / 2) * Math.sin(dLon / 2);
+
+      const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+      return R * c;
+    }
+  </script>
 </body>
 </html>
