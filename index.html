@@ -506,8 +506,8 @@
     }
 
     .why-feature{
-      background:var(--card);
-      border:1px solid var(--line);
+      background:linear-gradient(135deg, rgba(255,255,255,0.04), rgba(255,255,255,0.02));
+      border:1px solid rgba(255,255,255,0.08);
       border-radius:24px;
       padding:18px;
       box-shadow:var(--shadow);
@@ -516,18 +516,30 @@
       align-items:flex-start;
       backdrop-filter:blur(12px);
       -webkit-backdrop-filter:blur(12px);
+      position:relative;
+      overflow:hidden;
+    }
+
+    .why-feature::before{
+      content:"";
+      position:absolute;
+      inset:0;
+      background:radial-gradient(circle at top right, rgba(255,179,71,0.08), transparent 32%);
+      pointer-events:none;
     }
 
     .why-icon{
       width:48px;
       height:48px;
       border-radius:16px;
-      background:linear-gradient(135deg, rgba(255,138,0,0.14), rgba(255,179,71,0.14));
-      border:1px solid rgba(255,179,71,0.16);
+      background:linear-gradient(135deg, rgba(255,138,0,0.16), rgba(255,179,71,0.10));
+      border:1px solid rgba(255,179,71,0.18);
       display:flex;
       align-items:center;
       justify-content:center;
       flex-shrink:0;
+      position:relative;
+      z-index:1;
     }
 
     .why-icon svg{
@@ -538,6 +550,11 @@
       stroke-width:2;
       stroke-linecap:round;
       stroke-linejoin:round;
+    }
+
+    .why-content{
+      position:relative;
+      z-index:1;
     }
 
     .why-content h3{
@@ -659,6 +676,15 @@
       }
     }
   </style>
+<title>Meal Buzz - Find Nearby Mess & Tiffin Services</title>
+
+<meta name="description" content="Find nearby mess, tiffin services and daily meal options easily with Meal Buzz.">
+
+<meta name="keywords" content="mess near me, tiffin service, meal delivery, hostel mess, Meal Buzz Pune">
+
+<meta name="author" content="Meal Buzz">
+
+<meta name="robots" content="index, follow">
 </head>
 <body>
 
@@ -728,7 +754,7 @@
 
         <button class="category-chip" data-filter="nonveg" onclick="applyFilter('nonveg', this)">
           <div class="category-circle">
-            <img src="thali2.jpg" alt="Non veg">
+            <img src="nonveg.jpg" alt="Non veg">
           </div>
           <div class="category-label">Non-veg</div>
         </button>
@@ -772,7 +798,7 @@
       </div>
 
       <div class="recommend-card" data-type="nonveg" data-price="150" data-rating="4.5">
-        <img src="thali2.jpg" alt="Chicken Meal">
+        <img src="nonveg.jpg" alt="Chicken Meal">
         <div class="recommend-body">
           <div class="recommend-name">Chicken Meal</div>
           <div class="recommend-meta">
@@ -833,288 +859,295 @@
           <h3>Nearby first</h3>
           <p>Find local messes around you without wasting time asking around or checking random groups.</p>
         </div>
-      </div><div class="why-feature">
-        <div class="why-icon">
-          <svg viewBox="0 0 24 24">
-            <circle cx="11" cy="11" r="6"></circle>
-            <path d="M20 20l-4.2-4.2"></path>
-          </svg>
-        </div>
-        <div class="why-content">
-          <h3>Search made easy</h3>
-          <p>Search by mess name or food item like paneer, bhakri, rice or thali in a cleaner way.</p>
-        </div>
       </div>
 
-      <div class="why-feature">
-        <div class="why-icon">
-          <svg viewBox="0 0 24 24">
-            <path d="M5 12h14"></path>
-            <path d="M12 5v14"></path>
-            <circle cx="12" cy="12" r="9"></circle>
-          </svg>
-        </div>
-        <div class="why-content">
-          <h3>Student friendly</h3>
-          <p>Budget filters and local recommendations help hostel students and workers choose faster.</p>
-        </div>
+
+<div class="why-content">
+        <h3>Menu before visit</h3>
+        <p>Users can check today’s available food before going to the mess or calling the owner.</p>
       </div>
     </div>
-  </section>
 
-  <footer class="footer">
-    © 2026 Meal Buzz
-  </footer>
-
-  <nav class="bottom-nav">
-    <a href="#home" class="nav-item active">
-      <span class="nav-icon">
+    <div class="why-feature">
+      <div class="why-icon">
         <svg viewBox="0 0 24 24">
-          <path d="M3 10.5L12 3l9 7.5"></path>
-          <path d="M5 9.5V21h14V9.5"></path>
+          <circle cx="11" cy="11" r="6"></circle>
+          <path d="M20 20l-4.2-4.2"></path>
         </svg>
-      </span>
-      Home
-    </a>
+      </div>
+      <div class="why-content">
+        <h3>Search made easy</h3>
+        <p>Search by mess name or food item like paneer, bhakri, rice or thali in a cleaner way.</p>
+      </div>
+    </div>
 
-    <a href="#nearbySection" class="nav-item">
-      <span class="nav-icon">
+    <div class="why-feature">
+      <div class="why-icon">
         <svg viewBox="0 0 24 24">
-          <path d="M12 21s-6-5.2-6-11a6 6 0 1 1 12 0c0 5.8-6 11-6 11z"></path>
-          <circle cx="12" cy="10" r="2.5"></circle>
+          <path d="M5 12h14"></path>
+          <path d="M12 5v14"></path>
+          <circle cx="12" cy="12" r="9"></circle>
         </svg>
-      </span>
-      Nearby
-    </a>
+      </div>
+      <div class="why-content">
+        <h3>Student friendly</h3>
+        <p>Budget filters and local recommendations help hostel students and workers choose faster.</p>
+      </div>
+    </div>
+  </div>
+</section>
 
-    <a href="special.html" class="nav-item">
-      <span class="nav-icon">
-        <svg viewBox="0 0 24 24">
-          <path d="M12 3l2.8 5.7 6.2.9-4.5 4.4 1 6.2L12 17.2 6.5 20.2l1-6.2L3 9.6l6.2-.9z"></path>
-        </svg>
-      </span>
-      Special
-    </a>
+<footer class="footer">
+  © 2026 Meal Buzz
+</footer>
 
-    <a href="profile.html" class="nav-item">
-      <span class="nav-icon">
-        <svg viewBox="0 0 24 24">
-          <circle cx="12" cy="8" r="4"></circle>
-          <path d="M4 21c1.8-4 5-6 8-6s6.2 2 8 6"></path>
-        </svg>
-      </span>
-      Profile
-    </a>
-  </nav>
+<nav class="bottom-nav">
+  <a href="#home" class="nav-item active">
+    <span class="nav-icon">
+      <svg viewBox="0 0 24 24">
+        <path d="M3 10.5L12 3l9 7.5"></path>
+        <path d="M5 9.5V21h14V9.5"></path>
+      </svg>
+    </span>
+    Home
+  </a>
 
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <script>
-    const SUPABASE_URL = "https://iinvhwsbnvmcujyrzlxe.supabase.co";
-    const SUPABASE_KEY = "sb_publishable_fwhxfVqWpDrro8hkQbQQRA_1crMexZv";
-    const sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+  <a href="#nearbySection" class="nav-item">
+    <span class="nav-icon">
+      <svg viewBox="0 0 24 24">
+        <path d="M12 21s-6-5.2-6-11a6 6 0 1 1 12 0c0 5.8-6 11-6 11z"></path>
+        <circle cx="12" cy="10" r="2.5"></circle>
+      </svg>
+    </span>
+    Nearby
+  </a>
 
-    function changeLanguage(lang) {
-      const title = document.getElementById("title");
-      const desc = document.getElementById("desc");
+  <a href="special.html" class="nav-item">
+    <span class="nav-icon">
+      <svg viewBox="0 0 24 24">
+        <path d="M12 3l2.8 5.7 6.2.9-4.5 4.4 1 6.2L12 17.2 6.5 20.2l1-6.2L3 9.6l6.2-.9z"></path>
+      </svg>
+    </span>
+    Special
+  </a>
 
-      if (lang === "en") {
-        title.innerHTML = `Discover <span class="accent">today’s nearby meals</span> with style`;
-        desc.innerText = "Search nearby mess names, today’s menu preview, prices and top choices in one clean place designed for students and workers.";
-      }
+  <a href="profile.html" class="nav-item">
+    <span class="nav-icon">
+      <svg viewBox="0 0 24 24">
+        <circle cx="12" cy="8" r="4"></circle>
+        <path d="M4 21c1.8-4 5-6 8-6s6.2 2 8 6"></path>
+      </svg>
+    </span>
+    Profile
+  </a>
+</nav>
 
-      if (lang === "mr") {
-        title.innerHTML = `आजच्या <span class="accent">जवळच्या जेवणाच्या</span> पर्यायांचा शोध घ्या`;
-        desc.innerText = "जवळच्या मेसची नावे, आजचा मेनू, किंमत आणि चांगले पर्याय एकाच ठिकाणी सहज पाहा.";
-      }
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+  const SUPABASE_URL = "https://iinvhwsbnvmcujyrzlxe.supabase.co";
+  const SUPABASE_KEY = "sb_publishable_fwhxfVqWpDrro8hkQbQQRA_1crMexZv";
+  const sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
-      if (lang === "hi") {
-        title.innerHTML = `आज के <span class="accent">पास के खाने के</span> विकल्प खोजें`;
-        desc.innerText = "पास की मेस के नाम, आज का मेनू, कीमत और अच्छे विकल्प एक ही जगह आसानी से देखें।";
-      }
+  function changeLanguage(lang) {
+    const title = document.getElementById("title");
+    const desc = document.getElementById("desc");
+
+    if (lang === "en") {
+      title.innerHTML = `Discover <span class="accent">today’s nearby meals</span> with style`;
+      desc.innerText = "Search nearby mess names, today’s menu preview, prices and top choices in one clean place designed for students and workers.";
     }
 
-    function goToMeals(searchText) {
-      const searchValue = searchText || document.getElementById("searchInput").value.trim();
-      window.location.href = "meals.html?search=" + encodeURIComponent(searchValue);
+    if (lang === "mr") {
+      title.innerHTML = `आजच्या <span class="accent">जवळच्या जेवणाच्या</span> पर्यायांचा शोध घ्या`;
+      desc.innerText = "जवळच्या मेसची नावे, आजचा मेनू, किंमत आणि चांगले पर्याय एकाच ठिकाणी सहज पाहा.";
     }
 
-    async function showSuggestions(value) {
-      const box = document.getElementById("suggestionsBox");
+    if (lang === "hi") {
+      title.innerHTML = `आज के <span class="accent">पास के खाने के</span> विकल्प खोजें`;
+      desc.innerText = "पास की मेस के नाम, आज का मेनू, कीमत और अच्छे विकल्प एक ही जगह आसानी से देखें।";
+    }
+  }
 
-      if (!value.trim()) {
-        box.innerHTML = "";
-        box.style.display = "none";
-        return;
-      }
+  function goToMeals(searchText) {
+    const searchValue = searchText || document.getElementById("searchInput").value.trim();
+    window.location.href = "meals.html?search=" + encodeURIComponent(searchValue);
+  }
 
-      const { data } = await sb
-        .from("mess")
-        .select("name")
-        .ilike("name", `%${value}%`)
-        .limit(5);
+  async function showSuggestions(value) {
+    const box = document.getElementById("suggestionsBox");
 
-      if (!data || data.length === 0) {
-        box.innerHTML = "";
-        box.style.display = "none";
-        return;
-      }
-
-      box.innerHTML = data.map(m =>
-        `<div onclick="openMess('${String(m.name).replace(/'/g, "\\'")}')">${m.name}</div>`
-      ).join("");
-
-      box.style.display = "block";
+    if (!value.trim()) {
+      box.innerHTML = "";
+      box.style.display = "none";
+      return;
     }
 
-    function openMess(name) {
-      window.location.href = "mess.html?search=" + encodeURIComponent(name);
+    const { data } = await sb
+      .from("mess")
+      .select("name")
+      .ilike("name", `%${value}%`)
+      .limit(5);
+
+    if (!data || data.length === 0) {
+      box.innerHTML = "";
+      box.style.display = "none";
+      return;
     }
 
-    document.addEventListener("click", function(e) {
-      const searchWrap = document.querySelector(".search-box-wrap");
-      const box = document.getElementById("suggestionsBox");
-      if (searchWrap && !searchWrap.contains(e.target)) {
-        box.style.display = "none";
-      }
+    box.innerHTML = data.map(m =>
+      `<div onclick="openMess('${String(m.name).replace(/'/g, "\\'")}')">${m.name}</div>`
+    ).join("");
+
+    box.style.display = "block";
+  }
+
+  function openMess(name) {
+    window.location.href = "mess.html?search=" + encodeURIComponent(name);
+  }
+
+  document.addEventListener("click", function(e) {
+    const searchWrap = document.querySelector(".search-box-wrap");
+    const box = document.getElementById("suggestionsBox");
+    if (searchWrap && !searchWrap.contains(e.target)) {
+      box.style.display = "none";
+    }
+  });
+
+  function applyFilter(type, element) {
+    document.querySelectorAll(".category-chip").forEach(chip => chip.classList.remove("active"));
+    element.classList.add("active");
+
+    const cards = document.querySelectorAll(".recommend-card");
+
+    cards.forEach(card => {
+      const cardType = card.dataset.type;
+      const price = Number(card.dataset.price);
+      const rating = Number(card.dataset.rating);
+
+      let show = false;
+
+      if (type === "veg") show = cardType === "veg";
+      if (type === "nonveg") show = cardType === "nonveg";
+      if (type === "budget") show = price <= 100;
+      if (type === "toprated") show = rating >= 4.4;
+
+      card.style.display = show ? "block" : "none";
     });
+  }
 
-    function applyFilter(type, element) {
-      document.querySelectorAll(".category-chip").forEach(chip => chip.classList.remove("active"));
-      element.classList.add("active");
+  function getLocation() {
+    const result = document.getElementById("locationResult");
 
-      const cards = document.querySelectorAll(".recommend-card");
-
-      cards.forEach(card => {
-        const cardType = card.dataset.type;
-        const price = Number(card.dataset.price);
-        const rating = Number(card.dataset.rating);
-
-        let show = false;
-
-        if (type === "veg") show = cardType === "veg";
-        if (type === "nonveg") show = cardType === "nonveg";
-        if (type === "budget") show = price <= 100;
-        if (type === "toprated") show = rating >= 4.4;
-
-        card.style.display = show ? "block" : "none";
-      });
+    if (!navigator.geolocation) {
+      result.innerHTML = "Location not supported on this device.";
+      return;
     }
 
-    function getLocation() {
-      const result = document.getElementById("locationResult");
+    result.innerHTML = "Getting location...";
 
-      if (!navigator.geolocation) {
-        result.innerHTML = "Location not supported on this device.";
-        return;
+    navigator.geolocation.getCurrentPosition(
+      function(position) {
+        const lat = position.coords.latitude;
+        const lon = position.coords.longitude;
+
+        localStorage.setItem("userLat", lat);
+        localStorage.setItem("userLon", lon);
+
+        result.innerHTML = "📍 Location detected";
+        loadNearbyMesses(lat, lon);
+      },
+      function() {
+        result.innerHTML = "Location permission denied. You can still search manually.";
       }
+    );
+  }
 
-      result.innerHTML = "Getting location...";
+  async function loadNearbyMesses(userLat, userLon) {
+    const { data, error } = await sb.from("mess").select("*");
 
-      navigator.geolocation.getCurrentPosition(
-        function(position) {
-          const lat = position.coords.latitude;
-          const lon = position.coords.longitude;
-
-          localStorage.setItem("userLat", lat);
-          localStorage.setItem("userLon", lon);
-
-          result.innerHTML = "📍 Location detected";
-          loadNearbyMesses(lat, lon);
-        },
-        function() {
-          result.innerHTML = "Location permission denied. You can still search manually.";
-        }
-      );
+    if (error) {
+      console.log("MESS ERROR", error);
+      return;
     }
 
-    async function loadNearbyMesses(userLat, userLon) {
-      const { data, error } = await sb.from("mess").select("*");
+    const list = document.getElementById("nearbyMessList");
+    const section = document.getElementById("nearbySection");
+    const empty = document.getElementById("nearbyEmpty");
 
-      if (error) {
-        console.log("MESS ERROR", error);
-        return;
-      }
+    if (!list || !section || !empty) return;
 
-      const list = document.getElementById("nearbyMessList");
-      const section = document.getElementById("nearbySection");
-      const empty = document.getElementById("nearbyEmpty");
+    list.innerHTML = "";
 
-      if (!list || !section || !empty) return;
-
-      list.innerHTML = "";
-
-      if (!data || data.length === 0) {
-        section.style.display = "block";
-        empty.style.display = "block";
-        return;
-      }
-
-      let found = false;
-
-      data.forEach(mess => {
-        const messLat = Number(mess.latitude);
-        const messLon = Number(mess.longitude);
-
-        if (isNaN(messLat) || isNaN(messLon)) return;
-
-        const distance = getDistance(userLat, userLon, messLat, messLon);
-
-        if (distance < 1000) {
-          found = true;
-
-          const card = document.createElement("a");
-          card.className = "nearby-card";
-          card.href = `meals.html?search=${encodeURIComponent(mess.name || "")}`;
-          card.innerHTML = `
-            <img src="${mess.image_url || 'thali.jpg'}" alt="${mess.name || 'Mess'}">
-            <div class="nearby-info">
-              <div class="nearby-name">${mess.name || "Mess"}</div>
-              <div class="nearby-meta">
-                <span class="meta-badge">₹${mess.price || 'N/A'}</span>
-                <span class="meta-badge">${distance.toFixed(1)} km</span>
-                <span class="meta-badge rating-badge">⭐ ${mess.rating || "4.0"}</span>
-              </div>
-            </div>
-          `;
-          list.appendChild(card);
-        }
-      });
-
+    if (!data || data.length === 0) {
       section.style.display = "block";
-      empty.style.display = found ? "none" : "block";
+      empty.style.display = "block";
+      return;
     }
 
-    function getDistance(lat1, lon1, lat2, lon2) {
-      const R = 6371;
-      const dLat = (lat2 - lat1) * Math.PI / 180;
-      const dLon = (lon2 - lon1) * Math.PI / 180;
+    let found = false;
 
-      const a =
-        Math.sin(dLat / 2) * Math.sin(dLat / 2) +
-        Math.cos(lat1 * Math.PI / 180) *
-        Math.cos(lat2 * Math.PI / 180) *
-        Math.sin(dLon / 2) * Math.sin(dLon / 2);
+    data.forEach(mess => {
+      const messLat = Number(mess.latitude);
+      const messLon = Number(mess.longitude);
 
-      const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-      return R * c;
-    }
+      if (isNaN(messLat) || isNaN(messLon)) return;
 
-    document.addEventListener("DOMContentLoaded", function() {
-      const currentPath = window.location.pathname.split("/").pop() || "index.html";
-      const navItems = document.querySelectorAll(".bottom-nav .nav-item");
+      const distance = getDistance(userLat, userLon, messLat, messLon);
 
-      navItems.forEach(item => item.classList.remove("active"));
+      if (distance < 1000) {
+        found = true;
 
-      navItems.forEach(item => {
-        const href = item.getAttribute("href") || "";
-        if ((currentPath === "index.html" || currentPath === "") && href === "#home") {
-          item.classList.add("active");
-        }
-      });
+        const card = document.createElement("a");
+        card.className = "nearby-card";
+        card.href = `meals.html?search=${encodeURIComponent(mess.name || "")}`;
+        card.innerHTML = `
+          <img src="${mess.image_url || 'thali.jpg'}" alt="${mess.name || 'Mess'}">
+          <div class="nearby-info">
+            <div class="nearby-name">${mess.name || "Mess"}</div>
+            <div class="nearby-meta">
+              <span class="meta-badge">₹${mess.price || 'N/A'}</span>
+              <span class="meta-badge">${distance.toFixed(1)} km</span>
+              <span class="meta-badge rating-badge">⭐ ${mess.rating || "4.0"}</span>
+            </div>
+          </div>
+        `;
+        list.appendChild(card);
+      }
     });
-  </script>
+
+    section.style.display = "block";
+    empty.style.display = found ? "none" : "block";
+  }
+
+  function getDistance(lat1, lon1, lat2, lon2) {
+    const R = 6371;
+    const dLat = (lat2 - lat1) * Math.PI / 180;
+    const dLon = (lon2 - lon1) * Math.PI / 180;
+
+    const a =
+      Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+      Math.cos(lat1 * Math.PI / 180) *
+      Math.cos(lat2 * Math.PI / 180) *
+      Math.sin(dLon / 2) * Math.sin(dLon / 2);
+
+    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+    return R * c;
+  }
+
+  document.addEventListener("DOMContentLoaded", function() {
+    const currentPath = window.location.pathname.split("/").pop() || "index.html";
+    const navItems = document.querySelectorAll(".bottom-nav .nav-item");
+
+    navItems.forEach(item => item.classList.remove("active"));
+
+    navItems.forEach(item => {
+      const href = item.getAttribute("href") || "";
+      if ((currentPath === "index.html" || currentPath === "") && href === "#home") {
+        item.classList.add("active");
+      }
+    });
+  });
+</script>
 </body>
 </html>
 
-
-     
