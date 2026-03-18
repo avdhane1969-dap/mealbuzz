@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Meal Buzz Special</title>
+  <link rel="icon" href="favicon.png" type="image/png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Poppins:wght@700;800&display=swap" rel="stylesheet">
+
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box}
+    :root{
+      --text:#f5f7fb;
+      --muted:#b9c0cc;
+      --accent:#ff8a00;
+      --accent2:#ffb347;
+      --card:rgba(23,27,36,0.72);
+      --line:rgba(255,255,255,0.10);
+      --shadow:0 14px 30px rgba(0,0,0,0.24);
+    }
+
+    body{
+      font-family:'Inter',sans-serif;
+      color:var(--text);
+      background:
+        radial-gradient(circle at top right, rgba(255,138,0,0.10), transparent 22%),
+        radial-gradient(circle at top left, rgba(255,255,255,0.04), transparent 18%),
+        linear-gradient(180deg,#0b0d12 0%, #141925 100%);
+      min-height:100vh;
+      padding-bottom:90px;
+    }
+
+    a{text-decoration:none;color:inherit}
+    img{display:block;max-width:100%}
+
+    .topbar{
+      position:sticky;
+      top:0;
+      z-index:1000;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      padding:16px;
+      background:rgba(11,13,18,0.82);
+      backdrop-filter:blur(12px);
+      border-bottom:1px solid rgba(255,255,255,0.06);
+    }
+
+    .topbar-left{
+      display:flex;
+      align-items:center;
+      gap:12px;
+    }
+
+    .back-btn{
+      width:42px;
+      height:42px;
+      border-radius:14px;
+      border:1px solid rgba(255,255,255,0.08);
+      background:rgba(255,255,255,0.05);
+      color:#fff;
+      font-size:20px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+    }
+
+    .topbar h1{
+      font-family:'Poppins',sans-serif;
+      font-size:24px;
+      background:linear-gradient(90deg,#ffffff 0%, #ffdcb3 35%, #ffb347 62%, #ff8a00 100%);
+      -webkit-background-clip:text;
+      -webkit-text-fill-color:transparent;
+      background-clip:text;
+    }
+
+    .section{padding:18px 16px}
+
+    .hero-card{
+      background:var(--card);
+      border:1px solid var(--line);
+      border-radius:26px;
+      overflow:hidden;
+      box-shadow:var(--shadow);
+    }
+
+    .hero-card img{
+      width:100%;
+      height:230px;
+      object-fit:cover;
+    }
+
+    .hero-body{
+      padding:18px;
+    }
+
+    .hero-badge{
+      display:inline-block;
+      padding:8px 12px;
+      border-radius:999px;
+      background:linear-gradient(90deg,var(--accent),var(--accent2));
+      color:#111;
+      font-weight:800;
+      font-size:12px;
+      margin-bottom:12px;
+    }
+
+    .hero-title{
+      font-family:'Poppins',sans-serif;
+      font-size:28px;
+      line-height:1.15;
+      margin-bottom:10px;
+    }
+
+    .hero-text{
+      color:var(--muted);
+      font-size:14px;
+      line-height:1.7;
+    }
+
+    .section-title{
+      font-family:'Poppins',sans-serif;
+      font-size:23px;
+      margin-bottom:8px;
+    }
+
+    .section-subtitle{
+      color:var(--muted);
+      font-size:14px;
+      line-height:1.7;
+      margin-bottom:16px;
+    }
+
+    .grid{
+      display:grid;
+      gap:14px;
+    }
+
+    .special-card{
+      background:var(--card);
+      border:1px solid var(--line);
+      border-radius:22px;
+      overflow:hidden;
+      box-shadow:var(--shadow);
+    }
+
+    .special-card img{
+      width:100%;
+      height:180px;
+      object-fit:cover;
+    }
+
+    .special-content{
+      padding:14px;
+    }
+
+    .special-name{
+      font-size:19px;
+      font-weight:800;
+      margin-bottom:8px;
+    }
+
+    .special-meta{
+      display:flex;
+      flex-wrap:wrap;
+      gap:8px;
+      margin-bottom:10px;
+    }
+
+    .badge{
+      font-size:12px;
+      padding:6px 10px;
+      border-radius:999px;
+      background:rgba(255,255,255,0.05);
+      border:1px solid rgba(255,255,255,0.08);
+      color:var(--muted);
+    }
+
+    .special-desc{
+      color:var(--muted);
+      font-size:14px;
+      line-height:1.7;
+    }
+
+    .why-grid{
+      display:grid;
+      gap:14px;
+    }
+
+    .why-card{
+      background:var(--card);
+      border:1px solid var(--line);
+      border-radius:20px;
+      padding:18px;
+      box-shadow:var(--shadow);
+    }
+
+    .why-card h3{
+      color:#ffbe63;
+      font-size:18px;
+      margin-bottom:8px;
+      font-family:'Poppins',sans-serif;
+    }
+
+    .why-card p{
+      color:var(--muted);
+      font-size:14px;
+      line-height:1.75;
+    }
+
+    .bottom-nav{
+      position:fixed;
+      left:12px;
+      right:12px;
+      bottom:12px;
+      z-index:999;
+      display:grid;
+      grid-template-columns:repeat(4,1fr);
+      gap:8px;
+      padding:10px 12px;
+      background:rgba(18,22,31,0.88);
+      border:1px solid rgba(255,255,255,0.08);
+      border-radius:24px;
+      backdrop-filter:blur(16px);
+      box-shadow:0 18px 34px rgba(0,0,0,0.26);
+    }
+
+    .nav-item{
+      text-align:center;
+      color:#d7deea;
+      font-size:12px;
+      font-weight:600;
+      padding:6px 2px;
+    }
+
+    .nav-item span{
+      display:block;
+      font-size:19px;
+      margin-bottom:5px;
+    }
+
+    .nav-item.active{color:#ffb347}
+
+    @media (min-width:768px){
+      .grid{grid-template-columns:repeat(2,1fr)}
+      .why-grid{grid-template-columns:repeat(2,1fr)}
+    }
+  </style>
+</head>
+<body>
+
+  <header class="topbar">
+    <div class="topbar-left">
+      <a href="index.html" class="back-btn">‹</a>
+      <h1>Meal Buzz Special</h1>
+    </div>
+  </header>
+
+  <section class="section">
+    <div class="hero-card">
+      <img src="thali.jpg" alt="Special meal">
+      <div class="hero-body">
+        <div class="hero-badge">SPECIAL PICKS</div>
+        <div class="hero-title">Best local meals worth trying today</div>
+        <div class="hero-text">
+          Handpicked mess options, top-rated plates, and standout meals that make Meal Buzz special.
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <h2 class="section-title">Top picks</h2>
+    <p class="section-subtitle">Meals and messes users may want to try first</p>
+
+    <div class="grid">
+      <div class="special-card">
+        <img src="thali.jpg" alt="Special thali">
+        <div class="special-content">
+          <div class="special-name">Maharaja Veg Thali</div>
+          <div class="special-meta">
+            <span class="badge">₹120</span>
+            <span class="badge">⭐ 4.6</span>
+            <span class="badge">Top Rated</span>
+          </div>
+          <div class="special-desc">Complete veg meal with sabzi, dal, rice, chapati and homestyle taste.</div>
+        </div>
+      </div>
+
+      <div class="special-card">
+        <img src="thali.jpg" alt="Chicken special">
+        <div class="special-content">
+          <div class="special-name">Chicken Special Meal</div>
+          <div class="special-meta">
+            <span class="badge">₹150</span>
+            <span class="badge">⭐ 4.5</span>
+            <span class="badge">Popular</span>
+          </div>
+          <div class="special-desc">Good non-veg option for lunch and dinner with filling quantity and rich taste.</div>
+        </div>
+      </div>
+
+      <div class="special-card">
+        <img src="thali.jpg" alt="Budget combo">
+        <div class="special-content">
+          <div class="special-name">Budget Student Combo</div>
+          <div class="special-meta">
+            <span class="badge">₹80</span>
+            <span class="badge">Budget</span>
+            <span class="badge">Fast moving</span>
+          </div>
+          <div class="special-desc">Affordable meal combo made for students who want simple and pocket-friendly food.</div>
+        </div>
+      </div>
+
+      <div class="special-card">
+        <img src="thali.jpg" alt="Paneer plate">
+        <div class="special-content">
+          <div class="special-name">Paneer Plate</div>
+          <div class="special-meta">
+            <span class="badge">₹110</span>
+            <span class="badge">Veg</span>
+            <span class="badge">User favorite</span>
+          </div>
+          <div class="special-desc">A flavorful paneer option for users searching something tasty but still homestyle.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <h2 class="section-title">Why Meal Buzz special?</h2>
+    <p class="section-subtitle">What makes this idea different and useful</p>
+
+    <div class="why-grid">
+      <div class="why-card">
+        <h3>Nearby first</h3>
+        <p>Users can quickly find messes close to them instead of searching randomly.</p>
+      </div>
+
+      <div class="why-card">
+        <h3>Daily relevance</h3>
+        <p>The app is useful every day because meal choices change daily and users want current options.</p>
+      </div>
+
+      <div class="why-card">
+        <h3>Student friendly</h3>
+        <p>Budget filters and local recommendations make it more practical for hostel and PG users.</p>
+      </div>
+
+      <div class="why-card">
+        <h3>Local trust</h3>
+        <p>It helps small mess owners get discovered and helps users choose with more confidence.</p>
+      </div>
+    </div>
+  </section>
+
+  <nav class="bottom-nav">
+    <a href="index.html" class="nav-item"><span>🏠</span>Home</a>
+    <a href="index.html#nearbySection" class="nav-item"><span>📍</span>Nearby</a>
+    <a href="special.html" class="nav-item active"><span>⭐</span>Special</a>
+    <a href="profile.html" class="nav-item"><span>👤</span>Profile</a>
+  </nav>
+
+</body>
+</html>
