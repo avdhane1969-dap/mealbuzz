@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Meal Buzz Profile</title>
+  <link rel="icon" href="favicon.png" type="image/png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Poppins:wght@700;800&display=swap" rel="stylesheet">
+
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box}
+    :root{
+      --text:#f5f7fb;
+      --muted:#b9c0cc;
+      --accent:#ff8a00;
+      --accent2:#ffb347;
+      --card:rgba(23,27,36,0.72);
+      --line:rgba(255,255,255,0.10);
+      --shadow:0 14px 30px rgba(0,0,0,0.24);
+    }
+
+    body{
+      font-family:'Inter',sans-serif;
+      color:var(--text);
+      background:
+        radial-gradient(circle at top right, rgba(255,138,0,0.10), transparent 22%),
+        radial-gradient(circle at top left, rgba(255,255,255,0.04), transparent 18%),
+        linear-gradient(180deg,#0b0d12 0%, #141925 100%);
+      min-height:100vh;
+      padding-bottom:90px;
+    }
+
+    a{text-decoration:none;color:inherit}
+
+    .topbar{
+      position:sticky;
+      top:0;
+      z-index:1000;
+      display:flex;
+      align-items:center;
+      gap:12px;
+      padding:16px;
+      background:rgba(11,13,18,0.82);
+      backdrop-filter:blur(12px);
+      border-bottom:1px solid rgba(255,255,255,0.06);
+    }
+
+    .back-btn{
+      width:42px;
+      height:42px;
+      border-radius:14px;
+      border:1px solid rgba(255,255,255,0.08);
+      background:rgba(255,255,255,0.05);
+      color:#fff;
+      font-size:20px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+    }
+
+    .topbar h1{
+      font-family:'Poppins',sans-serif;
+      font-size:24px;
+      background:linear-gradient(90deg,#ffffff 0%, #ffdcb3 35%, #ffb347 62%, #ff8a00 100%);
+      -webkit-background-clip:text;
+      -webkit-text-fill-color:transparent;
+      background-clip:text;
+    }
+
+    .section{padding:18px 16px}
+
+    .profile-card{
+      background:var(--card);
+      border:1px solid var(--line);
+      border-radius:26px;
+      padding:24px 18px;
+      box-shadow:var(--shadow);
+      text-align:center;
+    }
+
+    .avatar{
+      width:92px;
+      height:92px;
+      margin:0 auto 14px;
+      border-radius:50%;
+      background:linear-gradient(135deg,var(--accent),var(--accent2));
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-size:38px;
+      color:#111;
+      font-weight:800;
+    }
+
+    .profile-title{
+      font-family:'Poppins',sans-serif;
+      font-size:28px;
+      margin-bottom:8px;
+    }
+
+    .profile-subtitle{
+      color:var(--muted);
+      font-size:14px;
+      line-height:1.7;
+    }
+
+    .grid{
+      display:grid;
+      gap:16px;
+      margin-top:18px;
+    }
+
+    .action-card{
+      background:var(--card);
+      border:1px solid var(--line);
+      border-radius:22px;
+      padding:20px 18px;
+      box-shadow:var(--shadow);
+    }
+
+    .action-card h3{
+      font-family:'Poppins',sans-serif;
+      font-size:20px;
+      margin-bottom:8px;
+    }
+
+    .action-card p{
+      color:var(--muted);
+      font-size:14px;
+      line-height:1.7;
+      margin-bottom:16px;
+    }
+
+    .action-btn{
+      display:inline-block;
+      width:100%;
+      text-align:center;
+      padding:14px;
+      border-radius:16px;
+      font-size:15px;
+      font-weight:800;
+    }
+
+    .login-btn{
+      background:linear-gradient(90deg,var(--accent),var(--accent2));
+      color:#fff;
+      box-shadow:0 12px 24px rgba(255,138,0,0.18);
+    }
+
+    .register-btn{
+      background:rgba(255,255,255,0.05);
+      border:1px solid rgba(255,255,255,0.08);
+      color:#fff;
+    }
+
+    .info-list{
+      display:grid;
+      gap:12px;
+      margin-top:18px;
+    }
+
+    .info-item{
+      background:var(--card);
+      border:1px solid var(--line);
+      border-radius:18px;
+      padding:16px;
+      color:var(--muted);
+      font-size:14px;
+      line-height:1.7;
+      box-shadow:var(--shadow);
+    }
+
+    .bottom-nav{
+      position:fixed;
+      left:12px;
+      right:12px;
+      bottom:12px;
+      z-index:999;
+      display:grid;
+      grid-template-columns:repeat(4,1fr);
+      gap:8px;
+      padding:10px 12px;
+      background:rgba(18,22,31,0.88);
+      border:1px solid rgba(255,255,255,0.08);
+      border-radius:24px;
+      backdrop-filter:blur(16px);
+      box-shadow:0 18px 34px rgba(0,0,0,0.26);
+    }
+
+    .nav-item{
+      text-align:center;
+      color:#d7deea;
+      font-size:12px;
+      font-weight:600;
+      padding:6px 2px;
+    }
+
+    .nav-item span{
+      display:block;
+      font-size:19px;
+      margin-bottom:5px;
+    }
+
+    .nav-item.active{color:#ffb347}
+
+    @media (min-width:768px){
+      .grid{grid-template-columns:repeat(2,1fr)}
+    }
+  </style>
+</head>
+<body>
+
+  <header class="topbar">
+    <a href="index.html" class="back-btn">‹</a>
+    <h1>Profile</h1>
+  </header>
+
+  <section class="section">
+    <div class="profile-card">
+      <div class="avatar">👤</div>
+      <div class="profile-title">Meal Buzz Profile</div>
+      <div class="profile-subtitle">
+        Mess owners can login, and new mess owners can register their mess here.
+      </div>
+    </div>
+
+    <div class="grid">
+      <div class="action-card">
+        <h3>Mess Owner Login</h3>
+        <p>Already registered? Login here to manage your mess profile, menu, and updates.</p>
+        <a href="owner.html" class="action-btn login-btn">Open Login</a>
+      </div>
+
+      <div class="action-card">
+        <h3>New Registration</h3>
+        <p>New mess owner? Register your mess on Meal Buzz and get discovered by nearby users.</p>
+        <a href="register.html" class="action-btn register-btn">Open Registration</a>
+      </div>
+    </div>
+
+    <div class="info-list">
+      <div class="info-item">
+        Add your mess details, menu, location and pricing so users can easily discover you.
+      </div>
+      <div class="info-item">
+        Meal Buzz is focused on helping local users find useful, nearby and affordable meal options.
+      </div>
+    </div>
+  </section>
+
+  <nav class="bottom-nav">
+    <a href="index.html" class="nav-item"><span>🏠</span>Home</a>
+    <a href="index.html#nearbySection" class="nav-item"><span>📍</span>Nearby</a>
+    <a href="special.html" class="nav-item"><span>⭐</span>Special</a>
+    <a href="profile.html" class="nav-item active"><span>👤</span>Profile</a>
+  </nav>
+
+</body>
+</html>
