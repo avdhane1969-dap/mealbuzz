@@ -1,0 +1,1150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Meal Buzz</title>
+  <link rel="icon" href="favicon.png" type="image/png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Poppins:wght@700;800&display=swap" rel="stylesheet">
+
+  <style>
+    *{
+      margin:0;
+      padding:0;
+      box-sizing:border-box;
+    }
+
+    :root{
+      --bg:#0b0d12;
+      --bg2:#141925;
+      --card:rgba(23,27,36,0.74);
+      --card-2:rgba(18,22,31,0.88);
+      --soft:rgba(255,255,255,0.06);
+      --line:rgba(255,255,255,0.10);
+      --text:#f5f7fb;
+      --muted:#b9c0cc;
+      --accent:#ff8a00;
+      --accent2:#ffb347;
+      --green:#27c26c;
+      --shadow:0 14px 30px rgba(0,0,0,0.24);
+      --shadow-strong:0 22px 44px rgba(0,0,0,0.30);
+    }
+
+    html{
+      scroll-behavior:smooth;
+    }
+
+    body{
+      font-family:'Inter', Arial, sans-serif;
+      color:var(--text);
+      background:
+        radial-gradient(circle at top right, rgba(255,138,0,0.10), transparent 22%),
+        radial-gradient(circle at top left, rgba(255,255,255,0.04), transparent 16%),
+        linear-gradient(180deg, #0b0d12 0%, #141925 100%);
+      min-height:100vh;
+      padding-bottom:100px;
+    }
+
+    a{
+      text-decoration:none;
+      color:inherit;
+    }
+
+    button{
+      border:none;
+      cursor:pointer;
+      font-family:inherit;
+      background:none;
+    }
+
+    img{
+      display:block;
+      max-width:100%;
+    }
+
+    .topbar{
+      position:sticky;
+      top:0;
+      z-index:1000;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:12px;
+      padding:16px;
+      background:rgba(11,13,18,0.84);
+      backdrop-filter:blur(14px);
+      border-bottom:1px solid rgba(255,255,255,0.06);
+    }
+
+    .brand h1{
+      font-family:'Poppins', sans-serif;
+      font-size:30px;
+      line-height:1;
+      background:linear-gradient(90deg,#ffffff 0%, #ffdcb3 35%, #ffb347 62%, #ff8a00 100%);
+      -webkit-background-clip:text;
+      -webkit-text-fill-color:transparent;
+      background-clip:text;
+    }
+
+    .brand p{
+      color:#d6dde8;
+      font-size:11px;
+      margin-top:6px;
+      letter-spacing:1.7px;
+      text-transform:uppercase;
+      font-weight:700;
+    }
+
+    .language-select{
+      background:rgba(255,255,255,0.05);
+      color:var(--text);
+      border:1px solid rgba(255,255,255,0.08);
+      border-radius:14px;
+      padding:10px 12px;
+      outline:none;
+      font-size:14px;
+    }
+
+    .section{
+      padding:18px 16px;
+    }
+
+    .hero-card{
+      background:
+        radial-gradient(circle at top right, rgba(255,179,71,0.08), transparent 26%),
+        linear-gradient(135deg, rgba(255,255,255,0.04), rgba(255,255,255,0.01)),
+        var(--card);
+      border:1px solid var(--line);
+      border-radius:30px;
+      overflow:hidden;
+      box-shadow:var(--shadow-strong);
+      backdrop-filter:blur(16px);
+      -webkit-backdrop-filter:blur(16px);
+      position:relative;
+      padding:24px 18px 20px;
+    }
+
+    .hero-card::after{
+      content:"";
+      position:absolute;
+      right:-40px;
+      top:-40px;
+      width:180px;
+      height:180px;
+      background:radial-gradient(circle, rgba(255,138,0,0.18), transparent 65%);
+      pointer-events:none;
+    }
+
+    .hero-eyebrow{
+      color:#ffbe63;
+      font-size:13px;
+      font-weight:700;
+      letter-spacing:1px;
+      text-transform:uppercase;
+      margin-bottom:10px;
+      position:relative;
+      z-index:1;
+    }
+
+    .hero-title{
+      font-family:'Poppins', sans-serif;
+      font-size:clamp(30px, 8vw, 48px);
+      line-height:1.08;
+      margin-bottom:12px;
+      max-width:95%;
+      position:relative;
+      z-index:1;
+    }
+
+    .hero-title .accent{
+      color:#ffbe63;
+    }
+
+    .hero-subtitle{
+      color:#dbe2ed;
+      font-size:14px;
+      line-height:1.8;
+      max-width:95%;
+      position:relative;
+      z-index:1;
+    }
+
+    .search-panel{
+      margin-top:16px;
+      background:var(--card);
+      border:1px solid var(--line);
+      border-radius:28px;
+      padding:16px;
+      box-shadow:var(--shadow);
+      backdrop-filter:blur(14px);
+      -webkit-backdrop-filter:blur(14px);
+    }
+
+    .search-row{
+      display:flex;
+      gap:12px;
+      align-items:center;
+    }
+
+    .search-box-wrap{
+      flex:1;
+      display:flex;
+      align-items:center;
+      gap:12px;
+      background:rgba(14,18,26,0.94);
+      border:1px solid rgba(255,255,255,0.08);
+      border-radius:22px;
+      padding:0 16px;
+      min-height:62px;
+      position:relative;
+      box-shadow:inset 0 1px 0 rgba(255,255,255,0.03);
+    }
+
+    .search-icon{
+      width:20px;
+      height:20px;
+      flex-shrink:0;
+      opacity:0.92;
+    }
+
+    .search-icon svg{
+      width:100%;
+      height:100%;
+      stroke:#dfe6f2;
+      fill:none;
+      stroke-width:2.2;
+      stroke-linecap:round;
+      stroke-linejoin:round;
+    }
+
+    .search-box{
+      width:100%;
+      background:transparent;
+      border:none;
+      outline:none;
+      color:#fff;
+      font-size:16px;
+    }
+
+    .search-box::placeholder{
+      color:#8c95a5;
+    }
+
+    #suggestionsBox{
+      position:absolute;
+      top:68px;
+      left:0;
+      right:0;
+      background:#171c27;
+      border:1px solid rgba(255,255,255,0.08);
+      border-radius:18px;
+      overflow:hidden;
+      z-index:999;
+      box-shadow:0 18px 34px rgba(0,0,0,0.30);
+      display:none;
+    }
+
+    #suggestionsBox div{
+      padding:12px 14px;
+      border-bottom:1px solid rgba(255,255,255,0.06);
+      cursor:pointer;
+      color:#fff;
+      font-size:14px;
+    }
+
+    #suggestionsBox div:last-child{
+      border-bottom:none;
+    }
+
+    #suggestionsBox div:hover{
+      background:#232b38;
+    }
+
+    .location-btn{
+      width:62px;
+      height:62px;
+      border-radius:22px;
+      background:
+        linear-gradient(135deg, rgba(255,138,0,0.18), rgba(255,179,71,0.18)),
+        rgba(255,255,255,0.05);
+      border:1px solid rgba(255,179,71,0.24);
+      box-shadow:0 10px 22px rgba(255,138,0,0.14);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      flex-shrink:0;
+    }
+
+    .location-btn svg{
+      width:24px;
+      height:24px;
+      fill:#ffbe63;
+    }
+
+    #locationResult{
+      margin-top:12px;
+      color:#90ee90;
+      font-size:14px;
+      min-height:20px;
+    }
+
+    .category-row{
+      display:grid;
+      grid-template-columns:repeat(4, minmax(0,1fr));
+      gap:10px;
+      margin-top:18px;
+    }
+
+    .category-chip{
+      text-align:center;
+      border:none;
+      background:none;
+    }
+
+    .category-circle{
+      width:72px;
+      height:72px;
+      margin:0 auto 8px;
+      border-radius:50%;
+      padding:4px;
+      box-shadow:0 8px 18px rgba(0,0,0,0.14);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      overflow:hidden;
+    }
+
+    .category-chip[data-filter="veg"] .category-circle{
+      background:#d9c4ff;
+    }
+
+    .category-chip[data-filter="nonveg"] .category-circle{
+      background:#c9ffbf;
+    }
+
+    .category-chip[data-filter="budget"] .category-circle{
+      background:#bfe6ff;
+    }
+
+    .category-chip[data-filter="toprated"] .category-circle{
+      background:#fff4b4;
+    }
+
+    .category-circle img{
+      width:56px;
+      height:56px;
+      border-radius:50%;
+      object-fit:cover;
+    }
+
+    .category-label{
+      font-size:13px;
+      color:#e5ebf5;
+      font-weight:700;
+      line-height:1.3;
+    }
+
+    .category-chip.active .category-label{
+      color:#ffbe63;
+    }
+
+    .section-head{
+      display:flex;
+      align-items:end;
+      justify-content:space-between;
+      gap:10px;
+      margin-bottom:12px;
+    }
+
+    .section-title{
+      font-family:'Poppins', sans-serif;
+      font-size:24px;
+      color:#fff;
+    }
+
+    .section-subtitle{
+      color:var(--muted);
+      font-size:14px;
+      line-height:1.7;
+      margin-bottom:16px;
+    }
+
+    .view-more{
+      color:#ffbe63;
+      font-size:14px;
+      font-weight:700;
+    }
+
+    .recommend-row{
+      display:flex;
+      gap:14px;
+      overflow-x:auto;
+      padding-bottom:4px;
+      scrollbar-width:none;
+    }
+
+    .recommend-row::-webkit-scrollbar{
+      display:none;
+    }
+
+    .recommend-card{
+      flex:0 0 260px;
+      background:var(--card);
+      border:1px solid var(--line);
+      border-radius:24px;
+      overflow:hidden;
+      box-shadow:var(--shadow);
+      backdrop-filter:blur(12px);
+      -webkit-backdrop-filter:blur(12px);
+    }
+
+    .recommend-card img{
+      width:100%;
+      height:165px;
+      object-fit:cover;
+    }
+
+    .recommend-body{
+      padding:14px;
+    }
+
+    .recommend-name{
+      font-size:18px;
+      font-weight:800;
+      margin-bottom:8px;
+    }
+
+    .recommend-meta{
+      color:var(--muted);
+      font-size:14px;
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+    }
+
+    #nearbySection{
+      display:none;
+    }
+
+    .nearby-list{
+      display:grid;
+      gap:14px;
+    }
+
+    .nearby-card{
+      display:flex;
+      align-items:center;
+      gap:12px;
+      background:var(--card);
+      border:1px solid var(--line);
+      border-radius:24px;
+      padding:12px;
+      color:#fff;
+      box-shadow:var(--shadow);
+      backdrop-filter:blur(12px);
+      -webkit-backdrop-filter:blur(12px);
+    }
+
+    .nearby-card img{
+      width:92px;
+      height:92px;
+      border-radius:18px;
+      object-fit:cover;
+      flex-shrink:0;
+    }
+
+    .nearby-info{
+      flex:1;
+      min-width:0;
+    }
+
+    .nearby-name{
+      font-size:18px;
+      font-weight:800;
+      margin-bottom:10px;
+      line-height:1.2;
+    }
+
+    .nearby-meta{
+      display:flex;
+      gap:8px;
+      flex-wrap:wrap;
+    }
+
+    .meta-badge{
+      font-size:12px;
+      padding:7px 10px;
+      border-radius:999px;
+      background:rgba(255,255,255,0.05);
+      border:1px solid rgba(255,255,255,0.08);
+      color:var(--muted);
+    }
+
+    .rating-badge{
+      color:#7df0b0;
+      border-color:rgba(39,194,108,0.28);
+      background:rgba(39,194,108,0.12);
+    }
+
+    .empty-note{
+      background:var(--card);
+      border:1px dashed rgba(255,255,255,0.12);
+      border-radius:18px;
+      padding:16px;
+      color:var(--muted);
+      font-size:14px;
+      line-height:1.7;
+      backdrop-filter:blur(12px);
+      -webkit-backdrop-filter:blur(12px);
+    }
+
+    .why-wrap{
+      display:grid;
+      gap:14px;
+    }
+
+    .why-feature{
+      background:linear-gradient(135deg, rgba(255,255,255,0.04), rgba(255,255,255,0.02));
+      border:1px solid rgba(255,255,255,0.08);
+      border-radius:24px;
+      padding:18px;
+      box-shadow:var(--shadow);
+      display:flex;
+      gap:14px;
+      align-items:flex-start;
+      backdrop-filter:blur(12px);
+      -webkit-backdrop-filter:blur(12px);
+      position:relative;
+      overflow:hidden;
+    }
+
+    .why-feature::before{
+      content:"";
+      position:absolute;
+      inset:0;
+      background:radial-gradient(circle at top right, rgba(255,179,71,0.08), transparent 32%);
+      pointer-events:none;
+    }
+
+    .why-icon{
+      width:48px;
+      height:48px;
+      border-radius:16px;
+      background:linear-gradient(135deg, rgba(255,138,0,0.16), rgba(255,179,71,0.10));
+      border:1px solid rgba(255,179,71,0.18);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      flex-shrink:0;
+      position:relative;
+      z-index:1;
+    }
+
+    .why-icon svg{
+      width:22px;
+      height:22px;
+      stroke:#ffbe63;
+      fill:none;
+      stroke-width:2;
+      stroke-linecap:round;
+      stroke-linejoin:round;
+    }
+
+    .why-content{
+      position:relative;
+      z-index:1;
+    }
+
+    .why-content h3{
+      font-family:'Poppins', sans-serif;
+      font-size:18px;
+      margin-bottom:6px;
+      color:#fff;
+    }
+
+    .why-content p{
+      color:var(--muted);
+      font-size:14px;
+      line-height:1.75;
+    }
+
+    .bottom-nav{
+      position:fixed;
+      left:12px;
+      right:12px;
+      bottom:12px;
+      z-index:999;
+      display:grid;
+      grid-template-columns:repeat(4,1fr);
+      gap:8px;
+      padding:10px 12px;
+      background:rgba(18,22,31,0.92);
+      border:1px solid rgba(255,255,255,0.08);
+      border-radius:26px;
+      backdrop-filter:blur(18px);
+      -webkit-backdrop-filter:blur(18px);
+      box-shadow:0 18px 34px rgba(0,0,0,0.26);
+    }
+
+    .nav-item{
+      text-align:center;
+      color:#d7deea;
+      font-size:12px;
+      font-weight:700;
+      padding:6px 2px;
+    }
+
+    .nav-icon{
+      width:24px;
+      height:24px;
+      margin:0 auto 6px;
+      display:block;
+    }
+
+    .nav-icon svg{
+      width:100%;
+      height:100%;
+      stroke:currentColor;
+      fill:none;
+      stroke-width:2;
+      stroke-linecap:round;
+      stroke-linejoin:round;
+    }
+
+    .nav-item.active{
+      color:#ffbe63;
+    }
+
+    .footer{
+      border-top:1px solid rgba(255,255,255,0.06);
+      margin-top:10px;
+      padding:22px 16px 10px;
+      text-align:center;
+      color:var(--muted);
+      font-size:13px;
+    }
+
+    @media (min-width:768px){
+      .topbar{
+        padding:16px 28px;
+      }
+
+      .section,
+      .footer{
+        padding-left:28px;
+        padding-right:28px;
+      }
+
+      .hero-card{
+        padding:28px 24px 22px;
+      }
+
+      .hero-title{
+        max-width:76%;
+      }
+
+      .hero-subtitle{
+        max-width:72%;
+        font-size:15px;
+      }
+
+      .category-row{
+        grid-template-columns:repeat(4, 110px);
+        justify-content:start;
+      }
+
+      .nearby-list{
+        grid-template-columns:repeat(2,1fr);
+      }
+
+      .why-wrap{
+        grid-template-columns:repeat(2,1fr);
+      }
+    }
+
+    @media (min-width:1100px){
+      .section,
+      .footer{
+        padding-left:48px;
+        padding-right:48px;
+      }
+
+      .nearby-list{
+        grid-template-columns:repeat(2,1fr);
+      }
+    }
+  </style>
+</head>
+<body><script>
+  if (sessionStorage.getItem("fromIntro") !== "yes") {
+    window.location.href = "index.html";
+  } else {
+    sessionStorage.removeItem("fromIntro");
+  }
+</script>
+
+
+  <header class="topbar" id="home">
+    <div class="brand">
+      <h1>Meal Buzz</h1>
+      <p>DISCOVER • DECIDE • DINE</p>
+    </div>
+
+    <select class="language-select" onchange="changeLanguage(this.value)">
+      <option value="en">English</option>
+      <option value="mr">मराठी</option>
+      <option value="hi">हिंदी</option>
+    </select>
+  </header>
+
+  <section class="section">
+    <div class="hero-card">
+      <div class="hero-eyebrow">Daily local discovery</div>
+      <h2 class="hero-title" id="title">
+        Find <span class="accent">Nearby Mess & Tiffin Services</span> Instantly 🍱
+      </h2>
+     <p class="hero-subtitle" id="desc">
+  Find best mess and tiffin services near you with daily menus, prices and top-rated options.
+</p>
+    </div>
+
+    <div class="search-panel">
+      <div class="search-row">
+        <div class="search-box-wrap">
+          <span class="search-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24">
+              <circle cx="11" cy="11" r="7"></circle>
+              <path d="M20 20l-3.5-3.5"></path>
+            </svg>
+          </span>
+
+          <input
+            type="text"
+            id="searchInput"
+            class="search-box"
+            placeholder="Search mess name or menu item"
+            oninput="showSuggestions(this.value)"
+          />
+
+          <div id="suggestionsBox"></div>
+        </div>
+
+        <button class="location-btn" onclick="getLocation()" title="Detect location">
+          <svg viewBox="0 0 24 24">
+            <path d="M12 21s-6-5.2-6-11a6 6 0 1 1 12 0c0 5.8-6 11-6 11z"></path>
+            <circle cx="12" cy="10" r="2.5"></circle>
+          </svg>
+        </button>
+      </div>
+
+      <div id="locationResult"></div>
+
+      <div class="category-row">
+        <button class="category-chip active" data-filter="veg" onclick="applyFilter('veg', this)">
+          <div class="category-circle">
+            <img src="budget.jpg" alt="Veg">
+          </div>
+          <div class="category-label">Veg</div>
+        </button>
+
+        <button class="category-chip" data-filter="nonveg" onclick="applyFilter('nonveg', this)">
+          <div class="category-circle">
+            <img src="nonveg.jpg" alt="Non veg">
+          </div>
+          <div class="category-label">Non-veg</div>
+        </button>
+
+        <button class="category-chip" data-filter="budget" onclick="applyFilter('budget', this)">
+          <div class="category-circle">
+            <img src="veg1.jpg" alt="Budget">
+          </div>
+          <div class="category-label">Budget</div>
+        </button>
+
+        <button class="category-chip" data-filter="toprated" onclick="applyFilter('toprated', this)">
+          <div class="category-circle">
+            <img src="thali2.jpg" alt="Top rated">
+          </div>
+          <div class="category-label">Top Rated</div>
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-head">
+      <div>
+        <h2 class="section-title">Recommended for you</h2>
+      </div>
+    </div>
+    <p class="section-subtitle">Popular meal suggestions inspired by your layout idea</p>
+
+    <div class="recommend-row" id="recommendRow">
+      <div class="recommend-card" data-type="veg" data-price="120" data-rating="4.4">
+        <img src="marathi.jpg" alt="Veg Thali">
+        <div class="recommend-body">
+          <div class="recommend-name">Veg Thali</div>
+          <div class="recommend-meta">
+            <span>₹120</span>
+            <span>0.8 km</span>
+            <span>⭐ 4.4</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="recommend-card" data-type="nonveg" data-price="150" data-rating="4.5">
+        <img src="nonveg.jpg" alt="Chicken Meal">
+        <div class="recommend-body">
+          <div class="recommend-name">Chicken Meal</div>
+          <div class="recommend-meta">
+            <span>₹150</span>
+            <span>1.2 km</span>
+            <span>⭐ 4.5</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="recommend-card" data-type="veg" data-price="80" data-rating="4.2">
+        <img src="budget.jpg" alt="Budget Meal">
+        <div class="recommend-body">
+          <div class="recommend-name">Budget Meal</div>
+          <div class="recommend-meta">
+            <span>₹80</span>
+            <span>0.5 km</span>
+            <span>⭐ 4.2</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="nearbySection" style="display:none;">
+    <div class="section-head">
+      <div>
+        <h2 class="section-title">Nearby Mess</h2>
+      </div>
+      <a href="meals.html" class="view-more">View all</a>
+    </div>
+    <p class="section-subtitle">Based on your current location</p>
+
+    <div id="nearbyMessList" class="nearby-list"></div>
+
+    <div id="nearbyEmpty" class="empty-note" style="display:none;">
+      No nearby mess found yet. More messes will appear here as owners register and add their location.
+    </div>
+  </section>
+
+  <section class="section" id="whySection">
+    <div class="section-head">
+      <div>
+        <h2 class="section-title">Why Meal Buzz?</h2>
+      </div>
+    </div>
+    <p class="section-subtitle">Made for local food discovery that feels simple, fast and useful</p>
+
+    <div class="why-wrap">
+      <div class="why-feature">
+        <div class="why-icon">
+          <svg viewBox="0 0 24 24">
+            <path d="M12 21s-6-5.2-6-11a6 6 0 1 1 12 0c0 5.8-6 11-6 11z"></path>
+            <circle cx="12" cy="10" r="2.5"></circle>
+          </svg>
+        </div>
+        <div class="why-content">
+          <h3>Nearby first</h3>
+          <p>Find local messes around you without wasting time asking around or checking random groups.</p>
+        </div>
+      </div>
+
+
+<div class="why-content">
+        <h3>Menu before visit</h3>
+        <p>Users can check today’s available food before going to the mess or calling the owner.</p>
+      </div>
+    </div>
+
+    <div class="why-feature">
+      <div class="why-icon">
+        <svg viewBox="0 0 24 24">
+          <circle cx="11" cy="11" r="6"></circle>
+          <path d="M20 20l-4.2-4.2"></path>
+        </svg>
+      </div>
+      <div class="why-content">
+        <h3>Search made easy</h3>
+        <p>Search by mess name or food item like paneer, bhakri, rice or thali in a cleaner way.</p>
+      </div>
+    </div>
+
+    <div class="why-feature">
+      <div class="why-icon">
+        <svg viewBox="0 0 24 24">
+          <path d="M5 12h14"></path>
+          <path d="M12 5v14"></path>
+          <circle cx="12" cy="12" r="9"></circle>
+        </svg>
+      </div>
+      <div class="why-content">
+        <h3>Student friendly</h3>
+        <p>Budget filters and local recommendations help hostel students and workers choose faster.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  © 2026 Meal Buzz
+</footer>
+
+<nav class="bottom-nav">
+  <a href="#home" class="nav-item active">
+    <span class="nav-icon">
+      <svg viewBox="0 0 24 24">
+        <path d="M3 10.5L12 3l9 7.5"></path>
+        <path d="M5 9.5V21h14V9.5"></path>
+      </svg>
+    </span>
+    Home
+  </a>
+
+  <a href="#nearbySection" class="nav-item">
+    <span class="nav-icon">
+      <svg viewBox="0 0 24 24">
+        <path d="M12 21s-6-5.2-6-11a6 6 0 1 1 12 0c0 5.8-6 11-6 11z"></path>
+        <circle cx="12" cy="10" r="2.5"></circle>
+      </svg>
+    </span>
+    Nearby
+  </a>
+
+  <a href="special.html" class="nav-item">
+    <span class="nav-icon">
+      <svg viewBox="0 0 24 24">
+        <path d="M12 3l2.8 5.7 6.2.9-4.5 4.4 1 6.2L12 17.2 6.5 20.2l1-6.2L3 9.6l6.2-.9z"></path>
+      </svg>
+    </span>
+    Special
+  </a>
+
+  <a href="profile.html" class="nav-item">
+    <span class="nav-icon">
+      <svg viewBox="0 0 24 24">
+        <circle cx="12" cy="8" r="4"></circle>
+        <path d="M4 21c1.8-4 5-6 8-6s6.2 2 8 6"></path>
+      </svg>
+    </span>
+    Profile
+  </a>
+</nav>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+  const SUPABASE_URL = "https://iinvhwsbnvmcujyrzlxe.supabase.co";
+  const SUPABASE_KEY = "sb_publishable_fwhxfVqWpDrro8hkQbQQRA_1crMexZv";
+  const sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+  function changeLanguage(lang) {
+    const title = document.getElementById("title");
+    const desc = document.getElementById("desc");
+
+    if (lang === "en") {
+      title.innerHTML = `Discover <span class="accent">today’s nearby meals</span> with style`;
+      desc.innerText = "Search nearby mess names, today’s menu preview, prices and top choices in one clean place designed for students and workers.";
+    }
+
+    if (lang === "mr") {
+      title.innerHTML = `आजच्या <span class="accent">जवळच्या जेवणाच्या</span> पर्यायांचा शोध घ्या`;
+      desc.innerText = "जवळच्या मेसची नावे, आजचा मेनू, किंमत आणि चांगले पर्याय एकाच ठिकाणी सहज पाहा.";
+    }
+
+    if (lang === "hi") {
+      title.innerHTML = `आज के <span class="accent">पास के खाने के</span> विकल्प खोजें`;
+      desc.innerText = "पास की मेस के नाम, आज का मेनू, कीमत और अच्छे विकल्प एक ही जगह आसानी से देखें।";
+    }
+  }
+
+  function goToMeals(searchText) {
+    const searchValue = searchText || document.getElementById("searchInput").value.trim();
+    window.location.href = "meals.html?search=" + encodeURIComponent(searchValue);
+  }
+
+  async function showSuggestions(value) {
+    const box = document.getElementById("suggestionsBox");
+
+    if (!value.trim()) {
+      box.innerHTML = "";
+      box.style.display = "none";
+      return;
+    }
+
+    const { data } = await sb
+      .from("mess")
+      .select("name")
+      .ilike("name", `%${value}%`)
+      .limit(5);
+
+    if (!data || data.length === 0) {
+      box.innerHTML = "";
+      box.style.display = "none";
+      return;
+    }
+
+    box.innerHTML = data.map(m =>
+      `<div onclick="openMess('${String(m.name).replace(/'/g, "\\'")}')">${m.name}</div>`
+    ).join("");
+
+    box.style.display = "block";
+  }
+
+  function openMess(name) {
+    window.location.href = "mess.html?search=" + encodeURIComponent(name);
+  }
+
+  document.addEventListener("click", function(e) {
+    const searchWrap = document.querySelector(".search-box-wrap");
+    const box = document.getElementById("suggestionsBox");
+    if (searchWrap && !searchWrap.contains(e.target)) {
+      box.style.display = "none";
+    }
+  });
+
+  function applyFilter(type, element) {
+    document.querySelectorAll(".category-chip").forEach(chip => chip.classList.remove("active"));
+    element.classList.add("active");
+
+    const cards = document.querySelectorAll(".recommend-card");
+
+    cards.forEach(card => {
+      const cardType = card.dataset.type;
+      const price = Number(card.dataset.price);
+      const rating = Number(card.dataset.rating);
+
+      let show = false;
+
+      if (type === "veg") show = cardType === "veg";
+      if (type === "nonveg") show = cardType === "nonveg";
+      if (type === "budget") show = price <= 100;
+      if (type === "toprated") show = rating >= 4.4;
+
+      card.style.display = show ? "block" : "none";
+    });
+  }
+
+  function getLocation() {
+    const result = document.getElementById("locationResult");
+
+    if (!navigator.geolocation) {
+      result.innerHTML = "Location not supported on this device.";
+      return;
+    }
+
+    result.innerHTML = "Getting location...";
+
+    navigator.geolocation.getCurrentPosition(
+      function(position) {
+        const lat = position.coords.latitude;
+        const lon = position.coords.longitude;
+
+        localStorage.setItem("userLat", lat);
+        localStorage.setItem("userLon", lon);
+
+        result.innerHTML = "📍 Location detected";
+        loadNearbyMesses(lat, lon);
+      },
+      function() {
+        result.innerHTML = "Location permission denied. You can still search manually.";
+      }
+    );
+  }
+
+  async function loadNearbyMesses(userLat, userLon) {
+    const { data, error } = await sb.from("mess").select("*");
+
+    if (error) {
+      console.log("MESS ERROR", error);
+      return;
+    }
+
+    const list = document.getElementById("nearbyMessList");
+    const section = document.getElementById("nearbySection");
+    const empty = document.getElementById("nearbyEmpty");
+
+    if (!list || !section || !empty) return;
+
+    list.innerHTML = "";
+
+    if (!data || data.length === 0) {
+      section.style.display = "block";
+      empty.style.display = "block";
+      return;
+    }
+
+    let found = false;
+
+    data.forEach(mess => {
+      const messLat = Number(mess.latitude);
+      const messLon = Number(mess.longitude);
+
+      if (isNaN(messLat) || isNaN(messLon)) return;
+
+      const distance = getDistance(userLat, userLon, messLat, messLon);
+
+      if (distance < 1000) {
+        found = true;
+
+        const card = document.createElement("a");
+        card.className = "nearby-card";
+        card.href = `meals.html?search=${encodeURIComponent(mess.name || "")}`;
+        card.innerHTML = `
+          <img src="${mess.image_url || 'thali.jpg'}" alt="${mess.name || 'Mess'}">
+          <div class="nearby-info">
+            <div class="nearby-name">${mess.name || "Mess"}</div>
+            <div class="nearby-meta">
+              <span class="meta-badge">₹${mess.price || 'N/A'}</span>
+              <span class="meta-badge">${distance.toFixed(1)} km</span>
+              <span class="meta-badge rating-badge">⭐ ${mess.rating || "4.0"}</span>
+            </div>
+          </div>
+        `;
+        list.appendChild(card);
+      }
+    });
+
+    section.style.display = "block";
+    empty.style.display = found ? "none" : "block";
+  }
+
+  function getDistance(lat1, lon1, lat2, lon2) {
+    const R = 6371;
+    const dLat = (lat2 - lat1) * Math.PI / 180;
+    const dLon = (lon2 - lon1) * Math.PI / 180;
+
+    const a =
+      Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+      Math.cos(lat1 * Math.PI / 180) *
+      Math.cos(lat2 * Math.PI / 180) *
+      Math.sin(dLon / 2) * Math.sin(dLon / 2);
+
+    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+    return R * c;
+  }
+
+  document.addEventListener("DOMContentLoaded", function() {
+    const currentPath = window.location.pathname.split("/").pop() || "index.html";
+    const navItems = document.querySelectorAll(".bottom-nav .nav-item");
+
+    navItems.forEach(item => item.classList.remove("active"));
+
+    navItems.forEach(item => {
+      const href = item.getAttribute("href") || "";
+      if ((currentPath === "index.html" || currentPath === "") && href === "#home") {
+        item.classList.add("active");
+      }
+    });
+  });
+</script>
+</body>
+</html>
+
