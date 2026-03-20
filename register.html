@@ -5,6 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Meal Buzz - Register Mess</title>
   <link rel="icon" href="favicon.png" type="image/png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Poppins:wght@700;800&display=swap" rel="stylesheet">
 
   <style>
     *{
@@ -15,20 +18,22 @@
 
     :root{
       --bg:#0d0f14;
-      --card:#171a21;
-      --soft:#20242d;
-      --line:#2b313d;
+      --card:#171b24;
+      --card-alt:#1c2330;
+      --soft:#222937;
+      --line:#2e3748;
       --text:#f5f7fb;
       --muted:#b9c0cc;
       --accent:#ff8a00;
       --accent2:#ffb347;
-      --green:#27c26c;
-      --danger:#ff6b6b;
+      --shadow:0 12px 28px rgba(0,0,0,0.22);
     }
 
     body{
-      font-family:Arial, Helvetica, sans-serif;
-      background:linear-gradient(180deg,#0d0f14 0%, #12151d 100%);
+      font-family:'Inter', Arial, sans-serif;
+      background:
+        radial-gradient(circle at top right, rgba(255,138,0,0.08), transparent 24%),
+        linear-gradient(180deg,#0b0d12 0%, #121721 100%);
       color:var(--text);
       min-height:100vh;
     }
@@ -46,13 +51,13 @@
       align-items:center;
       justify-content:space-between;
       gap:12px;
-      padding:14px 16px;
-      background:rgba(13,15,20,0.95);
-      backdrop-filter:blur(8px);
-      border-bottom:1px solid var(--line);
+      padding:16px;
+      background:rgba(13,15,20,0.90);
+      backdrop-filter:blur(12px);
+      border-bottom:1px solid rgba(255,255,255,0.06);
     }
 
-    .top-left{
+    .topbar-left{
       display:flex;
       align-items:center;
       gap:12px;
@@ -65,92 +70,104 @@
       min-width:44px;
       height:44px;
       padding:0 14px;
-      border-radius:12px;
-      background:var(--soft);
-      border:1px solid var(--line);
+      border-radius:14px;
+      background:rgba(255,255,255,0.05);
+      border:1px solid rgba(255,255,255,0.08);
       color:#fff;
       font-size:14px;
-      font-weight:bold;
+      font-weight:700;
+      box-shadow:0 8px 18px rgba(0,0,0,0.14);
+    }
+
+    .brand{
+      display:flex;
+      flex-direction:column;
+      justify-content:center;
     }
 
     .brand h1{
-      color:var(--accent);
+      font-family:'Poppins', sans-serif;
       font-size:28px;
       line-height:1;
+      letter-spacing:0.2px;
+      background:linear-gradient(90deg,#ffffff 0%, #ffdcb3 32%, #ffb347 60%, #ff8a00 100%);
+      -webkit-background-clip:text;
+      -webkit-text-fill-color:transparent;
+      background-clip:text;
     }
 
     .brand p{
-      color:var(--muted);
-      font-size:12px;
-      margin-top:4px;
+      color:#d6dde8;
+      font-size:11px;
+      margin-top:5px;
+      letter-spacing:1.7px;
+      text-transform:uppercase;
+      font-weight:700;
     }
 
     .section{
-      padding:18px 16px;
+      padding:18px 16px 28px;
     }
 
     .wrap{
-      max-width:1100px;
+      max-width:900px;
       margin:0 auto;
-      display:grid;
-      gap:18px;
     }
 
-    .hero-card,
-    .form-card,
-    .info-card{
-      background:linear-gradient(135deg,#171a21 0%, #1e232d 100%);
-      border:1px solid var(--line);
+    .card{
+      background:rgba(24,29,40,0.56);
+      border:1px solid rgba(255,255,255,0.08);
       border-radius:24px;
-      box-shadow:0 10px 30px rgba(0,0,0,0.25);
+      padding:20px;
+      box-shadow:var(--shadow);
+      backdrop-filter:blur(12px);
+      -webkit-backdrop-filter:blur(12px);
+      position:relative;
+      overflow:hidden;
     }
 
-    .hero-card{
-      padding:22px;
+    .card::before{
+      content:"";
+      position:absolute;
+      inset:0;
+      background:linear-gradient(135deg, rgba(255,255,255,0.05), rgba(255,255,255,0.01));
+      pointer-events:none;
     }
 
-    .hero-card h2{
-      font-size:30px;
+    .card > *{
+      position:relative;
+      z-index:1;
+    }
+
+    .title{
+      font-family:'Poppins', sans-serif;
+      font-size:28px;
       margin-bottom:10px;
     }
 
-    .hero-card p{
+    .subtitle{
       color:var(--muted);
       font-size:14px;
       line-height:1.8;
-    }
-
-    .form-card{
-      padding:20px;
-    }
-
-    .form-card h3{
-      font-size:22px;
-      margin-bottom:8px;
-    }
-
-    .form-card p{
-      color:var(--muted);
-      font-size:14px;
-      line-height:1.7;
-      margin-bottom:16px;
+      margin-bottom:18px;
     }
 
     .form-grid{
       display:grid;
-      gap:12px;
+      gap:14px;
     }
 
     .form-grid input,
-    .form-grid textarea{
+    .form-grid textarea,
+    .form-grid select{
       width:100%;
-      background:#11151c;
-      color:#fff;
+      padding:14px 15px;
+      border-radius:16px;
       border:1px solid var(--line);
-      border-radius:14px;
-      padding:14px;
-      outline:none;
+      background:rgba(17,21,28,0.85);
+      color:#fff;
       font-size:14px;
+      outline:none;
       font-family:inherit;
     }
 
@@ -159,102 +176,84 @@
       resize:vertical;
     }
 
-    .location-row{
-      display:flex;
-      gap:10px;
-      flex-wrap:wrap;
+    .file-block{
+      background:rgba(255,255,255,0.03);
+      border:1px solid rgba(255,255,255,0.06);
+      border-radius:18px;
+      padding:14px;
+    }
+
+    .file-label{
+      color:#ffbe63;
+      font-size:13px;
+      font-weight:700;
+      margin-bottom:6px;
+    }
+
+    .file-hint{
+      color:var(--muted);
+      font-size:12px;
+      line-height:1.6;
+      margin-bottom:10px;
     }
 
     .location-btn,
-    .register-btn{
+    .submit-btn{
       width:100%;
       padding:14px;
-      border-radius:14px;
+      border-radius:16px;
       font-size:15px;
-      font-weight:bold;
+      font-weight:800;
       border:none;
       cursor:pointer;
     }
 
     .location-btn{
-      background:var(--soft);
-      border:1px solid var(--line);
+      background:rgba(255,255,255,0.05);
       color:#fff;
+      border:1px solid rgba(255,255,255,0.08);
     }
 
-    .register-btn{
+    .submit-btn{
       background:linear-gradient(90deg,var(--accent),var(--accent2));
       color:#fff;
-      margin-top:4px;
+      box-shadow:0 14px 28px rgba(255,138,0,0.18);
+    }
+
+    .coords{
+      background:rgba(255,255,255,0.04);
+      border:1px solid rgba(255,255,255,0.07);
+      border-radius:16px;
+      padding:14px;
+      color:var(--muted);
+      font-size:14px;
+      line-height:1.7;
     }
 
     .status{
-      min-height:22px;
+      min-height:24px;
       font-size:14px;
-      margin-top:8px;
-      color:#90ee90;
+      color:#9df0bc;
+      margin-top:6px;
     }
 
     .status.error{
-      color:#ff9d9d;
+      color:#ff9c9c;
     }
 
-    .coords-box{
-      margin-top:8px;
-      color:var(--muted);
-      font-size:13px;
-      line-height:1.6;
-      background:#11151c;
-      border:1px solid var(--line);
-      border-radius:14px;
-      padding:12px;
-    }
+    @media(min-width:768px){
+      .topbar{
+        padding:16px 28px;
+      }
 
-    .info-card{
-      padding:20px;
-    }
-
-    .info-card h3{
-      font-size:20px;
-      margin-bottom:10px;
-    }
-
-    .info-card ul{
-      padding-left:18px;
-      color:var(--muted);
-      line-height:1.8;
-      font-size:14px;
-    }
-
-    .footer{
-      border-top:1px solid var(--line);
-      margin-top:10px;
-      padding:20px 16px 34px;
-      text-align:center;
-      color:var(--muted);
-      font-size:13px;
-    }
-
-    @media (min-width:768px){
-      .section,
-      .footer{
+      .section{
         padding-left:28px;
         padding-right:28px;
       }
-
-      .wrap{
-        grid-template-columns:1.15fr 0.85fr;
-        align-items:start;
-      }
-
-      .hero-card{
-        grid-column:1 / -1;
-      }
     }
 
-    @media (min-width:1100px){
-      .section,
-      .footer{
+    @media(min-width:1100px){
+      .section{
         padding-left:48px;
         padding-right:48px;
       }
@@ -264,8 +263,8 @@
 <body>
 
   <header class="topbar">
-    <div class="top-left">
-      <a href="index.html" class="back-btn">← Back</a>
+    <div class="topbar-left">
+      <a href="profile.html" class="back-btn">← Back</a>
       <div class="brand">
         <h1>Meal Buzz</h1>
         <p>Register your mess</p>
@@ -275,57 +274,60 @@
 
   <section class="section">
     <div class="wrap">
-
-      <div class="hero-card">
-        <h2>Add your mess to Meal Buzz</h2>
-        <p>
-          Register your mess, share your location, menu, price and contact details,
-          and help nearby students and workers discover your food easily.
+      <div class="card">
+        <h2 class="title">Register Your Mess</h2>
+        <p class="subtitle">
+          Fill the details below, capture your current location, upload your mess photos,
+          and create your owner password.
         </p>
-      </div>
-
-      <div class="form-card">
-        <h3>Mess Registration Form</h3>
-        <p>Fill the details below. Location is important so nearby users can find your mess.</p>
 
         <div class="form-grid">
           <input type="text" id="name" placeholder="Mess Name" />
-          <input type="text" id="location" placeholder="Area / City" />
-          <input type="text" id="price" placeholder="Price (example: ₹3000/month or ₹80 thali)" />
+          <input type="text" id="location" placeholder="Area / Location" />
+          <input type="text" id="price" placeholder="Price (example: ₹80 thali / ₹3000 month)" />
           <input type="text" id="contact" placeholder="Contact Number" />
+          <input type="password" id="password" placeholder="Create Password" />
+
+          <select id="mealType">
+            <option value="">Select Meal Type (Optional)</option>
+            <option value="veg">Veg</option>
+            <option value="nonveg">Non-veg</option>
+          </select>
+
           <textarea id="menu" placeholder="Today's Menu"></textarea>
 
-          <div class="location-row">
-            <button class="location-btn" onclick="captureLocation()">Use Current Location</button>
+          <div class="file-block">
+            <div class="file-label">Upload Main Mess Photo</div>
+            <div class="file-hint">This will be used as default image if specific veg/non-veg image is not available.</div>
+            <input type="file" id="image" accept="image/*" />
           </div>
 
-          <div class="coords-box" id="coordsBox">
+          <div class="file-block">
+            <div class="file-label">Upload Veg Menu Image</div>
+            <div class="file-hint">Optional. If today's menu is veg, this image will be preferred.</div>
+            <input type="file" id="vegImage" accept="image/*" />
+          </div>
+
+          <div class="file-block">
+            <div class="file-label">Upload Non-veg Menu Image</div>
+            <div class="file-hint">Optional. If today's menu is non-veg, this image will be preferred.</div>
+            <input type="file" id="nonVegImage" accept="image/*" />
+          </div>
+
+          <button class="location-btn" onclick="captureLocation()">Use Current Location</button>
+
+          <div class="coords" id="coordsBox">
             Latitude: Not captured yet<br>
             Longitude: Not captured yet
           </div>
 
-          <button class="register-btn" onclick="saveMess()">Register Mess</button>
+          <button class="submit-btn" onclick="saveMess()">Register Mess</button>
 
           <div class="status" id="statusText"></div>
         </div>
       </div>
-
-      <div class="info-card">
-        <h3>Why register?</h3>
-        <ul>
-          <li>Your mess can appear in nearby search results.</li>
-          <li>Users can discover your menu faster.</li>
-          <li>Students and workers can contact you directly.</li>
-          <li>Meal Buzz helps local messes get more visibility.</li>
-        </ul>
-      </div>
-
     </div>
   </section>
-
-  <footer class="footer">
-    © 2026 Meal Buzz
-  </footer>
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
@@ -367,15 +369,42 @@
       );
     }
 
+    async function uploadImageIfAny(file, prefix) {
+      if (!file) return "";
+
+      const safeName = file.name.replace(/\s+/g, "-");
+      const fileName = `${prefix}-${Date.now()}-${safeName}`;
+
+      const { error: uploadError } = await sb.storage
+        .from("mess-images")
+        .upload(fileName, file);
+
+      if (uploadError) {
+        throw uploadError;
+      }
+
+      const { data: publicData } = sb.storage
+        .from("mess-images")
+        .getPublicUrl(fileName);
+
+      return publicData.publicUrl;
+    }
+
     async function saveMess() {
       const name = document.getElementById("name").value.trim();
       const location = document.getElementById("location").value.trim();
       const price = document.getElementById("price").value.trim();
       const contact = document.getElementById("contact").value.trim();
+      const password = document.getElementById("password").value.trim();
+      const mealType = document.getElementById("mealType").value.trim();
       const menu = document.getElementById("menu").value.trim();
 
-      if (!name || !location || !menu || !contact) {
-        setStatus("Please fill all important fields.", true);
+      const imageFile = document.getElementById("image").files[0];
+      const vegImageFile = document.getElementById("vegImage").files[0];
+      const nonVegImageFile = document.getElementById("nonVegImage").files[0];
+
+      if (!name || !location || !price || !contact || !password || !menu || !imageFile) {
+        setStatus("Please fill all required fields and upload main mess photo.", true);
         return;
       }
 
@@ -384,39 +413,62 @@
         return;
       }
 
-      const payload = {
-        name: name,
-        location: location,
-        price: price,
-        menu: menu,
-        contact: contact,
-        latitude: currentLat,
-        longitude: currentLon
-      };
+      try {
+        setStatus("Uploading images...");
 
-      const { error } = await sb.from("mess").insert([payload]);
+        const imageUrl = await uploadImageIfAny(imageFile, "main");
+        const vegImageUrl = await uploadImageIfAny(vegImageFile, "veg");
+        const nonVegImageUrl = await uploadImageIfAny(nonVegImageFile, "nonveg");
 
-      if (error) {
-        console.log(error);
-        setStatus("Error saving mess data.", true);
-        return;
+        const payload = {
+          name: name,
+          location: location,
+          price: price,
+          contact: contact,
+          password: password,
+          type: mealType || null,
+          menu: menu,
+          today_menu: menu,
+          latitude: currentLat,
+          longitude: currentLon,
+          image_url: imageUrl,
+          veg_image_url: vegImageUrl || null,
+          nonveg_image_url: nonVegImageUrl || null
+        };
+
+        const { error } = await sb.from("mess").insert([payload]);
+
+        if (error) {
+          console.log(error);
+          setStatus("Error saving mess data. Check table columns once.", true);
+          return;
+        }
+
+        setStatus("Mess registered successfully 🎉");
+
+        document.getElementById("name").value = "";
+        document.getElementById("location").value = "";
+        document.getElementById("price").value = "";
+        document.getElementById("contact").value = "";
+        document.getElementById("password").value = "";
+        document.getElementById("mealType").value = "";
+        document.getElementById("menu").value = "";
+        document.getElementById("image").value = "";
+        document.getElementById("vegImage").value = "";
+        document.getElementById("nonVegImage").value = "";
+
+        currentLat = null;
+        currentLon = null;
+
+        document.getElementById("coordsBox").innerHTML =
+          "Latitude: Not captured yet<br>Longitude: Not captured yet";
+
+      } catch (err) {
+        console.log(err);
+        setStatus("Image upload failed or save failed.", true);
       }
-
-      setStatus("Mess registered successfully 🎉");
-
-      document.getElementById("name").value = "";
-      document.getElementById("location").value = "";
-      document.getElementById("price").value = "";
-      document.getElementById("contact").value = "";
-      document.getElementById("menu").value = "";
-
-      currentLat = null;
-      currentLon = null;
-
-      document.getElementById("coordsBox").innerHTML =
-        "Latitude: Not captured yet<br>Longitude: Not captured yet";
     }
   </script>
 
 </body>
-</html>
+</html>sss
