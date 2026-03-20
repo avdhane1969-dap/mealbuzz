@@ -5,13 +5,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Meal Buzz - Owner Login</title>
   <link rel="icon" href="favicon.png" type="image/png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Poppins:wght@700;800&display=swap" rel="stylesheet">
 
   <style>
-    *{
-      margin:0;
-      padding:0;
-      box-sizing:border-box;
-    }
+    *{margin:0;padding:0;box-sizing:border-box}
 
     :root{
       --bg:#0d0f14;
@@ -24,19 +23,19 @@
       --accent2:#ffb347;
       --green:#27c26c;
       --danger:#ff6b6b;
+      --shadow:0 12px 28px rgba(0,0,0,0.22);
     }
 
     body{
-      font-family:Arial, Helvetica, sans-serif;
-      background:linear-gradient(180deg,#0d0f14 0%, #12151d 100%);
+      font-family:'Inter', Arial, sans-serif;
+      background:
+        radial-gradient(circle at top right, rgba(255,138,0,0.08), transparent 24%),
+        linear-gradient(180deg,#0b0d12 0%, #121721 100%);
       color:var(--text);
       min-height:100vh;
     }
 
-    a{
-      text-decoration:none;
-      color:inherit;
-    }
+    a{text-decoration:none;color:inherit}
 
     .topbar{
       position:sticky;
@@ -74,9 +73,13 @@
     }
 
     .brand h1{
-      color:var(--accent);
+      font-family:'Poppins', sans-serif;
       font-size:28px;
       line-height:1;
+      background:linear-gradient(90deg,#ffffff 0%, #ffdcb3 32%, #ffb347 60%, #ff8a00 100%);
+      -webkit-background-clip:text;
+      -webkit-text-fill-color:transparent;
+      background-clip:text;
     }
 
     .brand p{
@@ -103,33 +106,19 @@
       background:linear-gradient(135deg,#171a21 0%, #1e232d 100%);
       border:1px solid var(--line);
       border-radius:24px;
-      box-shadow:0 10px 30px rgba(0,0,0,0.25);
+      box-shadow:var(--shadow);
     }
 
-    .hero-card{
-      padding:22px;
-    }
-
-    .hero-card h2{
-      font-size:30px;
-      margin-bottom:10px;
-    }
-
+    .hero-card{padding:22px}
+    .hero-card h2{font-size:30px;margin-bottom:10px}
     .hero-card p{
       color:var(--muted);
       font-size:14px;
       line-height:1.8;
     }
 
-    .login-card{
-      padding:20px;
-    }
-
-    .login-card h3{
-      font-size:22px;
-      margin-bottom:8px;
-    }
-
+    .login-card{padding:20px}
+    .login-card h3{font-size:22px;margin-bottom:8px}
     .login-card p{
       color:var(--muted);
       font-size:14px;
@@ -137,13 +126,18 @@
       margin-bottom:16px;
     }
 
-    .login-form{
+    .login-form,
+    .panel-grid{
       display:grid;
       gap:12px;
     }
 
     .login-form input,
-    .login-form textarea{
+    .login-form textarea,
+    .login-form select,
+    .panel-grid input,
+    .panel-grid textarea,
+    .panel-grid select{
       width:100%;
       background:#11151c;
       color:#fff;
@@ -153,6 +147,11 @@
       outline:none;
       font-size:14px;
       font-family:inherit;
+    }
+
+    .panel-grid textarea{
+      min-height:120px;
+      resize:vertical;
     }
 
     .login-btn,
@@ -186,19 +185,10 @@
       color:#90ee90;
     }
 
-    .status.error{
-      color:#ff9d9d;
-    }
+    .status.error{color:#ff9d9d}
 
-    .help-card{
-      padding:20px;
-    }
-
-    .help-card h3{
-      font-size:20px;
-      margin-bottom:10px;
-    }
-
+    .help-card{padding:20px}
+    .help-card h3{font-size:20px;margin-bottom:10px}
     .help-card ul{
       padding-left:18px;
       color:var(--muted);
@@ -211,9 +201,7 @@
       padding:20px;
     }
 
-    .panel-card.show{
-      display:block;
-    }
+    .panel-card.show{display:block}
 
     .panel-card h3{
       font-size:22px;
@@ -225,11 +213,6 @@
       font-size:14px;
       line-height:1.6;
       margin-bottom:16px;
-    }
-
-    .panel-grid{
-      display:grid;
-      gap:12px;
     }
 
     .owner-badge{
@@ -244,6 +227,65 @@
       margin-bottom:14px;
     }
 
+    .file-block{
+      background:rgba(255,255,255,0.03);
+      border:1px solid rgba(255,255,255,0.06);
+      border-radius:18px;
+      padding:14px;
+    }
+
+    .file-label{
+      color:#ffbe63;
+      font-size:13px;
+      font-weight:700;
+      margin-bottom:6px;
+    }
+
+    .file-hint{
+      color:var(--muted);
+      font-size:12px;
+      line-height:1.6;
+      margin-bottom:10px;
+    }
+
+    .preview-grid{
+      display:grid;
+      gap:12px;
+    }
+
+    .preview-card{
+      background:#11151c;
+      border:1px solid var(--line);
+      border-radius:18px;
+      padding:12px;
+    }
+
+    .preview-card h4{
+      font-size:13px;
+      margin-bottom:10px;
+      color:#ffbe63;
+    }
+
+    .preview-card img{
+      width:100%;
+      height:180px;
+      object-fit:cover;
+      border-radius:14px;
+      border:1px solid rgba(255,255,255,0.08);
+      display:block;
+      background:#0b0d12;
+    }
+
+    .preview-empty{
+      color:var(--muted);
+      font-size:13px;
+      line-height:1.6;
+      padding:18px 8px;
+      text-align:center;
+      border:1px dashed var(--line);
+      border-radius:14px;
+    }
+
     .footer{
       border-top:1px solid var(--line);
       margin-top:10px;
@@ -254,8 +296,7 @@
     }
 
     @media (min-width:768px){
-      .section,
-      .footer{
+      .section,.footer{
         padding-left:28px;
         padding-right:28px;
       }
@@ -265,18 +306,13 @@
         align-items:start;
       }
 
-      .hero-card{
-        grid-column:1 / -1;
-      }
-
-      .panel-card{
-        grid-column:1 / -1;
-      }
+      .hero-card{grid-column:1 / -1}
+      .panel-card{grid-column:1 / -1}
+      .preview-grid{grid-template-columns:repeat(3,1fr)}
     }
 
     @media (min-width:1100px){
-      .section,
-      .footer{
+      .section,.footer{
         padding-left:48px;
         padding-right:48px;
       }
@@ -287,7 +323,7 @@
 
   <header class="topbar">
     <div class="top-left">
-      <a href="index.html" class="back-btn">← Back</a>
+      <a href="profile.html" class="back-btn">← Back</a>
       <div class="brand">
         <h1>Meal Buzz</h1>
         <p>Mess owner login</p>
@@ -302,7 +338,7 @@
         <h2>Manage your mess on Meal Buzz</h2>
         <p>
           Login to access your owner panel, update your daily menu,
-          and keep your mess information useful for nearby users.
+          meal type and mess images so nearby users always see the latest information.
         </p>
       </div>
 
@@ -322,20 +358,62 @@
         <h3>Owner access includes</h3>
         <ul>
           <li>Quick daily menu update</li>
-          <li>Keep mess details active</li>
-          <li>Simple access for local visibility</li>
-          <li>Useful for regular students and workers nearby</li>
+          <li>Veg / non-veg type selection</li>
+          <li>Main, veg and non-veg image update</li>
+          <li>Better visibility for nearby users</li>
         </ul>
       </div>
 
       <div class="panel-card" id="ownerPanel">
         <span class="owner-badge">Logged in</span>
-        <h3>Owner Dashboard</h3>
-        <p>Update today’s menu here. This version is a simple local owner panel.</p>
+        <h3 id="panelTitle">Owner Dashboard</h3>
+        <p>Update your today's menu, meal type and images here.</p>
 
         <div class="panel-grid">
           <textarea id="todayMenu" placeholder="Enter today's menu"></textarea>
-          <button class="save-btn" onclick="saveMenu()">Save Menu</button>
+
+          <select id="mealType">
+            <option value="">Select Meal Type (Optional)</option>
+            <option value="veg">Veg</option>
+            <option value="nonveg">Non-veg</option>
+          </select>
+
+          <div class="preview-grid">
+            <div class="preview-card">
+              <h4>Main Image</h4>
+              <div id="mainPreviewWrap"></div>
+            </div>
+
+            <div class="preview-card">
+              <h4>Veg Image</h4>
+              <div id="vegPreviewWrap"></div>
+            </div>
+
+            <div class="preview-card">
+              <h4>Non-veg Image</h4>
+              <div id="nonVegPreviewWrap"></div>
+            </div>
+          </div>
+
+          <div class="file-block">
+            <div class="file-label">Change Main Image</div>
+            <div class="file-hint">Used as default image when no specific veg/non-veg image is available.</div>
+            <input type="file" id="mainImageFile" accept="image/*" />
+          </div>
+
+          <div class="file-block">
+            <div class="file-label">Change Veg Image</div>
+            <div class="file-hint">Used when today's menu is veg.</div>
+            <input type="file" id="vegImageFile" accept="image/*" />
+          </div>
+
+          <div class="file-block">
+            <div class="file-label">Change Non-veg Image</div>
+            <div class="file-hint">Used when today's menu is non-veg.</div>
+            <input type="file" id="nonVegImageFile" accept="image/*" />
+          </div>
+
+          <button class="save-btn" onclick="saveOwnerData()">Save Changes</button>
           <button class="logout-btn" onclick="logoutOwner()">Logout</button>
           <div class="status" id="panelStatus"></div>
         </div>
@@ -369,58 +447,144 @@
       box.className = isError ? "status error" : "status";
     }
 
-    function ownerLogin() {
+    function renderPreview(elementId, imageUrl) {
+      const wrap = document.getElementById(elementId);
+
+      if (imageUrl) {
+        wrap.innerHTML = `<img src="${imageUrl}" alt="Preview image">`;
+      } else {
+        wrap.innerHTML = `<div class="preview-empty">No image uploaded yet</div>`;
+      }
+    }
+
+    function fillOwnerPanel(owner) {
+      document.getElementById("panelTitle").innerText = owner.name || "Owner Dashboard";
+      document.getElementById("todayMenu").value = owner.today_menu || owner.menu || "";
+      document.getElementById("mealType").value = owner.type || "";
+
+      renderPreview("mainPreviewWrap", owner.image_url || owner.image || "");
+      renderPreview("vegPreviewWrap", owner.veg_image_url || owner.veg_image || "");
+      renderPreview("nonVegPreviewWrap", owner.nonveg_image_url || owner.nonveg_image || owner.non_veg_image_url || "");
+    }
+
+    async function uploadImageIfAny(file, prefix) {
+      if (!file) return null;
+
+      const safeName = file.name.replace(/\s+/g, "-");
+      const fileName = `${prefix}-${Date.now()}-${safeName}`;
+
+      const { error: uploadError } = await sb.storage
+        .from("mess-images")
+        .upload(fileName, file);
+
+      if (uploadError) {
+        throw uploadError;
+      }
+
+      const { data: publicData } = sb.storage
+        .from("mess-images")
+        .getPublicUrl(fileName);
+
+      return publicData.publicUrl;
+    }
+
+    async function ownerLogin() {
       const phone = document.getElementById("ownerPhone").value.trim();
       const password = document.getElementById("ownerPassword").value.trim();
 
-      const owners = {
-        "9876543210": { password: "annapurna123", name: "Annapurna Mess" },
-        "9876543211": { password: "owner123", name: "Demo Mess" },
-        "9876543212": { password: "shiv123", name: "Shiv Mess" }
-      };
-
-      if (!owners[phone]) {
-        setLoginStatus("Owner number not found.", true);
+      if (!phone || !password) {
+        setLoginStatus("Please enter contact number and password.", true);
         return;
       }
 
-      if (owners[phone].password !== password) {
-        setLoginStatus("Wrong password.", true);
+      const { data, error } = await sb
+        .from("mess")
+        .select("*")
+        .eq("contact", phone)
+        .eq("password", password)
+        .limit(1);
+
+      if (error) {
+        console.log(error);
+        setLoginStatus("Login failed.", true);
         return;
       }
 
-      loggedInOwner = owners[phone].name;
-      setLoginStatus("Login successful.");
+      if (!data || data.length === 0) {
+        setLoginStatus("Wrong contact number or password.", true);
+        return;
+      }
+
+      loggedInOwner = data[0];
+
       document.getElementById("ownerPanel").classList.add("show");
-      setPanelStatus("Welcome, " + loggedInOwner);
+      fillOwnerPanel(loggedInOwner);
+
+      setLoginStatus("Login successful.");
+      setPanelStatus("Welcome, " + (loggedInOwner.name || "Owner"));
     }
 
-    async function saveMenu() {
-      const menuText = document.getElementById("todayMenu").value.trim();
-
+    async function saveOwnerData() {
       if (!loggedInOwner) {
         setPanelStatus("Please login first.", true);
         return;
       }
+
+      const menuText = document.getElementById("todayMenu").value.trim();
+      const mealType = document.getElementById("mealType").value.trim();
 
       if (!menuText) {
         setPanelStatus("Please enter today's menu.", true);
         return;
       }
 
-      const { error } = await sb
-        .from("mess")
-        .update({ menu: menuText })
-        .eq("name", loggedInOwner);
+      const mainImageFile = document.getElementById("mainImageFile").files[0];
+      const vegImageFile = document.getElementById("vegImageFile").files[0];
+      const nonVegImageFile = document.getElementById("nonVegImageFile").files[0];
 
-      if (error) {
-        console.log(error);
-        setPanelStatus("Could not save menu.", true);
-        return;
+      try {
+        setPanelStatus("Saving changes...");
+
+        const newMainImageUrl = await uploadImageIfAny(mainImageFile, "owner-main");
+        const newVegImageUrl = await uploadImageIfAny(vegImageFile, "owner-veg");
+        const newNonVegImageUrl = await uploadImageIfAny(nonVegImageFile, "owner-nonveg");
+
+        const updatePayload = {
+          menu: menuText,
+          today_menu: menuText,
+          type: mealType || null,
+          image_url: newMainImageUrl || loggedInOwner.image_url || null,
+          veg_image_url: newVegImageUrl || loggedInOwner.veg_image_url || null,
+          nonveg_image_url: newNonVegImageUrl || loggedInOwner.nonveg_image_url || null
+        };
+
+        const { error } = await sb
+          .from("mess")
+          .update(updatePayload)
+          .eq("id", loggedInOwner.id);
+
+        if (error) {
+          console.log(error);
+          setPanelStatus("Could not save changes.", true);
+          return;
+        }
+
+        loggedInOwner = {
+          ...loggedInOwner,
+          ...updatePayload
+        };
+
+        fillOwnerPanel(loggedInOwner);
+
+        document.getElementById("mainImageFile").value = "";
+        document.getElementById("vegImageFile").value = "";
+        document.getElementById("nonVegImageFile").value = "";
+
+        setPanelStatus("Changes saved successfully 🎉");
+      } catch (err) {
+        console.log(err);
+        setPanelStatus("Image upload failed or save failed.", true);
       }
-
-      setPanelStatus("Menu updated successfully 🎉");
-      document.getElementById("todayMenu").value = "";
     }
 
     function logoutOwner() {
@@ -428,7 +592,14 @@
       document.getElementById("ownerPhone").value = "";
       document.getElementById("ownerPassword").value = "";
       document.getElementById("todayMenu").value = "";
+      document.getElementById("mealType").value = "";
+      document.getElementById("mainImageFile").value = "";
+      document.getElementById("vegImageFile").value = "";
+      document.getElementById("nonVegImageFile").value = "";
       document.getElementById("ownerPanel").classList.remove("show");
+      document.getElementById("mainPreviewWrap").innerHTML = "";
+      document.getElementById("vegPreviewWrap").innerHTML = "";
+      document.getElementById("nonVegPreviewWrap").innerHTML = "";
       setLoginStatus("");
       setPanelStatus("");
     }
