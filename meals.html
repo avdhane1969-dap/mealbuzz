@@ -184,19 +184,6 @@
       line-height:1.2;
     }
 
-    .rating{
-      min-width:62px;
-      text-align:center;
-      background:rgba(39,194,108,0.12);
-      color:#7df0b0;
-      border:1px solid rgba(39,194,108,0.28);
-      padding:7px 10px;
-      border-radius:12px;
-      font-size:14px;
-      font-weight:800;
-      box-shadow:inset 0 1px 0 rgba(255,255,255,0.04);
-    }
-
     .menu-label{
       color:#ffbe63;
       font-size:12px;
@@ -210,10 +197,6 @@
       color:#c7cfdb;
       font-size:14px;
       line-height:1.75;
-    }
-
-    .hidden{
-      display:none;
     }
 
     .no-result{
@@ -281,56 +264,26 @@
     No mess found 😢
   </div>
 
-  <div class="container">
+  <div class="container" id="mealsContainer"></div>
 
-    <a href="mess.html?search=Annapurna%20Mess" class="card" data-name="annapurna mess annapurna" data-menu="chapati rice dal paneer aloo sabji" data-lat="17.6805" data-lon="74.0183">
-      <img src="thali.jpg" alt="Annapurna Mess" />
-      <div class="card-body">
-        <div class="title-row">
-          <div class="mess-name">Annapurna Mess</div>
-          <div class="rating">4.6 ★</div>
-        </div>
-        <div class="menu-label">Today Menu</div>
-        <div class="menu">Chapati, Rice, Dal, Paneer</div>
-      </div>
-    </a>
-
-    <a href="mess.html?search=Shiv%20Mess" class="card" data-name="shiv mess shiv" data-menu="bhakri pithla rice dal thecha" data-lat="17.6812" data-lon="74.0195">
-      <img src="thali2.jpg" alt="Shiv Mess" />
-      <div class="card-body">
-        <div class="title-row">
-          <div class="mess-name">Shiv Mess</div>
-          <div class="rating">4.2 ★</div>
-        </div>
-        <div class="menu-label">Today Menu</div>
-        <div class="menu">Bhakri, Pithla, Rice, Dal</div>
-      </div>
-    </a>
-
-    <a href="mess.html?search=Gharachi%20Chav" class="card" data-name="gharachi chav gharachi" data-menu="paneer chapati rice sweet dal fry" data-lat="17.6797" data-lon="74.0171">
-      <img src="thali.jpg" alt="Gharachi Chav" />
-      <div class="card-body">
-        <div class="title-row">
-          <div class="mess-name">Gharachi Chav</div>
-          <div class="rating">4.8 ★</div>
-        </div>
-        <div class="menu-label">Today Menu</div>
-        <div class="menu">Paneer Bhaji, Chapati, Rice, Sweet</div>
-      </div>
-    </a>
-
-  </div>
-
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script>
+    const SUPABASE_URL = "https://iinvhwsbnvmcujyrzlxe.supabase.co";
+    const SUPABASE_KEY = "sb_publishable_fwhxfVqWpDrro8hkQbQQRA_1crMexZv";
+    const sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
     const params = new URLSearchParams(window.location.search);
     const search = (params.get("search") || "").trim().toLowerCase();
+    const filter = (params.get("filter") || "").trim().toLowerCase();
+    const nearby = (params.get("nearby") || "").trim();
 
-    const cards = document.querySelectorAll(".card");
     const searchText = document.getElementById("searchText");
     const noResult = document.getElementById("noResult");
+    const mealsContainer = document.getElementById("mealsContainer");
 
-    const userLat = parseFloat(localStorage.getItem("userLat"));
-    const userLon = parseFloat(localStorage.getItem("userLon"));
+    const userLat = parseFloat(sessionStorage.getItem("userLat"));
+    const userLon = parseFloat(sessionStorage.getItem("userLon"));
+    const locationEnabled = sessionStorage.getItem("locationEnabled") === "yes";
 
     function getDistance(lat1, lon1, lat2, lon2) {
       const R = 6371;
@@ -347,56 +300,217 @@
       return R * c;
     }
 
-    if (!search) {
-      if (!isNaN(userLat) && !isNaN(userLon)) {
-        searchText.innerText = "Showing nearby messes based on your location.";
-
-        let visibleCount = 0;
-
-        cards.forEach(card => {
-          const lat = parseFloat(card.dataset.lat);
-          const lon = parseFloat(card.dataset.lon);
-
-          if (isNaN(lat) || isNaN(lon)) {
-            card.classList.add("hidden");
-            return;
-          }
-
-          const distance = getDistance(userLat, userLon, lat, lon);
-
-          if (distance <= 10) {
-            card.classList.remove("hidden");
-            visibleCount++;
-          } else {
-            card.classList.add("hidden");
-          }
-        });
-
-        noResult.style.display = visibleCount === 0 ? "block" : "none";
-      } else {
-        searchText.innerText = "Please enter a mess name or menu item.";
-        cards.forEach(card => card.classList.add("hidden"));
-        noResult.style.display = "none";
-      }
-    } else {
-      searchText.innerText = "Showing results for: " + search;
-
-      let visibleCount = 0;
-
-      cards.forEach(card => {
-        const name = (card.dataset.name || "").toLowerCase();
-        const menu = (card.dataset.menu || "").toLowerCase();
-
-        if (name.includes(search) || menu.includes(search)) {
-          card.classList.remove("hidden");
-          visibleCount++;
-        } else {
-          card.classList.add("hidden");
-        }
-      });
-
-      noResult.style.display = visibleCount === 0 ? "block" : "none";
+    function getMenuText(mess) {
+      return mess.today_menu || mess.menu || "Menu not updated yet";
     }
+
+    function detectMealType(mess) {
+      const directType = (mess.type || mess.food_type || "").toString().toLowerCase().trim();
+      if (directType.includes("nonveg") || directType.includes("non-veg")) return "nonveg";
+      if (directType.includes("veg")) return "veg";
+
+      const text = getMenuText(mess).toLowerCase();
+
+      const nonVegWords = [
+        "chicken", "egg", "anda", "mutton", "fish", "keema", "prawn", "biryani", "nonveg", "non-veg"
+      ];
+
+      for (const word of nonVegWords) {
+        if (text.includes(word)) return "nonveg";
+      }
+
+      return "veg";
+    }
+
+    function getMessImage(mess) {
+      const mealType = detectMealType(mess);
+
+      const manualImage =
+        mess.image_url ||
+        mess.image ||
+        mess.main_image ||
+        mess.photo_url ||
+        "";
+
+      const vegImage =
+        mess.veg_image_url ||
+        mess.veg_image ||
+        "";
+
+      const nonVegImage =
+        mess.nonveg_image_url ||
+        mess.nonveg_image ||
+        mess.non_veg_image_url ||
+        mess.non_veg_image ||
+        "";
+
+      if (mealType === "nonveg" && nonVegImage) return nonVegImage;
+      if (mealType === "veg" && vegImage) return vegImage;
+      if (manualImage) return manualImage;
+
+      return mealType === "nonveg" ? "thali2.jpg" : "thali.jpg";
+    }
+
+    function getDistanceText(mess) {
+      const lat = Number(mess.latitude || mess.lat);
+      const lon = Number(mess.longitude || mess.lng || mess.lon);
+
+      if (
+        locationEnabled &&
+        !isNaN(userLat) &&
+        !isNaN(userLon) &&
+        !isNaN(lat) &&
+        !isNaN(lon)
+      ) {
+        const distance = getDistance(userLat, userLon, lat, lon);
+        if (!isNaN(distance) && isFinite(distance)) {
+          mess.distance = distance;
+          return distance.toFixed(1) + " km away";
+        }
+      }
+
+      return mess.location || mess.address || mess.location_name || "Nearby mess";
+    }
+
+    function matchesFilter(mess) {
+      const menuText = getMenuText(mess).toLowerCase();
+      const mealType = detectMealType(mess);
+
+      if (!filter) return true;
+
+      if (filter === "veg") return mealType === "veg";
+      if (filter === "nonveg") return mealType === "nonveg";
+
+      if (filter === "budget") {
+        const price = Number(mess.price || mess.price_range || 0);
+        return price > 0 ? price <= 100 : true;
+      }
+
+      if (filter === "premium") {
+        const price = Number(mess.price || mess.price_range || 0);
+        return price > 100;
+      }
+
+      return menuText.includes(filter) || mealType.includes(filter);
+    }
+
+    function createMealCard(mess) {
+      const card = document.createElement("a");
+      card.className = "card";
+      card.href = "mess.html?id=" + encodeURIComponent(mess.id);
+
+      const menuText = getMenuText(mess);
+      const imageSrc = getMessImage(mess);
+      const distanceText = getDistanceText(mess);
+
+      card.innerHTML = `
+        <img src="${imageSrc}" alt="${mess.name || "Mess"}" />
+        <div class="card-body">
+          <div class="title-row">
+            <div class="mess-name">${mess.name || "Mess"}</div>
+          </div>
+          <div class="menu-label">${distanceText}</div>
+          <div class="menu">${menuText}</div>
+        </div>
+      `;
+
+      mealsContainer.appendChild(card);
+    }
+
+    async function loadMeals() {
+      const { data, error } = await sb.from("mess").select("*");
+
+      if (error) {
+        console.log("MESS ERROR", error);
+        searchText.innerText = "Could not load meals right now.";
+        noResult.style.display = "block";
+        return;
+      }
+
+      if (!data || data.length === 0) {
+        searchText.innerText = "No mess data found.";
+        noResult.style.display = "block";
+        return;
+      }
+
+      let filtered = [...data];
+
+      if (search) {
+        searchText.innerText = "Showing results for: " + search;
+
+        filtered = filtered.filter(mess => {
+          const name = (mess.name || "").toLowerCase();
+          const menu = getMenuText(mess).toLowerCase();
+          const location = (mess.location || mess.address || "").toLowerCase();
+          return name.includes(search) || menu.includes(search) || location.includes(search);
+        });
+      } else if (nearby === "1") {
+        if (locationEnabled && !isNaN(userLat) && !isNaN(userLon)) {
+          searchText.innerText = "Showing nearby messes based on your location.";
+
+          filtered = filtered.filter(mess => {
+            const lat = Number(mess.latitude || mess.lat);
+            const lon = Number(mess.longitude || mess.lng || mess.lon);
+
+            if (isNaN(lat) || isNaN(lon)) return false;
+
+            const distance = getDistance(userLat, userLon, lat, lon);
+            mess.distance = distance;
+            return !isNaN(distance) && distance <= 10;
+          });
+
+          filtered.sort((a, b) => (a.distance || 9999) - (b.distance || 9999));
+        } else {
+          searchText.innerText = "Enable location to see nearby messes.";
+          filtered = [];
+        }
+      } else if (filter) {
+        searchText.innerText = "Showing " + filter + " meals.";
+        filtered = filtered.filter(matchesFilter);
+
+        if (locationEnabled && !isNaN(userLat) && !isNaN(userLon)) {
+          filtered.forEach(mess => {
+            const lat = Number(mess.latitude || mess.lat);
+            const lon = Number(mess.longitude || mess.lng || mess.lon);
+
+            if (!isNaN(lat) && !isNaN(lon)) {
+              mess.distance = getDistance(userLat, userLon, lat, lon);
+            }
+          });
+
+          filtered.sort((a, b) => (a.distance || 9999) - (b.distance || 9999));
+        }
+      } else {
+        if (locationEnabled && !isNaN(userLat) && !isNaN(userLon)) {
+          searchText.innerText = "Showing nearby messes based on your location.";
+
+          filtered.forEach(mess => {
+            const lat = Number(mess.latitude || mess.lat);
+            const lon = Number(mess.longitude || mess.lng || mess.lon);
+
+            if (!isNaN(lat) && !isNaN(lon)) {
+              mess.distance = getDistance(userLat, userLon, lat, lon);
+            }
+          });
+
+          filtered.sort((a, b) => (a.distance || 9999) - (b.distance || 9999));
+        } else {
+          searchText.innerText = "Browse available messes and menus.";
+        }
+      }
+
+      mealsContainer.innerHTML = "";
+
+      if (filtered.length === 0) {
+        noResult.style.display = "block";
+        return;
+      }
+
+      noResult.style.display = "none";
+      filtered.forEach(createMealCard);
+    }
+
+    loadMeals();
   </script>
 
 </body>
