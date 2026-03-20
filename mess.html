@@ -18,14 +18,11 @@
     :root{
       --bg:#0d0f14;
       --card:#171b24;
-      --card-alt:#1c2330;
-      --soft:#222937;
       --line:#2e3748;
       --text:#f5f7fb;
       --muted:#b9c0cc;
       --accent:#ff8a00;
       --accent2:#ffb347;
-      --green:#27c26c;
       --shadow:0 12px 28px rgba(0,0,0,0.22);
     }
 
@@ -161,19 +158,6 @@
       color:#fff;
     }
 
-    .rating{
-      min-width:66px;
-      text-align:center;
-      background:rgba(39,194,108,0.12);
-      color:#7df0b0;
-      border:1px solid rgba(39,194,108,0.28);
-      padding:8px 10px;
-      border-radius:12px;
-      font-size:14px;
-      font-weight:800;
-      box-shadow:inset 0 1px 0 rgba(255,255,255,0.04);
-    }
-
     .info-grid{
       display:grid;
       gap:12px;
@@ -223,11 +207,17 @@
       line-height:1.8;
       color:#d9e0eb;
       font-size:14px;
+      white-space:pre-wrap;
+    }
+
+    .btn-group{
+      display:grid;
+      gap:12px;
+      margin-top:16px;
     }
 
     .btn{
       display:block;
-      margin-top:16px;
       padding:14px;
       text-align:center;
       background:linear-gradient(90deg,var(--accent),var(--accent2));
@@ -237,6 +227,17 @@
       font-size:15px;
       font-weight:800;
       box-shadow:0 14px 28px rgba(255,138,0,0.18);
+    }
+
+    .btn.secondary{
+      background:rgba(255,255,255,0.06);
+      border:1px solid rgba(255,255,255,0.08);
+      box-shadow:none;
+    }
+
+    .btn.disabled{
+      opacity:0.6;
+      pointer-events:none;
     }
 
     .not-found{
@@ -264,6 +265,10 @@
       .info-grid{
         grid-template-columns:repeat(2,1fr);
       }
+
+      .btn-group{
+        grid-template-columns:repeat(2,1fr);
+      }
     }
 
     @media(min-width:1100px){
@@ -279,7 +284,7 @@
 
   <header class="topbar">
     <div class="topbar-left">
-      <a href="meals.html" class="back">← Back</a>
+      <a href="javascript:history.back()" class="back">← Back</a>
 
       <div class="brand">
         <h1>Meal Buzz</h1>
@@ -295,7 +300,6 @@
       <div class="content">
         <div class="title-row">
           <h2 id="name" class="title">Loading...</h2>
-          <div class="rating" id="rating">4.0 ★</div>
         </div>
 
         <div class="info-grid">
@@ -315,7 +319,10 @@
           <div class="menu" id="menu">Loading...</div>
         </div>
 
-        <a href="#" id="callBtn" class="btn">Call Now</a>
+        <div class="btn-group">
+          <a href="#" id="callBtn" class="btn">Call Now</a>
+          <a href="#" id="directionBtn" class="btn secondary">Get Directions</a>
+        </div>
       </div>
     </div>
   </div>
@@ -325,44 +332,142 @@
   <script>
     const SUPABASE_URL = "https://iinvhwsbnvmcujyrzlxe.supabase.co";
     const SUPABASE_KEY = "sb_publishable_fwhxfVqWpDrro8hkQbQQRA_1crMexZv";
-
     const sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
     const params = new URLSearchParams(window.location.search);
-    const name = params.get("search");
+    const messId = params.get("id");
+
+    function getMenuText(mess) {
+      return mess.today_menu || mess.menu || "Menu not available";
+    }
+
+    function detectMealType(mess) {
+      const directType = (mess.type || mess.food_type || "").toString().toLowerCase().trim();
+      if (directType.includes("nonveg") || directType.includes("non-veg")) return "nonveg";
+      if (directType.includes("veg")) return "veg";
+
+      const text = getMenuText(mess).toLowerCase();
+
+      const nonVegWords = [
+        "chicken", "egg", "anda", "mutton", "fish", "keema", "prawn", "biryani", "nonveg", "non-veg"
+      ];
+
+      for (const word of nonVegWords) {
+        if (text.includes(word)) return "nonveg";
+      }
+
+      return "veg";
+    }
+
+    function getMessImage(mess) {
+      const mealType = detectMealType(mess);
+
+      const manualImage =
+        mess.image_url ||
+        mess.image ||
+        mess.main_image ||
+        mess.photo_url ||
+        "";
+
+      const vegImage =
+        mess.veg_image_url ||
+        mess.veg_image ||
+        "";
+
+      const nonVegImage =
+        mess.nonveg_image_url ||
+        mess.nonveg_image ||
+        mess.non_veg_image_url ||
+        mess.non_veg_image ||
+        "";
+
+      if (mealType === "nonveg" && nonVegImage) return nonVegImage;
+      if (mealType === "veg" && vegImage) return vegImage;
+      if (manualImage) return manualImage;
+
+      return mealType === "nonveg" ? "thali2.jpg" : "thali.jpg";
+    }
 
     loadMess();
 
-    async function loadMess(){
-      const { data, error } = await sb
-        .from("mess")
-        .select("*")
-        .ilike("name", name);
-
-      if(error || !data || data.length === 0){
-        document.querySelector(".content").innerHTML = `
-          <div class="not-found">
-            <h2 style="margin-bottom:10px;color:#fff;">Mess not found</h2>
-            <p>This mess details page is not available right now.</p>
-          </div>
-        `;
+    async function loadMess() {
+      if (!messId) {
+        showNotFound();
         return;
       }
 
-      const mess = data[0];
+      const { data, error } = await sb
+        .from("mess")
+        .select("*")
+        .eq("id", messId)
+        .single();
 
-      document.getElementById("name").innerText = mess.name || "Mess";
-      document.getElementById("location").innerText = mess.location || "Location not available";
-      document.getElementById("price").innerText = mess.price || "Price not available";
-      document.getElementById("menu").innerText = mess.menu || "Menu not available";
-      document.getElementById("rating").innerText = (mess.rating || "4.0") + " ★";
-      document.getElementById("callBtn").href = "tel:" + (mess.contact || "");
-
-      if (mess.image_url) {
-        document.getElementById("image").src = mess.image_url;
+      if (error || !data) {
+        console.log("MESS DETAIL ERROR", error);
+        showNotFound();
+        return;
       }
+
+      const mess = data;
+
+      document.getElementById("name").innerText =
+        mess.name || mess.mess_name || "Mess";
+
+      const address =
+        mess.location || mess.address || mess.location_name || "Location not available";
+
+      document.getElementById("location").innerText = address;
+
+      document.getElementById("price").innerText =
+        mess.price || mess.price_range || "Price not available";
+
+      document.getElementById("menu").innerText = getMenuText(mess);
+
+      document.getElementById("image").src = getMessImage(mess);
+
+      const callBtn = document.getElementById("callBtn");
+      const contact = mess.contact || mess.phone || mess.mobile || "";
+
+      if (contact) {
+        callBtn.href = "tel:" + contact;
+        callBtn.innerText = "Call Now";
+        callBtn.classList.remove("disabled");
+      } else {
+        callBtn.href = "#";
+        callBtn.innerText = "Contact not available";
+        callBtn.classList.add("disabled");
+      }
+
+      const directionBtn = document.getElementById("directionBtn");
+      const lat = Number(mess.latitude || mess.lat);
+      const lon = Number(mess.longitude || mess.lon || mess.lng);
+
+      if (!isNaN(lat) && !isNaN(lon)) {
+        directionBtn.href = `https://www.google.com/maps/search/?api=1&query=${lat},${lon}`;
+        directionBtn.target = "_blank";
+        directionBtn.innerText = "Get Directions";
+        directionBtn.classList.remove("disabled");
+      } else if (address && address !== "Location not available") {
+        directionBtn.href = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(address)}`;
+        directionBtn.target = "_blank";
+        directionBtn.innerText = "Get Directions";
+        directionBtn.classList.remove("disabled");
+      } else {
+        directionBtn.href = "#";
+        directionBtn.innerText = "Direction not available";
+        directionBtn.classList.add("disabled");
+      }
+    }
+
+    function showNotFound() {
+      document.querySelector(".content").innerHTML = `
+        <div class="not-found">
+          <h2 style="margin-bottom:10px;color:#fff;">Mess not found</h2>
+          <p>This mess details page is not available right now.</p>
+        </div>
+      `;
     }
   </script>
 
 </body>
-</html>
+</html>s
