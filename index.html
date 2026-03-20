@@ -3,8 +3,11 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Meal Buzz Intro</title>
-
+  <title>Meal Buzz</title>
+  <link rel="icon" type="image/png" href="favicon.png" />
+  <link rel="shortcut icon" href="favicon.png" />
+  <link rel="apple-touch-icon" href="favicon.png" />
+  <meta name="theme-color" content="#0b0d12" />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Poppins:wght@700;800&display=swap" rel="stylesheet">
@@ -16,265 +19,1162 @@
       box-sizing:border-box;
     }
 
-    body{
-      font-family:'Inter', sans-serif;
-      background:#000;
-      color:#fff;
-      overflow:hidden;
+    :root{
+      --bg:#0b0d12;
+      --card:rgba(23,27,36,0.74);
+      --line:rgba(255,255,255,0.10);
+      --text:#f5f7fb;
+      --muted:#b9c0cc;
+      --accent:#ff8a00;
+      --accent2:#ffb347;
+      --shadow:0 14px 30px rgba(0,0,0,0.24);
+      --shadow-strong:0 22px 44px rgba(0,0,0,0.30);
     }
 
-    .intro-screen{
-      position:relative;
-      width:100%;
-      height:100vh;
+    html{
+      scroll-behavior:smooth;
+    }
+
+    body{
+      font-family:'Inter', Arial, sans-serif;
+      color:var(--text);
+      background:
+        radial-gradient(circle at top right, rgba(255,138,0,0.10), transparent 22%),
+        radial-gradient(circle at top left, rgba(255,255,255,0.04), transparent 16%),
+        linear-gradient(180deg,#0b0d12 0%,#141925 100%);
+      min-height:100vh;
+      padding-bottom:130px;
+      overflow-x:hidden;
+    }
+
+    a{
+      text-decoration:none;
+      color:inherit;
+    }
+
+    button{
+      border:none;
+      cursor:pointer;
+      font-family:inherit;
+      background:none;
+    }
+
+    img{
+      display:block;
+      max-width:100%;
+    }
+
+    .topbar{
+      position:sticky;
+      top:0;
+      z-index:100;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:12px;
+      padding:16px;
+      background:rgba(11,13,18,0.84);
+      backdrop-filter:blur(14px);
+      border-bottom:1px solid rgba(255,255,255,0.06);
+    }
+
+    .brand h1{
+      font-family:'Poppins', sans-serif;
+      font-size:30px;
+      line-height:1;
+      background:linear-gradient(90deg,#ffffff 0%, #ffdcb3 35%, #ffb347 62%, #ff8a00 100%);
+      -webkit-background-clip:text;
+      -webkit-text-fill-color:transparent;
+      background-clip:text;
+    }
+
+    .brand p{
+      color:#d6dde8;
+      font-size:11px;
+      margin-top:6px;
+      letter-spacing:1.7px;
+      text-transform:uppercase;
+      font-weight:700;
+    }
+
+    .section{
+      padding:18px 16px;
+    }
+
+    .hero-card{
+      background:
+        radial-gradient(circle at top right, rgba(255,179,71,0.08), transparent 26%),
+        linear-gradient(135deg, rgba(255,255,255,0.04), rgba(255,255,255,0.01)),
+        var(--card);
+      border:1px solid var(--line);
+      border-radius:30px;
       overflow:hidden;
+      box-shadow:var(--shadow-strong);
+      backdrop-filter:blur(16px);
+      position:relative;
+      padding:24px 18px 20px;
+    }
+
+    .hero-card::after{
+      content:"";
+      position:absolute;
+      right:-40px;
+      top:-40px;
+      width:180px;
+      height:180px;
+      background:radial-gradient(circle, rgba(255,138,0,0.18), transparent 65%);
+      pointer-events:none;
+    }
+
+    .hero-eyebrow{
+      color:#ffbe63;
+      font-size:13px;
+      font-weight:700;
+      letter-spacing:1px;
+      text-transform:uppercase;
+      margin-bottom:10px;
+      position:relative;
+      z-index:1;
+    }
+
+    .hero-title{
+      font-family:'Poppins', sans-serif;
+      font-size:clamp(30px, 8vw, 48px);
+      line-height:1.08;
+      margin-bottom:12px;
+      max-width:95%;
+      position:relative;
+      z-index:1;
+    }
+
+    .hero-title .accent{
+      color:#ffbe63;
+    }
+
+    .hero-subtitle{
+      color:#dbe2ed;
+      font-size:14px;
+      line-height:1.8;
+      max-width:95%;
+      position:relative;
+      z-index:1;
+    }
+
+    .search-panel{
+      margin-top:16px;
+      background:var(--card);
+      border:1px solid var(--line);
+      border-radius:28px;
+      padding:16px;
+      box-shadow:var(--shadow);
+      backdrop-filter:blur(14px);
+    }
+
+    .search-row{
+      display:flex;
+      gap:12px;
+      align-items:center;
+    }
+
+    .search-box-wrap{
+      flex:1;
+      display:flex;
+      align-items:center;
+      gap:12px;
+      background:rgba(255,255,255,0.08);
+      border:1px solid rgba(255,255,255,0.15);
+      border-radius:22px;
+      padding:0 16px;
+      min-height:62px;
+      position:relative;
+      box-shadow:
+        inset 0 1px 0 rgba(255,255,255,0.05),
+        0 8px 20px rgba(0,0,0,0.25);
+      backdrop-filter:blur(10px);
+    }
+
+    .search-icon{
+      width:20px;
+      height:20px;
+      flex-shrink:0;
+    }
+
+    .search-icon svg{
+      width:100%;
+      height:100%;
+      stroke:#f6c06d;
+      fill:none;
+      stroke-width:2.2;
+      stroke-linecap:round;
+      stroke-linejoin:round;
+    }
+
+    .search-box{
+      width:100%;
+      background:transparent;
+      border:none;
+      outline:none;
+      color:#fff;
+      font-size:16px;
+    }
+
+    .search-box::placeholder{
+      color:rgba(255,255,255,0.60);
+    }
+
+    #suggestionsBox{
+      position:absolute;
+      top:68px;
+      left:0;
+      right:0;
+      background:#171c27;
+      border:1px solid rgba(255,255,255,0.08);
+      border-radius:18px;
+      overflow:hidden;
+      z-index:999;
+      box-shadow:0 18px 34px rgba(0,0,0,0.30);
+      display:none;
+    }
+
+    #suggestionsBox div{
+      padding:12px 14px;
+      border-bottom:1px solid rgba(255,255,255,0.06);
+      cursor:pointer;
+      color:#fff;
+      font-size:14px;
+    }
+
+    #suggestionsBox div:last-child{
+      border-bottom:none;
+    }
+
+    #suggestionsBox div:hover{
+      background:#232b38;
+    }
+
+    .location-btn{
+      width:60px;
+      height:60px;
+      border-radius:18px;
+      background:linear-gradient(135deg,#ffb347,#ff8a00);
       display:flex;
       align-items:center;
       justify-content:center;
+      cursor:pointer;
+      box-shadow:0 8px 20px rgba(255,138,0,0.35);
+      transition:all 0.25s ease;
+      flex-shrink:0;
+      border:none;
     }
 
-    .intro-video{
+    .location-btn:active{
+      transform:scale(0.92);
+    }
+
+    .location-btn svg{
+      width:26px;
+      height:26px;
+      stroke:#ffffff;
+      fill:none;
+      stroke-width:2.4;
+      stroke-linecap:round;
+      stroke-linejoin:round;
+    }
+
+    #locationResult{
+      margin-top:12px;
+      color:#90ee90;
+      font-size:14px;
+      min-height:20px;
+    }
+
+    .category-row{
+      display:grid;
+      grid-template-columns:repeat(4,minmax(0,1fr));
+      gap:14px;
+      margin-top:22px;
+    }
+
+    .category-chip{
+      text-align:center;
+      border:none;
+      background:none;
+    }
+
+    .category-circle{
+      width:80px;
+      height:80px;
+      margin:0 auto 8px;
+      border-radius:50%;
+      background:rgba(255,255,255,0.04);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      overflow:hidden;
+      border:1px solid rgba(255,255,255,0.08);
+      box-shadow:0 6px 14px rgba(0,0,0,0.25);
+    }
+
+    .category-circle img{
+      width:64px;
+      height:64px;
+      border-radius:50%;
+      object-fit:cover;
+    }
+
+    .category-label{
+      font-size:13px;
+      color:#e5ebf5;
+      font-weight:700;
+      line-height:1.3;
+    }
+
+    .section-head{
+      display:flex;
+      align-items:end;
+      justify-content:space-between;
+      gap:10px;
+      margin-bottom:12px;
+    }
+
+    .section-title{
+      font-family:'Poppins', sans-serif;
+      font-size:24px;
+      color:#fff;
+    }
+
+    .section-subtitle{
+      color:var(--muted);
+      font-size:14px;
+      line-height:1.7;
+      margin-bottom:16px;
+    }
+
+    .recommend-row{
+      display:flex;
+      gap:14px;
+      overflow-x:auto;
+      padding-bottom:4px;
+      scrollbar-width:none;
+    }
+
+    .recommend-row::-webkit-scrollbar{
+      display:none;
+    }
+
+    .recommend-card{
+      flex:0 0 260px;
+      background:var(--card);
+      border:1px solid var(--line);
+      border-radius:24px;
+      overflow:hidden;
+      box-shadow:var(--shadow);
+      backdrop-filter:blur(12px);
+      text-decoration:none;
+      color:#fff;
+      display:block;
+    }
+
+    .recommend-card img{
+      width:100%;
+      height:165px;
+      object-fit:cover;
+    }
+
+    .recommend-body{
+      padding:14px;
+    }
+
+    .recommend-name{
+      font-size:18px;
+      font-weight:800;
+      margin-bottom:8px;
+    }
+
+    .recommend-meta{
+      color:var(--muted);
+      font-size:14px;
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+    }
+.why-wrap{
+      background:linear-gradient(180deg,#fff7f5 0%, #fffdfb 100%);
+      border:1px solid rgba(0,0,0,0.05);
+      border-radius:30px;
+      padding:22px 16px;
+      box-shadow:0 18px 38px rgba(0,0,0,0.08);
+      position:relative;
+      overflow:hidden;
+    }
+
+    .why-wrap::before{
+      content:"";
+      position:absolute;
+      left:-120px;
+      top:40px;
+      width:260px;
+      height:260px;
+      border:1px solid rgba(240,109,79,0.15);
+      border-radius:50%;
+      pointer-events:none;
+    }
+
+    .why-wrap::after{
+      content:"";
+      position:absolute;
+      right:-120px;
+      top:120px;
+      width:260px;
+      height:260px;
+      border:1px solid rgba(240,109,79,0.12);
+      border-radius:50%;
+      pointer-events:none;
+    }
+
+    .why-top{
+      position:relative;
+      z-index:1;
+      text-align:center;
+      margin-bottom:20px;
+    }
+
+    .why-top h2{
+      font-family:'Poppins', sans-serif;
+      font-size:clamp(28px, 7vw, 42px);
+      line-height:1.15;
+      color:#ef6a57;
+      margin-bottom:10px;
+    }
+
+    .why-top p{
+      color:#6a7382;
+      font-size:15px;
+      line-height:1.8;
+      max-width:560px;
+      margin:0 auto;
+    }
+
+    .why-grid{
+      position:relative;
+      z-index:1;
+      display:grid;
+      gap:12px;
+    }
+
+    .why-feature{
+      background:rgba(255,255,255,0.88);
+      border:1px solid rgba(0,0,0,0.05);
+      border-radius:22px;
+      padding:16px;
+      box-shadow:0 10px 22px rgba(0,0,0,0.05);
+      display:flex;
+      gap:12px;
+      align-items:flex-start;
+    }
+
+    .why-icon{
+      width:46px;
+      height:46px;
+      border-radius:14px;
+      background:linear-gradient(135deg, rgba(240,109,79,0.12), rgba(255,179,71,0.10));
+      border:1px solid rgba(240,109,79,0.14);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      flex-shrink:0;
+    }
+
+    .why-icon svg{
+      width:22px;
+      height:22px;
+      stroke:#ef6a57;
+      fill:none;
+      stroke-width:2;
+      stroke-linecap:round;
+      stroke-linejoin:round;
+    }
+
+    .why-content h3{
+      font-family:'Poppins', sans-serif;
+      font-size:17px;
+      margin-bottom:6px;
+      color:#252f3d;
+    }
+
+    .why-content p{
+      color:#707a89;
+      font-size:14px;
+      line-height:1.7;
+    }
+
+    .bottom-nav{
+      position:fixed;
+      left:12px;
+      right:12px;
+      bottom:12px;
+      z-index:999;
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:8px;
+      padding:10px 12px;
+      background:rgba(18,22,31,0.84);
+      border:1px solid rgba(255,255,255,0.08);
+      border-radius:26px;
+      backdrop-filter:blur(14px);
+      box-shadow:0 18px 34px rgba(0,0,0,0.26);
+    }
+
+    .nav-item{
+      text-align:center;
+      color:#d7deea;
+      font-size:12px;
+      font-weight:700;
+      padding:6px 2px;
+    }
+
+    .nav-icon{
+      width:24px;
+      height:24px;
+      margin:0 auto 6px;
+      display:block;
+    }
+
+    .nav-icon svg{
+      width:100%;
+      height:100%;
+      stroke:currentColor;
+      fill:none;
+      stroke-width:2;
+      stroke-linecap:round;
+      stroke-linejoin:round;
+    }
+
+    .nav-item.active{
+      color:#ffbe63;
+    }
+
+    .intro-screen{
+      position:fixed;
+      inset:0;
+      z-index:5000;
+      overflow:hidden;
+      background:#0b0d12;
+      transition:transform .45s ease, opacity .45s ease;
+    }
+
+    .intro-screen.hidden{
+      display:none;
+    }
+
+    .intro-screen.slide-out{
+      transform:translateX(100%);
+      opacity:0;
+    }
+
+    .bg-video{
       position:absolute;
       inset:0;
       width:100%;
       height:100%;
       object-fit:cover;
-      z-index:1;
     }
 
     .overlay{
       position:absolute;
       inset:0;
-      z-index:2;
       background:
-        linear-gradient(to bottom,
-          rgba(0,0,0,0.45) 0%,
-          rgba(0,0,0,0.18) 28%,
-          rgba(0,0,0,0.30) 60%,
-          rgba(0,0,0,0.72) 100%);
+        linear-gradient(180deg, rgba(0,0,0,0.18) 0%, rgba(0,0,0,0.50) 55%, rgba(0,0,0,0.82) 100%),
+        radial-gradient(circle at top right, rgba(255,138,0,0.18), transparent 28%);
+      z-index:1;
     }
 
     .intro-content{
       position:relative;
-      z-index:3;
+      z-index:2;
       width:100%;
-      max-width:520px;
-      height:100vh;
+      height:100%;
       display:flex;
       flex-direction:column;
-      justify-content:space-between;
-      padding:36px 22px 28px;
+      justify-content:flex-end;
+      padding:24px 20px 40px;
     }
 
-    .top-content{
-      margin-top:20px;
+    .intro-brand{
+      position:absolute;
+      top:22px;
+      left:20px;
+      z-index:3;
     }
 
-    .brand{
+    .intro-brand h1{
       font-family:'Poppins', sans-serif;
-      font-size:20px;
-      font-weight:800;
-      letter-spacing:0.3px;
-      margin-bottom:20px;
-      color:#fff;
-      text-shadow:0 4px 18px rgba(0,0,0,0.35);
+      font-size:28px;
+      line-height:1;
+      background:linear-gradient(90deg,#ffffff 0%, #ffdcb3 35%, #ffb347 62%, #ff8a00 100%);
+      -webkit-background-clip:text;
+      -webkit-text-fill-color:transparent;
+      background-clip:text;
+    }
+
+    .intro-brand p{
+      color:#dfe6f2;
+      font-size:10px;
+      margin-top:6px;
+      letter-spacing:1.7px;
+      text-transform:uppercase;
+      font-weight:700;
+    }
+
+    .text-wrap{
+      max-width:92%;
+      margin-bottom:26px;
+    }
+
+    .eyebrow{
+      color:#ffbe63;
+      font-size:12px;
+      font-weight:700;
+      letter-spacing:1px;
+      text-transform:uppercase;
+      margin-bottom:10px;
     }
 
     .title{
       font-family:'Poppins', sans-serif;
-      font-size:clamp(34px, 6vw, 54px);
-      line-height:1.1;
-      font-weight:800;
-      max-width:92%;
-      color:#fff;
-      text-shadow:0 6px 24px rgba(0,0,0,0.35);
+      font-size:clamp(30px, 8vw, 46px);
+      line-height:1.12;
+      margin-bottom:12px;
+    }
+
+    .title .accent{
+      color:#ffbe63;
     }
 
     .subtitle{
-      margin-top:14px;
-      font-size:15px;
-      line-height:1.7;
-      color:rgba(255,255,255,0.92);
-      font-weight:500;
-      text-shadow:0 4px 18px rgba(0,0,0,0.35);
+      color:#e5ebf4;
+      font-size:14px;
+      line-height:1.8;
+      max-width:95%;
     }
 
-    .bottom-content{
-      display:flex;
-      flex-direction:column;
-      align-items:center;
-      gap:22px;
-      width:100%;
-    }
-
-    .dots{
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      gap:12px;
-    }
-
-    .dot{
-      width:12px;
-      height:12px;
-      border-radius:50%;
-      background:rgba(255,255,255,0.75);
-      transition:0.25s ease;
-      box-shadow:0 4px 14px rgba(0,0,0,0.22);
-    }
-
-    .dot.active{
-      width:20px;
-      height:20px;
-      background:#fff;
-      box-shadow:0 0 0 7px rgba(255,255,255,0.18);
-    }
-
-    .slide-btn{
-      width:100%;
-      max-width:420px;
-      background:rgba(255,255,255,0.96);
-      border-radius:999px;
-      padding:10px 10px 10px 26px;
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      box-shadow:0 16px 34px rgba(0,0,0,0.26);
-      cursor:pointer;
-      user-select:none;
-      -webkit-tap-highlight-color:transparent;
-      transition:transform 0.18s ease;
-    }
-
-    .slide-btn:active{
-      transform:scale(0.98);
-    }
-
-    .slide-text{
-      color:#111;
-      font-size:20px;
-      font-weight:800;
-      letter-spacing:0.2px;
-      flex:1;
+    .bottom-area{
       text-align:center;
-      transform:translateX(10px);
+      width:100%;
     }
 
-    .slide-arrow{
-      width:62px;
-      height:62px;
-      border-radius:50%;
-      background:linear-gradient(135deg, #ff7b2c, #d85b24);
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      color:#fff;
-      font-size:30px;
-      font-weight:700;
-      box-shadow:0 10px 24px rgba(216,91,36,0.38);
-      flex-shrink:0;
-      transition:transform 0.25s ease;
-    }
-
-    .slide-btn:hover .slide-arrow{
-      transform:translateX(4px);
-    }
-
-    .hint{
+    .tap-text{
       font-size:13px;
-      color:rgba(255,255,255,0.78);
-      letter-spacing:0.4px;
+      color:rgba(255,255,255,0.68);
+      letter-spacing:1px;
+      font-weight:500;
     }
 
-    .slide-out{
-      animation:slideOut 0.55s ease forwards;
-    }
-
-    @keyframes slideOut{
-      0%{
-        transform:translateX(0);
-        opacity:1;
+    @media (min-width:768px){
+      .hero-subtitle{
+        font-size:15px;
+        max-width:78%;
       }
-      100%{
-        transform:translateX(-100%);
-        opacity:0;
-      }
-    }
 
-    @media (max-width:480px){
+      .why-grid{
+        grid-template-columns:repeat(2,1fr);
+      }
+
       .intro-content{
-        padding:28px 18px 24px;
+        padding:30px 32px 46px;
       }
 
-      .brand{
-        font-size:18px;
-        margin-bottom:18px;
+      .intro-brand{
+        top:28px;
+        left:32px;
+      }
+
+      .intro-brand h1{
+        font-size:32px;
+      }
+
+      .text-wrap{
+        max-width:68%;
       }
 
       .subtitle{
-        font-size:14px;
-      }
-
-      .slide-text{
-        font-size:18px;
-      }
-
-      .slide-arrow{
-        width:58px;
-        height:58px;
-        font-size:28px;
+        font-size:15px;
+        max-width:78%;
       }
     }
   </style>
 </head>
 <body>
 
-  <section class="intro-screen" id="introScreen">
-    <video class="intro-video" autoplay muted loop playsinline>
-      <source src="intro.mp4" type="video/mp4">
-    </video>
+  <header class="topbar" id="home">
+    <div class="brand">
+      <h1>Meal Buzz</h1>
+      <p>DISCOVER • DECIDE • DINE</p>
+    </div>
+  </header>
 
-    <div class="overlay"></div>
+  <section class="section">
+    <div class="hero-card">
+      <div class="hero-eyebrow">Daily local discovery</div>
+      <h2 class="hero-title">
+        Find <span class="accent">Nearby Tiffin & Mess</span> Services
+      </h2>
+      <p class="hero-subtitle">
+        Search nearby mess names, menu items and affordable local meal options in one place.
+      </p>
+    </div>
 
-    <div class="intro-content">
-      <div class="top-content">
-        <div class="brand">Meal Buzz</div>
+    <div class="search-panel">
+      <div class="search-row">
+        <div class="search-box-wrap">
+          <span class="search-icon">
+            <svg viewBox="0 0 24 24">
+              <circle cx="11" cy="11" r="7"></circle>
+              <path d="M20 20l-3.5-3.5"></path>
+            </svg>
+          </span>
 
-        <h1 class="title">Gharghuti jevan, ata fakt ek tap dur 🍛</h1>
+          <input
+            type="text"
+            id="searchInput"
+            class="search-box"
+            placeholder="Search mess or food item..."
+            oninput="showSuggestions(this.value)"
+            onkeydown="handleSearchEnter(event)"
+          />
 
-        <p class="subtitle">Simple • Affordable • Daily updated</p>
+          <div id="suggestionsBox"></div>
+        </div>
+
+        <button class="location-btn" onclick="enableLocationAndOpenNearby(false)" title="Use current location">
+          <svg viewBox="0 0 24 24">
+            <path d="M12 21s-6-5.2-6-11a6 6 0 1 1 12 0c0 5.8-6 11-6 11z"></path>
+            <circle cx="12" cy="10" r="2.3"></circle>
+          </svg>
+        </button>
       </div>
 
-      <div class="bottom-content">
-        <div class="dots">
-          <span class="dot"></span>
-          <span class="dot active"></span>
-          <span class="dot"></span>
-          <span class="dot"></span>
-          <span class="dot"></span>
-        </div>
+      <div id="locationResult"></div>
 
-        <div class="slide-btn" onclick="goNext()">
-          <span class="slide-text">Explore Meals</span>
-          <span class="slide-arrow">›</span>
-        </div>
+      <div class="category-row">
+        <button class="category-chip" onclick="goToMealsWithFilter('veg')">
+          <div class="category-circle"><img src="marathi.jpg" alt="Veg"></div>
+          <div class="category-label">Veg</div>
+        </button>
 
-        <div class="hint">Slide feel • Tap to continue</div>
+        <button class="category-chip" onclick="goToMealsWithFilter('nonveg')">
+          <div class="category-circle"><img src="nonveg1.jpg" alt="Non-veg"></div>
+          <div class="category-label">Non-veg</div>
+        </button>
+
+        <button class="category-chip" onclick="goToMealsWithFilter('budget')">
+          <div class="category-circle"><img src="budget.jpg" alt="Budget"></div>
+          <div class="category-label">Budget</div>
+        </button>
+
+        <button class="category-chip" onclick="goToMealsWithFilter('premium')">
+          <div class="category-circle"><img src="thali2.jpg" alt="Premium"></div>
+          <div class="category-label">Premium</div>
+        </button>
       </div>
     </div>
   </section>
 
+  <section class="section">
+    <div class="section-head">
+      <div>
+        <h2 class="section-title">Recommended for you</h2>
+      </div>
+    </div>
+    <p class="section-subtitle">Popular mess options near your area</p>
+    <div class="recommend-row" id="recommendRow"></div>
+  </section>
+
+  <section class="section" id="whySection">
+    <div class="why-wrap">
+      <div class="why-top">
+        <h2>Why Choose Meal Buzz</h2>
+        <p>
+          A simple way to discover nearby meals, compare menus and choose affordable local food options faster.
+        </p>
+      </div>
+
+      <div class="why-grid">
+        <div class="why-feature">
+          <div class="why-icon">
+            <svg viewBox="0 0 24 24">
+              <path d="M12 21s-6-5.2-6-11a6 6 0 1 1 12 0c0 5.8-6 11-6 11z"></path>
+              <circle cx="12" cy="10" r="2.5"></circle>
+            </svg>
+          </div>
+          <div class="why-content">
+            <h3>Nearby first</h3>
+            <p>Find local messes around you quickly without asking around or checking random places.</p>
+          </div>
+        </div>
+
+        <div class="why-feature">
+          <div class="why-icon">
+            <svg viewBox="0 0 24 24">
+              <path d="M4 6h16"></path>
+              <path d="M6 10h12"></path>
+              <path d="M8 14h8"></path>
+              <path d="M10 18h4"></path>
+            </svg>
+          </div>
+          <div class="why-content">
+            <h3>Daily menu view</h3>
+            <p>Check what is available before going to the mess or calling the owner.</p>
+          </div>
+        </div>
+
+        <div class="why-feature">
+          <div class="why-icon">
+            <svg viewBox="0 0 24 24">
+              <circle cx="11" cy="11" r="6"></circle>
+              <path d="M20 20l-4.2-4.2"></path>
+            </svg>
+          </div>
+          <div class="why-content">
+            <h3>Easy search</h3>
+            <p>Search by mess name or food item like paneer, rice, bhakri or thali in one place.</p>
+          </div>
+        </div>
+
+        <div class="why-feature">
+          <div class="why-icon">
+            <svg viewBox="0 0 24 24">
+              <path d="M5 12h14"></path>
+              <path d="M12 5v14"></path>
+              <circle cx="12" cy="12" r="9"></circle>
+            </svg>
+          </div>
+          <div class="why-content">
+            <h3>Affordable choices</h3>
+            <p>Useful for students and workers looking for simple, affordable and home-style meals.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <nav class="bottom-nav">
+    <a href="#home" class="nav-item active">
+      <span class="nav-icon">
+        <svg viewBox="0 0 24 24">
+          <path d="M3 10.5L12 3l9 7.5"></path>
+          <path d="M5 9.5V21h14V9.5"></path>
+        </svg>
+      </span>
+      Home
+    </a>
+
+    <button class="nav-item" onclick="enableLocationAndOpenNearby(true)">
+      <span class="nav-icon">
+        <svg viewBox="0 0 24 24">
+          <path d="M12 21s-6-5.2-6-11a6 6 0 1 1 12 0c0 5.8-6 11-6 11z"></path>
+          <circle cx="12" cy="10" r="2.5"></circle>
+        </svg>
+      </span>
+      Nearby
+    </button>
+
+    <a href="profile.html" class="nav-item">
+      <span class="nav-icon">
+        <svg viewBox="0 0 24 24">
+          <circle cx="12" cy="8" r="4"></circle>
+          <path d="M4 21c1.8-4 5-6 8-6s6.2 2 8 6"></path>
+        </svg>
+      </span>
+      Profile
+    </a>
+  </nav>
+
+  <div class="intro-screen" id="introScreen">
+    <video class="bg-video" autoplay muted loop playsinline>
+      <source src="food1.mp4" type="video/mp4" />
+    </video>
+
+    <div class="overlay"></div>
+
+    <div class="intro-brand">
+      <h1>Meal Buzz</h1>
+      <p>DISCOVER • DECIDE • DINE</p>
+    </div>
+
+    <div class="intro-content">
+      <div class="text-wrap">
+        <div class="eyebrow">Daily local discovery</div>
+
+        <h1 class="title">
+          Your <span class="accent">Favorite Tiffin Menu</span>, One Tap Away
+        </h1>
+
+        <p class="subtitle">
+          Discover affordable nearby meals, daily tiffin options and local mess menus designed for students and workers.
+        </p>
+      </div>
+
+      <div class="bottom-area">
+        <p class="tap-text">Swipe to continue</p>
+      </div>
+    </div>
+  </div>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
   <script>
-    function goNext() {
+    const SUPABASE_URL = "https://iinvhwsbnvmcujyrzlxe.supabase.co";
+    const SUPABASE_KEY = "sb_publishable_fwhxfVqWpDrro8hkQbQQRA_1crMexZv";
+    const sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+    function closeIntro() {
       const intro = document.getElementById("introScreen");
       intro.classList.add("slide-out");
-
-      setTimeout(() => {
-sessionStorage.setItem("fromIntro", "yes");
-        window.location.href = "home.html";
-      }, 500);
+      sessionStorage.setItem("mealbuzz_intro_seen", "yes");
+      setTimeout(() => intro.classList.add("hidden"), 450);
     }
-  </script>
 
+    let startX = 0;
+    let currentX = 0;
+    let isSwiping = false;
+    let isMouseDown = false;
+
+    const introScreen = document.getElementById("introScreen");
+
+    introScreen.addEventListener("touchstart", function(e) {
+      startX = e.touches[0].clientX;
+      currentX = startX;
+      isSwiping = true;
+    }, { passive: true });
+
+    introScreen.addEventListener("touchmove", function(e) {
+      if (!isSwiping) return;
+      currentX = e.touches[0].clientX;
+    }, { passive: true });
+
+    introScreen.addEventListener("touchend", function() {
+      if (!isSwiping) return;
+      isSwiping = false;
+
+      const diffX = currentX - startX;
+      if (diffX > 80) {
+        closeIntro();
+      }
+    });
+
+    introScreen.addEventListener("mousedown", function(e) {
+      startX = e.clientX;
+      currentX = startX;
+      isMouseDown = true;
+    });
+
+    document.addEventListener("mousemove", function(e) {
+      if (!isMouseDown) return;
+      currentX = e.clientX;
+    });
+
+    document.addEventListener("mouseup", function() {
+      if (!isMouseDown) return;
+      isMouseDown = false;
+
+      const diffX = currentX - startX;
+      if (diffX > 80) {
+        closeIntro();
+      }
+    });
+
+    if (sessionStorage.getItem("mealbuzz_intro_seen") === "yes") {
+      introScreen.classList.add("hidden");
+    }
+
+    function handleSearchEnter(event) {
+      if (event.key === "Enter") {
+        event.preventDefault();
+        const value = document.getElementById("searchInput").value.trim();
+        if (!value) return;
+        window.location.href = "meals.html?search=" + encodeURIComponent(value);
+      }
+    }
+
+    function goToMealsWithFilter(filter) {
+      window.location.href = "meals.html?filter=" + encodeURIComponent(filter);
+    }
+
+    async function showSuggestions(value) {
+      const box = document.getElementById("suggestionsBox");
+
+      if (!value.trim()) {
+        box.innerHTML = "";
+        box.style.display = "none";
+        return;
+      }
+
+      const { data } = await sb
+        .from("mess")
+        .select("id,name,menu,today_menu")
+        .or(`name.ilike.%${value}%,menu.ilike.%${value}%,today_menu.ilike.%${value}%`)
+        .limit(6);
+
+      if (!data || data.length === 0) {
+        box.innerHTML = "";
+        box.style.display = "none";
+        return;
+      }
+
+      box.innerHTML = data.map(m =>
+        `<div onclick="openMess(${m.id})">${m.name}</div>`
+      ).join("");
+
+      box.style.display = "block";
+    }
+
+    function openMess(id) {
+      window.location.href = "mess.html?id=" + encodeURIComponent(id);
+    }
+
+    document.addEventListener("click", function(e) {
+      const searchWrap = document.querySelector(".search-box-wrap");
+      const box = document.getElementById("suggestionsBox");
+
+      if (searchWrap && !searchWrap.contains(e.target)) {
+        box.style.display = "none";
+      }
+    });
+function getMenuText(mess) {
+  return mess.today_menu || mess.menu || "";
+}
+
+function detectMealType(mess) {
+  const directType = (mess.type || mess.food_type || "").toString().toLowerCase().trim();
+
+  if (directType.includes("nonveg") || directType.includes("non-veg")) return "nonveg";
+  if (directType.includes("veg")) return "veg";
+
+  const text = getMenuText(mess).toLowerCase();
+
+  const nonVegWords = [
+    "chicken", "egg", "anda", "mutton", "fish", "keema", "prawn", "biryani", "nonveg", "non-veg"
+  ];
+
+  for (const word of nonVegWords) {
+    if (text.includes(word)) return "nonveg";
+  }
+
+  return "veg";
+}
+
+function getMessImage(mess) {
+  const mealType = detectMealType(mess);
+
+  const manualImage =
+    mess.image_url ||
+    mess.image ||
+    mess.main_image ||
+    mess.photo_url ||
+    "";
+
+  const vegImage =
+    mess.veg_image_url ||
+    mess.veg_image ||
+    "";
+
+  const nonVegImage =
+    mess.nonveg_image_url ||
+    mess.nonveg_image ||
+    mess.non_veg_image_url ||
+    mess.non_veg_image ||
+    "";
+
+  if (mealType === "nonveg" && nonVegImage) return nonVegImage;
+  if (mealType === "veg" && vegImage) return vegImage;
+  if (manualImage) return manualImage;
+
+  return mealType === "nonveg" ? "thali2.jpg" : "thali.jpg";
+}
+
+
+    async function loadRecommendedMesses() {
+      const row = document.getElementById("recommendRow");
+
+      const { data, error } = await sb
+        .from("mess")
+        .select("*")
+        .limit(6);
+
+      if (error || !data || data.length === 0) {
+        row.innerHTML = "<p style='color:#b9c0cc;'>No meals available yet.</p>";
+        return;
+      }
+
+      row.innerHTML = "";
+
+      data.forEach(mess => {
+        const card = document.createElement("a");
+        card.className = "recommend-card";
+        card.href = `mess.html?id=${mess.id}`;
+
+const imageUrl = getMessImage(mess);
+        const name = mess.name || "Mess";
+        const price = mess.price ? `₹${mess.price}` : "Price N/A";
+       const type = detectMealType(mess);
+
+        card.innerHTML = `
+          <img src="${imageUrl}" alt="${name}">
+          <div class="recommend-body">
+            <div class="recommend-name">${name}</div>
+            <div class="recommend-meta">
+              <span>${price}</span>
+              <span>${type}</span>
+            </div>
+          </div>
+        `;
+
+        row.appendChild(card);
+      });
+    }
+
+    function saveLocation(lat, lon) {
+      sessionStorage.setItem("userLat", lat);
+      sessionStorage.setItem("userLon", lon);
+      sessionStorage.setItem("locationEnabled", "yes");
+    }
+
+    function enableLocationAndOpenNearby(openMealsPage) {
+      const result = document.getElementById("locationResult");
+      const alreadyOn = sessionStorage.getItem("locationEnabled") === "yes";
+
+      if (alreadyOn) {
+        if (result) result.innerHTML = "📍 Location already enabled";
+        if (openMealsPage) {
+          window.location.href = "meals.html?nearby=1";
+        }
+        return;
+      }
+
+      if (!navigator.geolocation) {
+        if (result) result.innerHTML = "Location not supported on this device.";
+        return;
+      }
+
+      if (result) result.innerHTML = "Getting location...";
+
+      navigator.geolocation.getCurrentPosition(
+        function(position) {
+          saveLocation(position.coords.latitude, position.coords.longitude);
+          if (result) result.innerHTML = "📍 Location detected";
+          if (openMealsPage) {
+            window.location.href = "meals.html?nearby=1";
+          }
+        },
+        function() {
+          if (result) result.innerHTML = "Location permission denied.";
+        }
+      );
+    }
+
+    document.addEventListener("DOMContentLoaded", function() {
+      loadRecommendedMesses();
+    });
+  </script>
 </body>
 </html>
