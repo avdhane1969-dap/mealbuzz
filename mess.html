@@ -1,12 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
   <title>Meal Buzz - Mess Details</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link rel="icon" type="image/png" href="favicon.png" />
+  <meta name="theme-color" content="#0b0d12" />
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Poppins:wght@700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Poppins:wght@700;800;900&display=swap" rel="stylesheet">
 
   <style>
     *{
@@ -16,28 +21,44 @@
     }
 
     :root{
-      --bg:#0d0f14;
-      --card:#171b24;
-      --line:#2e3748;
+      --bg:#0b0d12;
+      --bg2:#141925;
+      --card:rgba(23,27,36,0.82);
+      --card2:rgba(18,22,31,0.92);
+      --line:rgba(255,255,255,0.10);
       --text:#f5f7fb;
       --muted:#b9c0cc;
       --accent:#ff8a00;
       --accent2:#ffb347;
-      --shadow:0 12px 28px rgba(0,0,0,0.22);
+      --green:#27c26c;
+      --red:#ef4444;
+      --yellow:#facc15;
+      --shadow:0 16px 34px rgba(0,0,0,0.28);
     }
 
     body{
-      font-family:'Inter', Arial, sans-serif;
-      background:
-        radial-gradient(circle at top right, rgba(255,138,0,0.08), transparent 24%),
-        linear-gradient(180deg,#0b0d12 0%, #121721 100%);
+      font-family:Inter, Arial, sans-serif;
       color:var(--text);
+      background:
+        radial-gradient(circle at top right, rgba(255,138,0,0.12), transparent 24%),
+        radial-gradient(circle at top left, rgba(255,255,255,0.04), transparent 18%),
+        linear-gradient(180deg, var(--bg) 0%, var(--bg2) 100%);
       min-height:100vh;
+      padding-bottom:34px;
     }
 
     a{
-      text-decoration:none;
       color:inherit;
+      text-decoration:none;
+    }
+
+    button{
+      font-family:inherit;
+    }
+
+    img{
+      display:block;
+      max-width:100%;
     }
 
     .topbar{
@@ -45,287 +66,328 @@
       top:0;
       z-index:1000;
       display:flex;
-      align-items:center;
       justify-content:space-between;
+      align-items:center;
       gap:12px;
-      padding:16px;
-      background:rgba(13,15,20,0.90);
-      backdrop-filter:blur(12px);
-      border-bottom:1px solid rgba(255,255,255,0.06);
+      padding:15px 16px;
+      background:rgba(11,13,18,0.88);
+      backdrop-filter:blur(16px);
+      -webkit-backdrop-filter:blur(16px);
+      border-bottom:1px solid rgba(255,255,255,0.07);
     }
 
     .topbar-left{
       display:flex;
       align-items:center;
       gap:12px;
+      min-width:0;
     }
 
     .back{
+      flex-shrink:0;
+      min-width:44px;
+      height:44px;
+      padding:0 13px;
+      border-radius:14px;
+      background:rgba(255,255,255,0.06);
+      border:1px solid rgba(255,255,255,0.10);
       display:inline-flex;
       align-items:center;
       justify-content:center;
-      min-width:44px;
-      height:44px;
-      padding:0 14px;
-      border-radius:14px;
-      background:rgba(255,255,255,0.05);
-      border:1px solid rgba(255,255,255,0.08);
       color:#fff;
       font-size:14px;
-      font-weight:700;
-      box-shadow:0 8px 18px rgba(0,0,0,0.14);
+      font-weight:900;
     }
 
     .brand{
-      display:flex;
-      flex-direction:column;
-      justify-content:center;
+      min-width:0;
     }
 
     .brand h1{
-      font-family:'Poppins', sans-serif;
-      font-size:28px;
+      font-family:Poppins,sans-serif;
+      font-size:27px;
       line-height:1;
-      letter-spacing:0.2px;
-      background:linear-gradient(90deg,#ffffff 0%, #ffdcb3 32%, #ffb347 60%, #ff8a00 100%);
+      background:linear-gradient(90deg,#ffffff 0%,#ffdcb3 38%,#ffb347 65%,#ff8a00 100%);
       -webkit-background-clip:text;
       -webkit-text-fill-color:transparent;
       background-clip:text;
-      text-shadow:0 0 24px rgba(255,138,0,0.12);
     }
 
     .brand p{
+      margin-top:6px;
       color:#d6dde8;
-      font-size:11px;
-      margin-top:5px;
-      letter-spacing:1.7px;
+      font-size:10px;
+      letter-spacing:1.5px;
       text-transform:uppercase;
-      font-weight:700;
+      font-weight:800;
     }
 
     .container{
-      padding:18px 16px 28px;
-      max-width:900px;
+      max-width:920px;
       margin:0 auto;
+      padding:16px;
+      display:grid;
+      gap:16px;
     }
 
     .card{
-      background:rgba(24,29,40,0.56);
-      border-radius:24px;
+      background:var(--card);
+      border:1px solid var(--line);
+      border-radius:28px;
       overflow:hidden;
-      border:1px solid rgba(255,255,255,0.08);
       box-shadow:var(--shadow);
-      backdrop-filter:blur(12px);
-      -webkit-backdrop-filter:blur(12px);
-      position:relative;
+      backdrop-filter:blur(14px);
+      -webkit-backdrop-filter:blur(14px);
     }
 
-    .card::before{
-      content:"";
-      position:absolute;
-      inset:0;
-      background:linear-gradient(135deg, rgba(255,255,255,0.05), rgba(255,255,255,0.01));
-      pointer-events:none;
-    }
-
-    .hero-image{
+    .hero-img{
       width:100%;
       height:270px;
       object-fit:cover;
-      display:block;
-      position:relative;
-      z-index:1;
+      background:#111;
+      border-bottom:1px solid rgba(255,255,255,0.08);
     }
 
     .content{
       padding:18px;
-      position:relative;
-      z-index:1;
+      display:grid;
+      gap:16px;
     }
 
     .title-row{
       display:flex;
-      align-items:flex-start;
       justify-content:space-between;
+      align-items:flex-start;
       gap:12px;
-      margin-bottom:10px;
     }
 
     .title{
-      font-family:'Poppins', sans-serif;
-      font-size:28px;
-      line-height:1.15;
+      font-family:Poppins,sans-serif;
+      font-size:30px;
+      line-height:1.12;
       color:#fff;
     }
 
-    .info-grid{
+    .status{
+      flex-shrink:0;
+      font-size:11px;
+      font-weight:900;
+      padding:7px 10px;
+      border-radius:999px;
+      text-transform:uppercase;
+    }
+
+    .status.open{
+      color:#9ff2bd;
+      background:rgba(39,194,108,0.14);
+      border:1px solid rgba(39,194,108,0.28);
+    }
+
+    .status.limited{
+      color:#ffe39a;
+      background:rgba(250,204,21,0.14);
+      border:1px solid rgba(250,204,21,0.28);
+    }
+
+    .status.closed{
+      color:#ffb4b4;
+      background:rgba(239,68,68,0.14);
+      border:1px solid rgba(239,68,68,0.28);
+    }
+
+    .sub-meta{
+      color:var(--muted);
+      font-size:14px;
+      line-height:1.7;
       display:grid;
+      gap:4px;
+    }
+
+    .price-row{
+      display:grid;
+      grid-template-columns:1fr 1fr;
       gap:12px;
-      margin:14px 0 10px;
     }
 
     .info-box{
-      background:rgba(255,255,255,0.04);
-      border:1px solid rgba(255,255,255,0.07);
-      border-radius:16px;
+      background:rgba(255,255,255,0.045);
+      border:1px solid rgba(255,255,255,0.08);
+      border-radius:18px;
       padding:14px;
     }
 
     .info-label{
       color:#ffbe63;
       font-size:12px;
+      font-weight:900;
+      letter-spacing:.7px;
       text-transform:uppercase;
-      letter-spacing:0.7px;
-      margin-bottom:6px;
-      font-weight:700;
+      margin-bottom:7px;
     }
 
     .info-text{
-      color:#dce2ec;
-      font-size:14px;
-      line-height:1.75;
+      color:#f5f7fb;
+      font-size:15px;
+      font-weight:800;
+      line-height:1.5;
+      word-break:break-word;
     }
 
-    .menu-box{
-      margin-top:14px;
-      background:rgba(255,255,255,0.04);
-      border:1px solid rgba(255,255,255,0.07);
-      border-radius:18px;
-      padding:16px;
+    .menu-section{
+      display:grid;
+      gap:12px;
+    }
+
+    .menu-card{
+      background:rgba(255,255,255,0.045);
+      border:1px solid rgba(255,255,255,0.08);
+      border-radius:20px;
+      padding:15px;
     }
 
     .menu-title{
       color:#ffbe63;
-      font-size:12px;
+      font-size:13px;
+      font-weight:900;
+      letter-spacing:.8px;
       text-transform:uppercase;
-      letter-spacing:0.8px;
       margin-bottom:8px;
-      font-weight:700;
+      display:flex;
+      align-items:center;
+      gap:7px;
     }
 
-    .menu{
-      line-height:1.8;
-      color:#d9e0eb;
-      font-size:14px;
+    .menu-text{
+      color:#dfe6f2;
+      font-size:15px;
+      line-height:1.75;
       white-space:pre-wrap;
     }
 
-    .btn-group{
+    .address-card{
+      background:rgba(255,255,255,0.045);
+      border:1px solid rgba(255,255,255,0.08);
+      border-radius:20px;
+      padding:15px;
+    }
+
+    .address{
+      color:#dfe6f2;
+      font-size:15px;
+      line-height:1.8;
+      white-space:pre-wrap;
+    }
+
+    .btn-grid{
       display:grid;
+      grid-template-columns:1fr 1fr;
       gap:12px;
-      margin-top:16px;
     }
 
     .btn{
-      display:block;
-      padding:14px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      min-height:50px;
+      padding:13px;
       text-align:center;
-      background:linear-gradient(90deg,var(--accent),var(--accent2));
-      color:#fff;
       border-radius:16px;
-      text-decoration:none;
       font-size:15px;
-      font-weight:800;
+      font-weight:900;
+      background:linear-gradient(135deg,var(--accent),var(--accent2));
+      color:#111;
       box-shadow:0 14px 28px rgba(255,138,0,0.18);
     }
 
     .btn.secondary{
       background:rgba(255,255,255,0.06);
-      border:1px solid rgba(255,255,255,0.08);
+      color:#fff;
+      border:1px solid rgba(255,255,255,0.10);
       box-shadow:none;
     }
 
     .btn.disabled{
-      opacity:0.6;
+      opacity:.55;
       pointer-events:none;
     }
 
-    .not-found{
-      text-align:center;
-      padding:28px 18px;
+    .loading-card,
+    .error-card{
+      background:var(--card);
+      border:1px solid var(--line);
+      border-radius:24px;
+      padding:20px;
+      box-shadow:var(--shadow);
       color:var(--muted);
-      font-size:15px;
+      text-align:center;
       line-height:1.8;
+      font-size:14px;
     }
 
-    @media(min-width:768px){
-      .topbar{
-        padding:16px 28px;
-      }
+    .error-card h2{
+      color:#fff;
+      font-family:Poppins,sans-serif;
+      font-size:24px;
+      margin-bottom:8px;
+    }
 
+    .small-note{
+      color:var(--muted);
+      font-size:12px;
+      line-height:1.7;
+      text-align:center;
+      margin-top:2px;
+    }
+
+    @media(min-width:760px){
       .container{
-        padding-left:28px;
-        padding-right:28px;
+        padding:24px 28px;
       }
 
-      .hero-image{
-        height:340px;
+      .hero-img{
+        height:350px;
       }
 
-      .info-grid{
-        grid-template-columns:repeat(2,1fr);
-      }
-
-      .btn-group{
-        grid-template-columns:repeat(2,1fr);
+      .menu-section{
+        grid-template-columns:repeat(3,1fr);
       }
     }
 
-    @media(min-width:1100px){
-      .container{
-        padding-left:48px;
-        padding-right:48px;
+    @media(max-width:520px){
+      .price-row{
+        grid-template-columns:1fr;
+      }
+
+      .btn-grid{
+        grid-template-columns:1fr;
+      }
+
+      .title{
+        font-size:26px;
+      }
+
+      .hero-img{
+        height:240px;
       }
     }
   </style>
 </head>
 
 <body>
-
   <header class="topbar">
     <div class="topbar-left">
-      <a href="javascript:history.back()" class="back">← Back</a>
+      <a href="index.html" class="back">←</a>
 
       <div class="brand">
         <h1>Meal Buzz</h1>
-        <p>Mess details</p>
+        <p>Mess Details</p>
       </div>
     </div>
   </header>
 
-  <div class="container">
-    <div class="card">
-      <img src="thali.jpg" id="image" class="hero-image" alt="Mess image">
-
-      <div class="content">
-        <div class="title-row">
-          <h2 id="name" class="title">Loading...</h2>
-        </div>
-
-        <div class="info-grid">
-          <div class="info-box">
-            <div class="info-label">Location</div>
-            <div class="info-text" id="location">Loading...</div>
-          </div>
-
-          <div class="info-box">
-            <div class="info-label">Price</div>
-            <div class="info-text" id="price">Loading...</div>
-          </div>
-        </div>
-
-        <div class="menu-box">
-          <div class="menu-title">Today Menu</div>
-          <div class="menu" id="menu">Loading...</div>
-        </div>
-
-        <div class="btn-group">
-          <a href="#" id="callBtn" class="btn">Call Now</a>
-          <a href="#" id="directionBtn" class="btn secondary">Get Directions</a>
-        </div>
-      </div>
-    </div>
-  </div>
+  <main class="container" id="app">
+    <div class="loading-card">Loading mess details...</div>
+  </main>
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
@@ -337,137 +399,201 @@
     const params = new URLSearchParams(window.location.search);
     const messId = params.get("id");
 
-    function getMenuText(mess) {
-      return mess.today_menu || mess.menu || "Menu not available";
+    const fallbackImages = [
+      "thali.jpg",
+      "thali2.jpg",
+      "thali3.jpg",
+      "veg1.jpg",
+      "paneer.jpg"
+    ];
+
+    function safeText(value, fallback = "Not updated"){
+      return value && String(value).trim() ? String(value).trim() : fallback;
     }
 
-    function detectMealType(mess) {
-      const directType = (mess.type || mess.food_type || "").toString().toLowerCase().trim();
-      if (directType.includes("nonveg") || directType.includes("non-veg")) return "nonveg";
-      if (directType.includes("veg")) return "veg";
+    function getStatusClass(status){
+      const s = String(status || "Open").toLowerCase();
 
-      const text = getMenuText(mess).toLowerCase();
-
-      const nonVegWords = [
-        "chicken", "egg", "anda", "mutton", "fish", "keema", "prawn", "biryani", "nonveg", "non-veg"
-      ];
-
-      for (const word of nonVegWords) {
-        if (text.includes(word)) return "nonveg";
-      }
-
-      return "veg";
+      if(s.includes("closed")) return "closed";
+      if(s.includes("limited")) return "limited";
+      return "open";
     }
 
-    function getMessImage(mess) {
-      const mealType = detectMealType(mess);
+    function formatDateTime(value){
+      if(!value) return "Not updated";
 
-      const manualImage =
-        mess.image_url ||
-        mess.image ||
-        mess.main_image ||
-        mess.photo_url ||
-        "";
+      try{
+        const date = new Date(value);
 
-      const vegImage =
-        mess.veg_image_url ||
-        mess.veg_image ||
-        "";
+        if(isNaN(date.getTime())) return "Not updated";
 
-      const nonVegImage =
-        mess.nonveg_image_url ||
-        mess.nonveg_image ||
-        mess.non_veg_image_url ||
-        mess.non_veg_image ||
-        "";
-
-      if (mealType === "nonveg" && nonVegImage) return nonVegImage;
-      if (mealType === "veg" && vegImage) return vegImage;
-      if (manualImage) return manualImage;
-
-      return mealType === "nonveg" ? "thali2.jpg" : "thali.jpg";
-    }
-
-    loadMess();
-
-    async function loadMess() {
-      if (!messId) {
-        showNotFound();
-        return;
-      }
-
-      const { data, error } = await sb
-        .from("mess")
-        .select("*")
-        .eq("id", messId)
-        .single();
-
-      if (error || !data) {
-        console.log("MESS DETAIL ERROR", error);
-        showNotFound();
-        return;
-      }
-
-      const mess = data;
-
-      document.getElementById("name").innerText =
-        mess.name || mess.mess_name || "Mess";
-
-      const address =
-        mess.location || mess.address || mess.location_name || "Location not available";
-
-      document.getElementById("location").innerText = address;
-
-      document.getElementById("price").innerText =
-        mess.price || mess.price_range || "Price not available";
-
-      document.getElementById("menu").innerText = getMenuText(mess);
-
-      document.getElementById("image").src = getMessImage(mess);
-
-      const callBtn = document.getElementById("callBtn");
-      const contact = mess.contact || mess.phone || mess.mobile || "";
-
-      if (contact) {
-        callBtn.href = "tel:" + contact;
-        callBtn.innerText = "Call Now";
-        callBtn.classList.remove("disabled");
-      } else {
-        callBtn.href = "#";
-        callBtn.innerText = "Contact not available";
-        callBtn.classList.add("disabled");
-      }
-
-      const directionBtn = document.getElementById("directionBtn");
-      const lat = Number(mess.latitude || mess.lat);
-      const lon = Number(mess.longitude || mess.lon || mess.lng);
-
-      if (!isNaN(lat) && !isNaN(lon)) {
-        directionBtn.href = `https://www.google.com/maps/search/?api=1&query=${lat},${lon}`;
-        directionBtn.target = "_blank";
-        directionBtn.innerText = "Get Directions";
-        directionBtn.classList.remove("disabled");
-      } else if (address && address !== "Location not available") {
-        directionBtn.href = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(address)}`;
-        directionBtn.target = "_blank";
-        directionBtn.innerText = "Get Directions";
-        directionBtn.classList.remove("disabled");
-      } else {
-        directionBtn.href = "#";
-        directionBtn.innerText = "Direction not available";
-        directionBtn.classList.add("disabled");
+        return date.toLocaleString("en-IN", {
+          day:"2-digit",
+          month:"short",
+          year:"numeric",
+          hour:"numeric",
+          minute:"2-digit"
+        });
+      }catch(e){
+        return "Not updated";
       }
     }
 
-    function showNotFound() {
-      document.querySelector(".content").innerHTML = `
-        <div class="not-found">
-          <h2 style="margin-bottom:10px;color:#fff;">Mess not found</h2>
-          <p>This mess details page is not available right now.</p>
+    function getImage(mess){
+      return mess.image_url || fallbackImages[0];
+    }
+
+    function getDirectionsLink(mess){
+      const lat = Number(mess.latitude);
+      const lon = Number(mess.longitude);
+
+      if(lat && lon){
+        return `https://www.google.com/maps/search/?api=1&query=${lat},${lon}`;
+      }
+
+      const query = encodeURIComponent(`${mess.name || ""} ${mess.location || ""}`);
+      return `https://www.google.com/maps/search/?api=1&query=${query}`;
+    }
+
+    function getCallLink(contact){
+      const clean = String(contact || "").replace(/\D/g, "");
+
+      if(!clean){
+        return "#";
+      }
+
+      return `tel:${clean}`;
+    }
+
+    function showError(title, message){
+      document.getElementById("app").innerHTML = `
+        <div class="error-card">
+          <h2>${title}</h2>
+          <p>${message}</p>
+          <br>
+          <a href="index.html" class="btn">Back to Home</a>
         </div>
       `;
     }
-  </script>
 
+    async function loadDetails(){
+      if(!messId){
+        showError("Mess not found", "Missing mess ID. Please open a mess from the home page.");
+        return;
+      }
+
+      try{
+        const { data: mess, error } = await sb
+          .from("mess")
+          .select("*")
+          .eq("id", Number(messId))
+          .maybeSingle();
+
+        if(error){
+          console.log("Load detail error:", error);
+          showError("Could not load mess", "Please check Supabase permissions or try again.");
+          return;
+        }
+
+        if(!mess){
+          showError("Mess not found", "This mess listing is not available.");
+          return;
+        }
+
+        renderDetails(mess);
+
+      }catch(err){
+        console.log("Unexpected detail error:", err);
+        showError("Something went wrong", "Could not load this mess right now.");
+      }
+    }
+
+    function renderDetails(mess){
+      const statusText = safeText(mess.status, "Open");
+      const statusClass = getStatusClass(statusText);
+      const price = safeText(mess.today_price || mess.price, "Price not updated");
+      const basePrice = safeText(mess.price, "Not added");
+      const updated = formatDateTime(mess.updated_at);
+      const image = getImage(mess);
+      const callLink = getCallLink(mess.contact);
+      const directionsLink = getDirectionsLink(mess);
+      const hasContact = String(mess.contact || "").replace(/\D/g, "").length > 0;
+
+      document.title = `${safeText(mess.name, "Mess")} - Meal Buzz`;
+
+      document.getElementById("app").innerHTML = `
+        <article class="card">
+          <img
+            src="${image}"
+            class="hero-img"
+            alt="${safeText(mess.name, "Mess image")}"
+            onerror="this.src='thali.jpg'"
+          >
+
+          <div class="content">
+            <div class="title-row">
+              <h2 class="title">${safeText(mess.name, "Unnamed Mess")}</h2>
+              <span class="status ${statusClass}">${statusText}</span>
+            </div>
+
+            <div class="sub-meta">
+              <div>📍 ${safeText(mess.location, "Location not added")}</div>
+              <div>🕒 Last updated: ${updated}</div>
+            </div>
+
+            <div class="price-row">
+              <div class="info-box">
+                <div class="info-label">Today Price</div>
+                <div class="info-text">${price}</div>
+              </div>
+
+              <div class="info-box">
+                <div class="info-label">Base / Monthly Price</div>
+                <div class="info-text">${basePrice}</div>
+              </div>
+            </div>
+
+            <section class="menu-section">
+              <div class="menu-card">
+                <div class="menu-title">☕ Morning</div>
+                <div class="menu-text">${safeText(mess.morning_menu, "Morning menu not updated")}</div>
+              </div>
+
+              <div class="menu-card">
+                <div class="menu-title">🍱 Lunch</div>
+                <div class="menu-text">${safeText(mess.lunch_menu, "Lunch menu not updated")}</div>
+              </div>
+
+              <div class="menu-card">
+                <div class="menu-title">🌙 Dinner</div>
+                <div class="menu-text">${safeText(mess.dinner_menu, "Dinner menu not updated")}</div>
+              </div>
+            </section>
+
+            <div class="address-card">
+              <div class="info-label">Address</div>
+              <div class="address">${safeText(mess.location, "Address not added")}</div>
+            </div>
+
+            <div class="btn-grid">
+              <a href="${callLink}" class="btn ${hasContact ? "" : "disabled"}">
+                📞 Call Owner
+              </a>
+
+              <a href="${directionsLink}" target="_blank" rel="noopener" class="btn secondary">
+                📍 Get Directions
+              </a>
+            </div>
+
+            <div class="small-note">
+              Menu is updated directly by the mess owner on Meal Buzz Partner.
+            </div>
+          </div>
+        </article>
+      `;
+    }
+
+    loadDetails();
+  </script>
 </body>
-</html>s
+</html>
