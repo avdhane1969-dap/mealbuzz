@@ -801,56 +801,63 @@
                 <h3 class="mess-name">${safeText(mess.name, "Unnamed Mess")}</h3>
                 <span class="status ${statusClass}">${statusText}</span>
               </div>
+              function renderMess(items){
+  const list = document.getElementById("messList");
+  const countPill = document.getElementById("countPill");
 
-              <div class="meta">
-                <span>📍 ${safeText(mess.location, "Location not added")}</span>
-                ${distance ? `<span>• ${distance}</span>` : ""}
-              </div>
+  countPill.innerText = `${items.length} found`;
 
-              <div class="menu-preview">${menuPreview}</div>
+  if(!items.length){
+    list.innerHTML = `
+      <div class="empty-card">
+        No mess found. Try another search or check again later.
+      </div>
+    `;
+    return;
+  }
 
-              <div class="meta">
-                <span>Updated: ${updated}</span>
-              </div>
+  list.innerHTML = items.map((mess, index) => {
+    const statusText = safeText(mess.status, "Open");
+    const statusClass = getStatusClass(statusText);
+    const price = normalizePrice(mess.today_price || mess.price);
+    const distance = getDistanceText(mess);
+    const updated = formatDateTime(mess.updated_at);
+    const image = getMessImage(mess, index);
+    const menuPreview = getMenuPreview(mess);
 
-              <div class="price-row">
-                <div class="price">${price}</div>
-                <a class="details-btn" href="mess.html?id=${encodeURIComponent(mess.id)}">View Details</a>
-              </div>
-            </div>
-          </article>
-        `;
-      }).join("");
-    }
+    return `
+      <article class="mess-card">
+        <img
+          src="${escapeHTML(image)}"
+          class="mess-img"
+          alt="${escapeHTML(safeText(mess.name, "Mess image"))}"
+          onerror="this.src='thali.jpg'"
+        >
 
-    function getLocation(){
-      if(!navigator.geolocation){
-        alert("Location is not supported on this device.");
-        return;
-      }
+        <div class="mess-body">
+          <div class="mess-top">
+            <h3 class="mess-name">${escapeHTML(safeText(mess.name, "Unnamed Mess"))}</h3>
+            <span class="status ${statusClass}">${escapeHTML(statusText)}</span>
+          </div>
 
-      navigator.geolocation.getCurrentPosition(
-        function(position){
-          userLat = position.coords.latitude;
-          userLon = position.coords.longitude;
+          <div class="meta">
+            <span>📍 ${escapeHTML(safeText(mess.location, "Location not added"))}</span>
+            ${distance ? `<span>• ${escapeHTML(distance)}</span>` : ""}
+          </div>
 
-          document.getElementById("subtitle").innerText =
-            "Showing mess options sorted by your current location where possible.";
+          <div class="mini-label">Today’s Menu</div>
+          <div class="menu-preview">${escapeHTML(menuPreview)}</div>
 
-          applyFilters();
-        },
-        function(){
-          alert("Could not get your location. Please allow location permission.");
-        },
-        {
-          enableHighAccuracy:true,
-          timeout:15000,
-          maximumAge:0
-        }
-      );
-    }
+          <div class="meta">
+            <span>Updated: ${escapeHTML(updated)}</span>
+          </div>
 
-    loadMess();
-  </script>
-</body>
-</html>
+          <div class="price-row">
+            <div class="price">${escapeHTML(price)}</div>
+            <a class="details-btn" href="mess.html?id=${encodeURIComponent(mess.id)}">View Details</a>
+          </div>
+        </div>
+      </article>
+    `;
+  }).join("");
+}
