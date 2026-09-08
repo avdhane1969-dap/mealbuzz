@@ -139,7 +139,7 @@ function setLoginStatus(message,isError=false){const status=document.getElementB
 function setLoginDisabled(disabled){document.getElementById("loginBtn").disabled=disabled}
 function saveOwnerSession(mess,userId=null,phoneFallback=""){localStorage.setItem("ownerMessId",mess.id);localStorage.setItem("ownerMessName",mess.name||"");localStorage.setItem("ownerPhone",mess.contact||phoneFallback||"");if(userId||mess.user_id)localStorage.setItem("ownerUserId",userId||mess.user_id);else localStorage.removeItem("ownerUserId")}
 async function loginWithSupabaseAuth(contact10,password){const partnerEmail=buildPartnerEmail(contact10);const{data:loginData,error:loginError}=await sb.auth.signInWithPassword({email:partnerEmail,password});if(loginError||!loginData?.user)return null;const{data:messByUser,error:messByUserError}=await sb.from("mess").select("*").eq("user_id",loginData.user.id).maybeSingle();if(messByUserError||!messByUser)return null;return{userId:loginData.user.id,mess:messByUser}}
-async async function loginWithOldMessTable(contact10,password){
+async function loginWithOldMessTable(contact10,password){
   const{data:allMess,error:fetchError}=await sb.from("mess").select("*").limit(1000);
   if(fetchError)throw new Error("Login check failed.");
   const matchedMess=(allMess||[]).find(row=>last10(row.contact)===contact10&&String(row.password||"").trim()===password);
