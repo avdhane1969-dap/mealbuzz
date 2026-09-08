@@ -1,474 +1,124 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Meal Buzz - Register Mess</title>
-  <link rel="icon" href="favicon.png" type="image/png" />
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Poppins:wght@700;800&display=swap" rel="stylesheet">
-
-  <style>
-    *{
-      margin:0;
-      padding:0;
-      box-sizing:border-box;
-    }
-
-    :root{
-      --bg:#0d0f14;
-      --card:#171b24;
-      --card-alt:#1c2330;
-      --soft:#222937;
-      --line:#2e3748;
-      --text:#f5f7fb;
-      --muted:#b9c0cc;
-      --accent:#ff8a00;
-      --accent2:#ffb347;
-      --shadow:0 12px 28px rgba(0,0,0,0.22);
-    }
-
-    body{
-      font-family:'Inter', Arial, sans-serif;
-      background:
-        radial-gradient(circle at top right, rgba(255,138,0,0.08), transparent 24%),
-        linear-gradient(180deg,#0b0d12 0%, #121721 100%);
-      color:var(--text);
-      min-height:100vh;
-    }
-
-    a{
-      text-decoration:none;
-      color:inherit;
-    }
-
-    .topbar{
-      position:sticky;
-      top:0;
-      z-index:1000;
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:12px;
-      padding:16px;
-      background:rgba(13,15,20,0.90);
-      backdrop-filter:blur(12px);
-      border-bottom:1px solid rgba(255,255,255,0.06);
-    }
-
-    .topbar-left{
-      display:flex;
-      align-items:center;
-      gap:12px;
-    }
-
-    .back-btn{
-      display:inline-flex;
-      align-items:center;
-      justify-content:center;
-      min-width:44px;
-      height:44px;
-      padding:0 14px;
-      border-radius:14px;
-      background:rgba(255,255,255,0.05);
-      border:1px solid rgba(255,255,255,0.08);
-      color:#fff;
-      font-size:14px;
-      font-weight:700;
-      box-shadow:0 8px 18px rgba(0,0,0,0.14);
-    }
-
-    .brand{
-      display:flex;
-      flex-direction:column;
-      justify-content:center;
-    }
-
-    .brand h1{
-      font-family:'Poppins', sans-serif;
-      font-size:28px;
-      line-height:1;
-      letter-spacing:0.2px;
-      background:linear-gradient(90deg,#ffffff 0%, #ffdcb3 32%, #ffb347 60%, #ff8a00 100%);
-      -webkit-background-clip:text;
-      -webkit-text-fill-color:transparent;
-      background-clip:text;
-    }
-
-    .brand p{
-      color:#d6dde8;
-      font-size:11px;
-      margin-top:5px;
-      letter-spacing:1.7px;
-      text-transform:uppercase;
-      font-weight:700;
-    }
-
-    .section{
-      padding:18px 16px 28px;
-    }
-
-    .wrap{
-      max-width:900px;
-      margin:0 auto;
-    }
-
-    .card{
-      background:rgba(24,29,40,0.56);
-      border:1px solid rgba(255,255,255,0.08);
-      border-radius:24px;
-      padding:20px;
-      box-shadow:var(--shadow);
-      backdrop-filter:blur(12px);
-      -webkit-backdrop-filter:blur(12px);
-      position:relative;
-      overflow:hidden;
-    }
-
-    .card::before{
-      content:"";
-      position:absolute;
-      inset:0;
-      background:linear-gradient(135deg, rgba(255,255,255,0.05), rgba(255,255,255,0.01));
-      pointer-events:none;
-    }
-
-    .card > *{
-      position:relative;
-      z-index:1;
-    }
-
-    .title{
-      font-family:'Poppins', sans-serif;
-      font-size:28px;
-      margin-bottom:10px;
-    }
-
-    .subtitle{
-      color:var(--muted);
-      font-size:14px;
-      line-height:1.8;
-      margin-bottom:18px;
-    }
-
-    .form-grid{
-      display:grid;
-      gap:14px;
-    }
-
-    .form-grid input,
-    .form-grid textarea,
-    .form-grid select{
-      width:100%;
-      padding:14px 15px;
-      border-radius:16px;
-      border:1px solid var(--line);
-      background:rgba(17,21,28,0.85);
-      color:#fff;
-      font-size:14px;
-      outline:none;
-      font-family:inherit;
-    }
-
-    .form-grid textarea{
-      min-height:110px;
-      resize:vertical;
-    }
-
-    .file-block{
-      background:rgba(255,255,255,0.03);
-      border:1px solid rgba(255,255,255,0.06);
-      border-radius:18px;
-      padding:14px;
-    }
-
-    .file-label{
-      color:#ffbe63;
-      font-size:13px;
-      font-weight:700;
-      margin-bottom:6px;
-    }
-
-    .file-hint{
-      color:var(--muted);
-      font-size:12px;
-      line-height:1.6;
-      margin-bottom:10px;
-    }
-
-    .location-btn,
-    .submit-btn{
-      width:100%;
-      padding:14px;
-      border-radius:16px;
-      font-size:15px;
-      font-weight:800;
-      border:none;
-      cursor:pointer;
-    }
-
-    .location-btn{
-      background:rgba(255,255,255,0.05);
-      color:#fff;
-      border:1px solid rgba(255,255,255,0.08);
-    }
-
-    .submit-btn{
-      background:linear-gradient(90deg,var(--accent),var(--accent2));
-      color:#fff;
-      box-shadow:0 14px 28px rgba(255,138,0,0.18);
-    }
-
-    .coords{
-      background:rgba(255,255,255,0.04);
-      border:1px solid rgba(255,255,255,0.07);
-      border-radius:16px;
-      padding:14px;
-      color:var(--muted);
-      font-size:14px;
-      line-height:1.7;
-    }
-
-    .status{
-      min-height:24px;
-      font-size:14px;
-      color:#9df0bc;
-      margin-top:6px;
-    }
-
-    .status.error{
-      color:#ff9c9c;
-    }
-
-    @media(min-width:768px){
-      .topbar{
-        padding:16px 28px;
-      }
-
-      .section{
-        padding-left:28px;
-        padding-right:28px;
-      }
-    }
-
-    @media(min-width:1100px){
-      .section{
-        padding-left:48px;
-        padding-right:48px;
-      }
-    }
-  </style>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#f7f1e7">
+<title>Meal Buzz — Register your kitchen</title>
+<meta name="description" content="Join Meal Buzz and publish your mess or home kitchen menu.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet">
+<style>
+:root{--ink:#0d2940;--muted:#667685;--paper:#f7f1e7;--white:#fff;--coral:#ff654b;--green:#198668;--line:rgba(13,41,64,.10);--shadow:0 20px 56px rgba(13,41,64,.10)}
+*{box-sizing:border-box}body{margin:0;background:linear-gradient(120deg,#fffaf3,#f7f1e7 58%,#fff8e8);color:var(--ink);font-family:"DM Sans",system-ui,sans-serif}button,input,textarea,select{font:inherit}a{text-decoration:none;color:inherit}.shell{max-width:1320px;margin:auto;padding:0 24px 60px}
+.top{height:96px;display:flex;align-items:center;justify-content:space-between;gap:16px}.brand{display:flex;align-items:center;gap:12px}.logo{width:46px;height:46px;display:grid;place-items:center;border-radius:15px;background:linear-gradient(135deg,#ff5b43,#ff8e64);color:#fff;box-shadow:7px 7px 0 rgba(239,173,56,.30);transform:rotate(-4deg)}.brand-name{font:700 26px "Space Grotesk";letter-spacing:-.05em}.brand-name span{color:var(--coral)}.top-actions{display:flex;align-items:center;gap:10px}.lang{display:flex;background:#fff;border:1px solid var(--line);padding:4px;border-radius:999px}.lang button{border:0;background:transparent;padding:8px 10px;border-radius:999px;font-size:11px;font-weight:900;color:#607080;cursor:pointer}.lang button.active{background:#ffece5;color:var(--ink)}.back{padding:11px 15px;border-radius:14px;background:#fff;border:1px solid var(--line);font-weight:900;color:#40556a}
+.hero{display:grid;grid-template-columns:.85fr 1.15fr;gap:26px}.intro{padding:38px 32px;border-radius:32px;background:linear-gradient(145deg,#0d2940,#173f55);color:#fff;box-shadow:var(--shadow);min-height:100%}.kicker{color:#9fd7c7;font-size:11px;font-weight:900;letter-spacing:.16em;text-transform:uppercase}.intro h1{font:700 clamp(44px,5vw,70px)/.98 "Space Grotesk";letter-spacing:-.065em;margin:18px 0}.intro p{color:#d4e0e6;font-size:16px;line-height:1.7}.benefits{display:grid;gap:14px;margin-top:30px}.benefit{display:flex;gap:12px;align-items:flex-start;padding:14px;border-radius:18px;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.09)}.benefit i{width:34px;height:34px;display:grid;place-items:center;border-radius:11px;background:rgba(255,255,255,.10);font-style:normal}.benefit b{display:block;font-size:13px}.benefit small{display:block;color:#b9cbd5;line-height:1.45;margin-top:3px}
+.form-card{background:rgba(255,255,255,.82);border:1px solid var(--line);border-radius:32px;padding:30px;box-shadow:var(--shadow)}.form-head{display:flex;justify-content:space-between;gap:20px;align-items:end;flex-wrap:wrap;margin-bottom:24px}.form-head h2{font:700 36px "Space Grotesk";letter-spacing:-.05em;margin:0}.form-head p{color:var(--muted);margin:7px 0 0}.step-pill{padding:9px 12px;border-radius:999px;background:#edf7f2;color:var(--green);font-size:11px;font-weight:900}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:15px}.field{display:grid;gap:7px}.field.full{grid-column:1/-1}.field label{font-size:12px;font-weight:900;color:#42596b}.req{color:var(--coral)}input,textarea,select{width:100%;border:1px solid var(--line);background:#fff;border-radius:15px;padding:14px 15px;color:var(--ink);outline:0;transition:.2s}input:focus,textarea:focus,select:focus{border-color:rgba(255,101,75,.65);box-shadow:0 0 0 4px rgba(255,101,75,.08)}textarea{min-height:120px;resize:vertical}
+.upload-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}.upload{padding:15px;border-radius:18px;border:1px dashed rgba(13,41,64,.18);background:#fffaf5}.upload b{display:block;font-size:12px;margin-bottom:5px}.upload small{display:block;color:#7b8993;line-height:1.45;min-height:34px}.upload input{padding:10px;background:#fff;margin-top:10px;font-size:12px}
+.location-box{display:grid;grid-template-columns:auto 1fr;gap:12px;align-items:stretch}.btn{min-height:52px;padding:0 18px;border:0;border-radius:16px;font-weight:900;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:8px}.secondary{background:#fff;border:1px solid var(--line);color:var(--ink)}.primary{background:var(--coral);color:#fff;box-shadow:0 13px 26px rgba(255,101,75,.22)}.coords{padding:13px 15px;border-radius:15px;background:#f7faf8;border:1px solid var(--line);color:#677883;font-size:12px;line-height:1.55}.submit-row{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-top:22px;padding-top:22px;border-top:1px solid var(--line)}.status{font-size:13px;color:var(--green);font-weight:800}.status.error{color:#c94d45}
+.preview-note{margin-top:20px;padding:16px;border-radius:17px;background:#fff6e9;color:#775c32;font-size:12px;line-height:1.6}
+@media(max-width:950px){.hero{grid-template-columns:1fr}.intro{min-height:auto}.upload-grid{grid-template-columns:1fr 1fr}.upload:last-child{grid-column:1/-1}}
+@media(max-width:640px){.shell{padding:0 14px 40px}.top{height:82px}.lang{display:none}.brand-name{font-size:22px}.back{font-size:11px;padding:9px 11px}.intro,.form-card{padding:22px 17px;border-radius:24px}.grid{grid-template-columns:1fr}.field.full{grid-column:auto}.upload-grid{grid-template-columns:1fr}.upload:last-child{grid-column:auto}.location-box{grid-template-columns:1fr}.submit-row{align-items:stretch;flex-direction:column}.submit-row .btn{width:100%}}
+</style>
 </head>
 <body>
+<main class="shell">
+<header class="top">
+  <a class="brand" href="index.html"><span class="logo">🍽</span><span class="brand-name">Meal <span>Buzz</span></span></a>
+  <div class="top-actions">
+    <div class="lang"><button class="lang-btn active" data-lang="en">EN</button><button class="lang-btn" data-lang="mr">मराठी</button><button class="lang-btn" data-lang="hi">हिंदी</button></div>
+    <a class="back" href="partner-index.html">← <span data-i18n="back">Partner home</span></a>
+  </div>
+</header>
 
-  <header class="topbar">
-    <div class="topbar-left">
-      <a href="profile.html" class="back-btn">← Back</a>
-      <div class="brand">
-        <h1>Meal Buzz</h1>
-        <p>Register your mess</p>
-      </div>
+<section class="hero">
+  <aside class="intro">
+    <div class="kicker" data-i18n="kicker">Grow with Meal Buzz</div>
+    <h1 data-i18n-html="title">Put today’s menu<br>in front of<br><span style="color:#ff8267">nearby customers.</span></h1>
+    <p data-i18n="intro">Register your mess or home kitchen once, then keep your daily menu, price and availability easy to discover.</p>
+    <div class="benefits">
+      <div class="benefit"><i>◎</i><div><b data-i18n="b1">Be discovered locally</b><small data-i18n="b1s">Reach people already searching for food nearby.</small></div></div>
+      <div class="benefit"><i>₹</i><div><b data-i18n="b2">Show clear pricing</b><small data-i18n="b2s">Help customers decide before they call or visit.</small></div></div>
+      <div class="benefit"><i>✦</i><div><b data-i18n="b3">Keep today’s menu fresh</b><small data-i18n="b3s">Update what is actually available today.</small></div></div>
     </div>
-  </header>
+  </aside>
 
-  <section class="section">
-    <div class="wrap">
-      <div class="card">
-        <h2 class="title">Register Your Mess</h2>
-        <p class="subtitle">
-          Fill the details below, capture your current location, upload your mess photos,
-          and create your owner password.
-        </p>
+  <section class="form-card">
+    <div class="form-head">
+      <div><h2 data-i18n="formTitle">Register your kitchen</h2><p data-i18n="formSub">A few details and you’re ready to publish.</p></div>
+      <span class="step-pill" data-i18n="step">OWNER SETUP</span>
+    </div>
 
-        <div class="form-grid">
-          <input type="text" id="name" placeholder="Mess Name" />
-          <input type="text" id="location" placeholder="Area / Location" />
-          <input type="text" id="price" placeholder="Price (example: ₹80 thali / ₹3000 month)" />
-          <input type="text" id="contact" placeholder="Contact Number" />
-          <input type="password" id="password" placeholder="Create Password" />
+    <div class="grid">
+      <div class="field"><label data-i18n="nameLabel">Mess / kitchen name <span class="req">*</span></label><input id="name" data-i18n-placeholder="namePh" placeholder="e.g. Shree Krishna Mess"></div>
+      <div class="field"><label data-i18n="areaLabel">Area / location <span class="req">*</span></label><input id="location" data-i18n-placeholder="areaPh" placeholder="e.g. Malkapur, Karad"></div>
+      <div class="field"><label data-i18n="priceLabel">Price <span class="req">*</span></label><input id="price" data-i18n-placeholder="pricePh" placeholder="e.g. ₹90 thali / ₹3000 month"></div>
+      <div class="field"><label data-i18n="contactLabel">Contact number <span class="req">*</span></label><input id="contact" inputmode="tel" data-i18n-placeholder="contactPh" placeholder="10-digit mobile number"></div>
+      <div class="field"><label data-i18n="passwordLabel">Create owner password <span class="req">*</span></label><input type="password" id="password" data-i18n-placeholder="passwordPh" placeholder="Create a secure password"></div>
+      <div class="field"><label data-i18n="typeLabel">Food type</label><select id="mealType"><option value="" data-i18n="typeAny">Veg / Non-Veg / Both</option><option value="veg">Veg</option><option value="nonveg">Non-Veg</option></select></div>
+      <div class="field full"><label data-i18n="menuLabel">Today’s menu <span class="req">*</span></label><textarea id="menu" data-i18n-placeholder="menuPh" placeholder="Write today’s dishes clearly…"></textarea></div>
 
-          <select id="mealType">
-            <option value="">Select Meal Type (Optional)</option>
-            <option value="veg">Veg</option>
-            <option value="nonveg">Non-veg</option>
-          </select>
-
-          <textarea id="menu" placeholder="Today's Menu"></textarea>
-
-          <div class="file-block">
-            <div class="file-label">Upload Main Mess Photo</div>
-            <div class="file-hint">This will be used as default image if specific veg/non-veg image is not available.</div>
-            <input type="file" id="image" accept="image/*" />
-          </div>
-
-          <div class="file-block">
-            <div class="file-label">Upload Veg Menu Image</div>
-            <div class="file-hint">Optional. If today's menu is veg, this image will be preferred.</div>
-            <input type="file" id="vegImage" accept="image/*" />
-          </div>
-
-          <div class="file-block">
-            <div class="file-label">Upload Non-veg Menu Image</div>
-            <div class="file-hint">Optional. If today's menu is non-veg, this image will be preferred.</div>
-            <input type="file" id="nonVegImage" accept="image/*" />
-          </div>
-
-          <button class="location-btn" onclick="captureLocation()">Use Current Location</button>
-
-          <div class="coords" id="coordsBox">
-            Latitude: Not captured yet<br>
-            Longitude: Not captured yet
-          </div>
-
-          <button class="submit-btn" onclick="saveMess()">Register Mess</button>
-
-          <div class="status" id="statusText"></div>
+      <div class="field full">
+        <label data-i18n="photosLabel">Kitchen & menu photos</label>
+        <div class="upload-grid">
+          <div class="upload"><b data-i18n="mainPhoto">Main kitchen photo *</b><small data-i18n="mainPhotoS">Your default listing image.</small><input type="file" id="image" accept="image/*"></div>
+          <div class="upload"><b data-i18n="vegPhoto">Veg menu photo</b><small data-i18n="vegPhotoS">Optional photo for Veg listings.</small><input type="file" id="vegImage" accept="image/*"></div>
+          <div class="upload"><b data-i18n="nonvegPhoto">Non-Veg menu photo</b><small data-i18n="nonvegPhotoS">Optional photo for Non-Veg listings.</small><input type="file" id="nonVegImage" accept="image/*"></div>
         </div>
       </div>
+
+      <div class="field full">
+        <label data-i18n="locationLabel">Kitchen location <span class="req">*</span></label>
+        <div class="location-box"><button class="btn secondary" type="button" onclick="captureLocation()">◎ <span data-i18n="capture">Use current location</span></button><div class="coords" id="coordsBox" data-i18n-html="coords">Location not captured yet.<br>Tap the button to add your kitchen location.</div></div>
+      </div>
+    </div>
+
+    <div class="preview-note" data-i18n="note">Tip: use a bright, real photo of the food you actually serve. Clear menu photos make a listing feel more trustworthy.</div>
+
+    <div class="submit-row">
+      <div class="status" id="statusText"></div>
+      <button class="btn primary" type="button" onclick="saveMess()"><span data-i18n="submit">Register kitchen</span> →</button>
     </div>
   </section>
+</section>
+</main>
 
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+const SUPABASE_URL="https://iinvhwsbnvmcujyrzlxe.supabase.co";
+const SUPABASE_KEY="sb_publishable_fwhxfVqWpDrro8hkQbQQRA_1crMexZv";
+const sb=window.supabase.createClient(SUPABASE_URL,SUPABASE_KEY);
+let currentLat=null,currentLon=null,lang=localStorage.getItem("mealbuzzLang")||"en";
 
-  <script>
-    const SUPABASE_URL = "https://iinvhwsbnvmcujyrzlxe.supabase.co";
-    const SUPABASE_KEY = "sb_publishable_fwhxfVqWpDrro8hkQbQQRA_1crMexZv";
-    const sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+const tr={
+en:{back:"Partner home",kicker:"Grow with Meal Buzz",title:"Put today’s menu<br>in front of<br><span style='color:#ff8267'>nearby customers.</span>",intro:"Register your mess or home kitchen once, then keep your daily menu, price and availability easy to discover.",b1:"Be discovered locally",b1s:"Reach people already searching for food nearby.",b2:"Show clear pricing",b2s:"Help customers decide before they call or visit.",b3:"Keep today’s menu fresh",b3s:"Update what is actually available today.",formTitle:"Register your kitchen",formSub:"A few details and you’re ready to publish.",step:"OWNER SETUP",nameLabel:"Mess / kitchen name *",namePh:"e.g. Shree Krishna Mess",areaLabel:"Area / location *",areaPh:"e.g. Malkapur, Karad",priceLabel:"Price *",pricePh:"e.g. ₹90 thali / ₹3000 month",contactLabel:"Contact number *",contactPh:"10-digit mobile number",passwordLabel:"Create owner password *",passwordPh:"Create a secure password",typeLabel:"Food type",typeAny:"Veg / Non-Veg / Both",menuLabel:"Today’s menu *",menuPh:"Write today’s dishes clearly…",photosLabel:"Kitchen & menu photos",mainPhoto:"Main kitchen photo *",mainPhotoS:"Your default listing image.",vegPhoto:"Veg menu photo",vegPhotoS:"Optional photo for Veg listings.",nonvegPhoto:"Non-Veg menu photo",nonvegPhotoS:"Optional photo for Non-Veg listings.",locationLabel:"Kitchen location *",capture:"Use current location",coords:"Location not captured yet.<br>Tap the button to add your kitchen location.",note:"Tip: use a bright, real photo of the food you actually serve. Clear menu photos make a listing feel more trustworthy.",submit:"Register kitchen",getting:"Getting your location…",captured:"Location captured successfully.",allow:"Please allow location permission.",required:"Please complete all required fields and upload the main kitchen photo.",needLocation:"Please add your kitchen location first.",uploading:"Uploading photos and creating your kitchen…",success:"Kitchen registered successfully 🎉",saveError:"Could not save your kitchen. Please try again.",uploadError:"Photo upload or registration failed."},
+mr:{back:"पार्टनर होम",kicker:"Meal Buzz सोबत वाढा",title:"आजचा मेनू<br>जवळच्या ग्राहकांपर्यंत<br><span style='color:#ff8267'>आजच पोहोचवा.</span>",intro:"मेस किंवा होम किचन एकदा नोंदवा. त्यानंतर रोजचा मेनू, किंमत आणि उपलब्धता सहज अपडेट करा.",b1:"जवळच्या ग्राहकांना दिसा",b1s:"आधीच जवळचं जेवण शोधणाऱ्या लोकांपर्यंत पोहोचा.",b2:"किंमत स्पष्ट दाखवा",b2s:"फोन किंवा भेटीआधीच ग्राहकांना निर्णय घेणं सोपं करा.",b3:"आजचा मेनू ताजा ठेवा",b3s:"आज खरंच काय मिळतंय तेच दाखवा.",formTitle:"तुमचं किचन नोंदवा",formSub:"काही माहिती भरा आणि तुमची लिस्टिंग तयार.",step:"मालक नोंदणी",nameLabel:"मेस / किचनचं नाव *",namePh:"उदा. श्री कृष्णा मेस",areaLabel:"परिसर / लोकेशन *",areaPh:"उदा. मलकापूर, कराड",priceLabel:"किंमत *",pricePh:"उदा. ₹90 थाळी / ₹3000 महिना",contactLabel:"मोबाईल नंबर *",contactPh:"10 अंकी मोबाईल नंबर",passwordLabel:"मालकासाठी पासवर्ड *",passwordPh:"सुरक्षित पासवर्ड तयार करा",typeLabel:"जेवणाचा प्रकार",typeAny:"Veg / Non-Veg / दोन्ही",menuLabel:"आजचा मेनू *",menuPh:"आजचे पदार्थ स्पष्ट लिहा…",photosLabel:"किचन आणि मेनूचे फोटो",mainPhoto:"मुख्य किचन फोटो *",mainPhotoS:"लिस्टिंगवर दिसणारा मुख्य फोटो.",vegPhoto:"Veg मेनू फोटो",vegPhotoS:"Veg लिस्टिंगसाठी ऐच्छिक.",nonvegPhoto:"Non-Veg मेनू फोटो",nonvegPhotoS:"Non-Veg लिस्टिंगसाठी ऐच्छिक.",locationLabel:"किचनचं लोकेशन *",capture:"सध्याचं लोकेशन वापरा",coords:"लोकेशन अजून घेतलेलं नाही.<br>किचनचं लोकेशन जोडण्यासाठी बटण दाबा.",note:"टीप: तुम्ही खरंच देत असलेल्या जेवणाचा उजळ, नैसर्गिक फोटो वापरा. स्पष्ट फोटोमुळे ग्राहकांचा विश्वास वाढतो.",submit:"किचन नोंदवा",getting:"लोकेशन घेत आहे…",captured:"लोकेशन यशस्वीपणे घेतलं.",allow:"कृपया लोकेशनची परवानगी द्या.",required:"सगळी आवश्यक माहिती भरा आणि मुख्य किचन फोटो अपलोड करा.",needLocation:"आधी किचनचं लोकेशन जोडा.",uploading:"फोटो अपलोड करून किचन तयार करत आहे…",success:"किचन यशस्वीपणे नोंदलं 🎉",saveError:"किचन सेव्ह करता आलं नाही. पुन्हा प्रयत्न करा.",uploadError:"फोटो अपलोड किंवा नोंदणी अयशस्वी झाली."},
+hi:{back:"पार्टनर होम",kicker:"Meal Buzz के साथ बढ़ें",title:"आज का मेनू<br>पास के ग्राहकों तक<br><span style='color:#ff8267'>आज ही पहुँचाएँ.</span>",intro:"अपनी मेस या होम किचन एक बार रजिस्टर करें, फिर रोज़ का मेनू, कीमत और उपलब्धता आसानी से अपडेट करें.",b1:"पास के ग्राहकों को दिखें",b1s:"उन लोगों तक पहुँचें जो पहले से आसपास खाना खोज रहे हैं.",b2:"कीमत साफ़ दिखाएँ",b2s:"कॉल या विज़िट से पहले ग्राहक को फैसला करने दें.",b3:"आज का मेनू ताज़ा रखें",b3s:"आज सच में क्या उपलब्ध है वही दिखाएँ.",formTitle:"अपनी किचन रजिस्टर करें",formSub:"कुछ जानकारी भरें और आपकी लिस्टिंग तैयार.",step:"OWNER SETUP",nameLabel:"मेस / किचन का नाम *",namePh:"जैसे Shree Krishna Mess",areaLabel:"एरिया / लोकेशन *",areaPh:"जैसे Malkapur, Karad",priceLabel:"कीमत *",pricePh:"जैसे ₹90 थाली / ₹3000 महीना",contactLabel:"मोबाइल नंबर *",contactPh:"10 अंकों का मोबाइल नंबर",passwordLabel:"ओनर पासवर्ड *",passwordPh:"एक सुरक्षित पासवर्ड बनाएँ",typeLabel:"फूड टाइप",typeAny:"Veg / Non-Veg / दोनों",menuLabel:"आज का मेनू *",menuPh:"आज की डिश साफ़-साफ़ लिखें…",photosLabel:"किचन और मेनू फोटो",mainPhoto:"मुख्य किचन फोटो *",mainPhotoS:"लिस्टिंग पर दिखने वाली मुख्य फोटो.",vegPhoto:"Veg मेनू फोटो",vegPhotoS:"Veg लिस्टिंग के लिए वैकल्पिक.",nonvegPhoto:"Non-Veg मेनू फोटो",nonvegPhotoS:"Non-Veg लिस्टिंग के लिए वैकल्पिक.",locationLabel:"किचन लोकेशन *",capture:"मौजूदा लोकेशन इस्तेमाल करें",coords:"लोकेशन अभी नहीं लिया गया.<br>किचन लोकेशन जोड़ने के लिए बटन दबाएँ.",note:"टिप: जो खाना आप सच में परोसते हैं उसकी साफ़ और नेचुरल फोटो लगाएँ. अच्छी फोटो से लिस्टिंग ज्यादा भरोसेमंद लगती है.",submit:"किचन रजिस्टर करें",getting:"लोकेशन लिया जा रहा है…",captured:"लोकेशन सफलतापूर्वक मिल गया.",allow:"कृपया लोकेशन की अनुमति दें.",required:"सभी जरूरी जानकारी भरें और मुख्य किचन फोटो अपलोड करें.",needLocation:"पहले किचन लोकेशन जोड़ें.",uploading:"फोटो अपलोड करके किचन तैयार किया जा रहा है…",success:"किचन सफलतापूर्वक रजिस्टर हो गई 🎉",saveError:"किचन सेव नहीं हो पाई. दोबारा कोशिश करें.",uploadError:"फोटो अपलोड या रजिस्ट्रेशन फेल हुआ."}
+};
 
-    let currentLat = null;
-    let currentLon = null;
+function t(k){return tr[lang][k]||tr.en[k]||k}
+function setLang(l){lang=l;localStorage.setItem("mealbuzzLang",l);document.documentElement.lang=l;document.querySelectorAll(".lang-btn").forEach(b=>b.classList.toggle("active",b.dataset.lang===l));document.querySelectorAll("[data-i18n]").forEach(el=>el.textContent=t(el.dataset.i18n));document.querySelectorAll("[data-i18n-html]").forEach(el=>el.innerHTML=t(el.dataset.i18nHtml));document.querySelectorAll("[data-i18n-placeholder]").forEach(el=>el.placeholder=t(el.dataset.i18nPlaceholder))}
+document.querySelectorAll(".lang-btn").forEach(b=>b.onclick=()=>setLang(b.dataset.lang));
 
-    function setStatus(message, isError = false) {
-      const status = document.getElementById("statusText");
-      status.innerText = message;
-      status.className = isError ? "status error" : "status";
-    }
-
-    function captureLocation() {
-      if (!navigator.geolocation) {
-        setStatus("Location is not supported on this device.", true);
-        return;
-      }
-
-      setStatus("Getting current location...");
-
-      navigator.geolocation.getCurrentPosition(
-        function(position) {
-          currentLat = position.coords.latitude;
-          currentLon = position.coords.longitude;
-
-          document.getElementById("coordsBox").innerHTML =
-            "Latitude: " + currentLat + "<br>Longitude: " + currentLon;
-
-          setStatus("Location captured successfully.");
-        },
-        function() {
-          setStatus("Could not get location. Please allow location permission.", true);
-        }
-      );
-    }
-
-    async function uploadImageIfAny(file, prefix) {
-      if (!file) return "";
-
-      const safeName = file.name.replace(/\s+/g, "-");
-      const fileName = `${prefix}-${Date.now()}-${safeName}`;
-
-      const { error: uploadError } = await sb.storage
-        .from("mess-images")
-        .upload(fileName, file);
-
-      if (uploadError) {
-        throw uploadError;
-      }
-
-      const { data: publicData } = sb.storage
-        .from("mess-images")
-        .getPublicUrl(fileName);
-
-      return publicData.publicUrl;
-    }
-
-    async function saveMess() {
-      const name = document.getElementById("name").value.trim();
-      const location = document.getElementById("location").value.trim();
-      const price = document.getElementById("price").value.trim();
-      const contact = document.getElementById("contact").value.trim();
-      const password = document.getElementById("password").value.trim();
-      const mealType = document.getElementById("mealType").value.trim();
-      const menu = document.getElementById("menu").value.trim();
-
-      const imageFile = document.getElementById("image").files[0];
-      const vegImageFile = document.getElementById("vegImage").files[0];
-      const nonVegImageFile = document.getElementById("nonVegImage").files[0];
-
-      if (!name || !location || !price || !contact || !password || !menu || !imageFile) {
-        setStatus("Please fill all required fields and upload main mess photo.", true);
-        return;
-      }
-
-      if (currentLat === null || currentLon === null) {
-        setStatus("Please capture current location first.", true);
-        return;
-      }
-
-      try {
-        setStatus("Uploading images...");
-
-        const imageUrl = await uploadImageIfAny(imageFile, "main");
-        const vegImageUrl = await uploadImageIfAny(vegImageFile, "veg");
-        const nonVegImageUrl = await uploadImageIfAny(nonVegImageFile, "nonveg");
-
-        const payload = {
-          name: name,
-          location: location,
-          price: price,
-          contact: contact,
-          password: password,
-          type: mealType || null,
-          menu: menu,
-          today_menu: menu,
-          latitude: currentLat,
-          longitude: currentLon,
-          image_url: imageUrl,
-          veg_image_url: vegImageUrl || null,
-          nonveg_image_url: nonVegImageUrl || null
-        };
-
-        const { error } = await sb.from("mess").insert([payload]);
-
-        if (error) {
-          console.log(error);
-          setStatus("Error saving mess data. Check table columns once.", true);
-          return;
-        }
-
-        setStatus("Mess registered successfully 🎉");
-
-        document.getElementById("name").value = "";
-        document.getElementById("location").value = "";
-        document.getElementById("price").value = "";
-        document.getElementById("contact").value = "";
-        document.getElementById("password").value = "";
-        document.getElementById("mealType").value = "";
-        document.getElementById("menu").value = "";
-        document.getElementById("image").value = "";
-        document.getElementById("vegImage").value = "";
-        document.getElementById("nonVegImage").value = "";
-
-        currentLat = null;
-        currentLon = null;
-
-        document.getElementById("coordsBox").innerHTML =
-          "Latitude: Not captured yet<br>Longitude: Not captured yet";
-
-      } catch (err) {
-        console.log(err);
-        setStatus("Image upload failed or save failed.", true);
-      }
-    }
-  </script>
-
+function setStatus(message,isError=false){const s=document.getElementById("statusText");s.textContent=message;s.className=isError?"status error":"status"}
+function captureLocation(){if(!navigator.geolocation){setStatus(t("allow"),true);return}setStatus(t("getting"));navigator.geolocation.getCurrentPosition(p=>{currentLat=p.coords.latitude;currentLon=p.coords.longitude;document.getElementById("coordsBox").innerHTML="✓ "+currentLat.toFixed(5)+", "+currentLon.toFixed(5);setStatus(t("captured"))},()=>setStatus(t("allow"),true),{enableHighAccuracy:true,timeout:8000})}
+async function uploadImageIfAny(file,prefix){if(!file)return"";const safe=file.name.replace(/\s+/g,"-");const fileName=prefix+"-"+Date.now()+"-"+safe;const{error}=await sb.storage.from("mess-images").upload(fileName,file);if(error)throw error;return sb.storage.from("mess-images").getPublicUrl(fileName).data.publicUrl}
+async function saveMess(){
+ const name=document.getElementById("name").value.trim(),location=document.getElementById("location").value.trim(),price=document.getElementById("price").value.trim(),contact=document.getElementById("contact").value.trim(),password=document.getElementById("password").value.trim(),mealType=document.getElementById("mealType").value.trim(),menu=document.getElementById("menu").value.trim();
+ const imageFile=document.getElementById("image").files[0],vegImageFile=document.getElementById("vegImage").files[0],nonVegImageFile=document.getElementById("nonVegImage").files[0];
+ if(!name||!location||!price||!contact||!password||!menu||!imageFile){setStatus(t("required"),true);return}
+ if(currentLat===null||currentLon===null){setStatus(t("needLocation"),true);return}
+ try{
+  setStatus(t("uploading"));
+  const imageUrl=await uploadImageIfAny(imageFile,"main"),vegImageUrl=await uploadImageIfAny(vegImageFile,"veg"),nonVegImageUrl=await uploadImageIfAny(nonVegImageFile,"nonveg");
+  const payload={name,location,price,contact,password,type:mealType||null,menu,today_menu:menu,latitude:currentLat,longitude:currentLon,image_url:imageUrl,veg_image_url:vegImageUrl||null,nonveg_image_url:nonVegImageUrl||null};
+  const{error}=await sb.from("mess").insert([payload]);if(error){console.error(error);setStatus(t("saveError"),true);return}
+  setStatus(t("success"));["name","location","price","contact","password","menu","image","vegImage","nonVegImage"].forEach(id=>document.getElementById(id).value="");document.getElementById("mealType").value="";currentLat=currentLon=null;document.getElementById("coordsBox").innerHTML=t("coords");
+ }catch(e){console.error(e);setStatus(t("uploadError"),true)}
+}
+setLang(lang);
+</script>
 </body>
-</html>sss
+</html>
