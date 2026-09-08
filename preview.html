@@ -1,0 +1,192 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#f6f0e6">
+<title>Meal Buzz — Fresh menus near you</title>
+<meta name="description" content="Discover live mess menus, compare veg and non-veg options, prices and nearby kitchens with Meal Buzz.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet">
+<style>
+:root{--ink:#102534;--muted:#667786;--paper:#f6f0e6;--card:#fffaf4;--white:#fff;--coral:#ff6548;--coral2:#ff8a67;--mint:#19795f;--mint2:#e8f5ee;--gold:#efad38;--line:rgba(16,37,52,.12);--shadow:0 20px 55px rgba(16,37,52,.12);--soft:0 10px 28px rgba(16,37,52,.08);--red:#d84b42;--red2:#fff0ee}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;min-width:320px;background:radial-gradient(circle at 85% 0,rgba(239,173,56,.18),transparent 28rem),var(--paper);color:var(--ink);font-family:"DM Sans",system-ui,sans-serif}a{text-decoration:none;color:inherit}button,input{font:inherit}.shell{width:min(1440px,100%);margin:auto}
+.topbar{position:sticky;top:0;z-index:20;display:flex;align-items:center;justify-content:space-between;gap:18px;padding:16px clamp(18px,4vw,58px);background:rgba(246,240,230,.86);backdrop-filter:blur(18px);border-bottom:1px solid rgba(16,37,52,.07)}
+.brand{display:flex;align-items:center;gap:11px}.logo{display:grid;place-items:center;width:42px;height:42px;border-radius:15px;background:linear-gradient(135deg,var(--coral),var(--coral2));color:#fff;font-size:21px;box-shadow:7px 7px 0 rgba(239,173,56,.42);transform:rotate(-4deg)}.brand b{font-family:"Space Grotesk";font-size:23px;letter-spacing:-.05em}.brand b span{color:var(--coral)}.brand small{display:block;color:var(--muted);font-size:9px;font-weight:800;letter-spacing:.18em;text-transform:uppercase;margin-top:1px}
+.top-actions{display:flex;align-items:center;gap:10px}.lang-switch{display:flex;align-items:center;gap:4px;padding:4px;border:1px solid var(--line);border-radius:999px;background:rgba(255,255,255,.72);box-shadow:0 6px 18px rgba(16,37,52,.05)}.lang-btn{border:0;background:transparent;color:var(--muted);padding:8px 10px;border-radius:999px;font-size:11px;font-weight:900;cursor:pointer;transition:.18s}.lang-btn:hover{color:var(--ink)}.lang-btn.active{background:var(--ink);color:#fff;box-shadow:0 5px 12px rgba(16,37,52,.16)}.nav{display:flex;align-items:center;gap:8px}.nav a{padding:10px 14px;border-radius:999px;color:var(--muted);font-size:13px;font-weight:800}.nav a:hover{background:#fff;color:var(--ink)}.nav .partner{background:var(--ink);color:#fff;box-shadow:var(--soft)}.nav .partner:hover{background:var(--coral);color:#fff}
+.hero{display:grid;grid-template-columns:.95fr 1.05fr;gap:clamp(30px,5vw,74px);align-items:center;padding:clamp(46px,7vw,94px) clamp(18px,6vw,86px) 54px}.eyebrow{display:inline-flex;align-items:center;gap:10px;color:var(--mint);font-size:11px;font-weight:900;letter-spacing:.16em;text-transform:uppercase}.eyebrow i{width:28px;height:3px;border-radius:99px;background:var(--coral)}h1{margin:18px 0 18px;font-family:"Space Grotesk";font-size:clamp(48px,7vw,92px);line-height:.94;letter-spacing:-.075em}h1 span{color:var(--coral)}.hero p{max-width:560px;color:var(--muted);font-size:clamp(16px,1.5vw,20px);line-height:1.65}
+.hero-actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:28px}.btn{display:inline-flex;align-items:center;justify-content:center;gap:9px;min-height:52px;padding:0 20px;border:0;border-radius:16px;font-weight:900;transition:.22s;cursor:pointer}.btn-primary{background:linear-gradient(135deg,var(--coral),#ff7d58);color:#fff;box-shadow:0 14px 28px rgba(255,101,72,.26)}.btn-primary:hover{transform:translateY(-3px);box-shadow:0 20px 34px rgba(255,101,72,.32)}.btn-secondary{background:rgba(255,255,255,.7);border:1px solid var(--line);color:var(--ink);box-shadow:var(--soft)}.btn-secondary:hover{background:#fff;transform:translateY(-2px)}
+.visual{position:relative;min-height:480px}.visual img{position:absolute;inset:0 0 18px 6%;width:94%;height:94%;object-fit:cover;border-radius:44px 20px 44px 20px;box-shadow:var(--shadow);transform:rotate(2deg)}.visual:before{content:"";position:absolute;left:0;top:10%;width:90%;height:80%;border-radius:46% 54% 44% 56%;background:linear-gradient(135deg,rgba(239,173,56,.35),rgba(255,101,72,.11));transform:rotate(-7deg)}.float{position:absolute;z-index:2;padding:13px 16px;border-radius:999px;background:rgba(255,250,244,.94);border:1px solid rgba(255,255,255,.7);box-shadow:var(--soft);font-size:12px;font-weight:900}.float.top{right:0;top:7%}.float.bottom{left:0;bottom:6%;border-radius:18px}
+.discover{margin:0 clamp(14px,3vw,44px) 50px;padding:clamp(26px,4vw,50px);background:rgba(255,250,244,.88);border:1px solid rgba(16,37,52,.09);border-radius:34px;box-shadow:0 22px 64px rgba(16,37,52,.08)}.head{display:flex;align-items:end;justify-content:space-between;gap:20px;flex-wrap:wrap}.kicker{color:var(--mint);font-size:11px;font-weight:900;letter-spacing:.16em;text-transform:uppercase}.head h2{margin:6px 0 4px;font-family:"Space Grotesk";font-size:clamp(31px,4vw,50px);letter-spacing:-.06em}.head p{margin:0;color:var(--muted)}.live{display:inline-flex;align-items:center;gap:8px;padding:10px 14px;border-radius:999px;background:#fff;border:1px solid var(--line);font-size:12px;font-weight:900}.dot{width:8px;height:8px;border-radius:50%;background:#29ad71;box-shadow:0 0 0 4px rgba(41,173,113,.12)}
+.filter-panel{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:12px;margin-top:26px}.searchbox{display:flex;align-items:center;gap:10px;padding:7px 8px 7px 16px;background:#fff;border:1px solid rgba(16,37,52,.16);border-radius:18px;box-shadow:0 7px 22px rgba(16,37,52,.06)}.searchbox input{width:100%;border:0;outline:0;background:transparent;color:var(--ink);font-size:15px}.locate{white-space:nowrap}
+.dietary{display:flex;flex-wrap:wrap;gap:10px;margin-top:16px}.diet-btn{display:inline-flex;align-items:center;gap:9px;padding:11px 15px;border-radius:14px;border:1px solid var(--line);background:#fff;color:var(--ink);font-size:13px;font-weight:900;cursor:pointer;transition:.2s}.diet-btn:hover{transform:translateY(-2px);box-shadow:var(--soft)}.diet-btn.active[data-filter="all"]{background:var(--ink);color:#fff}.diet-btn.active[data-filter="veg"]{background:var(--mint);color:#fff;border-color:var(--mint)}.diet-btn.active[data-filter="nonveg"]{background:var(--red);color:#fff;border-color:var(--red)}.symbol{display:grid;place-items:center;width:18px;height:18px;border:2px solid currentColor;border-radius:4px}.symbol:after{content:"";width:7px;height:7px;border-radius:50%;background:currentColor}
+.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px;margin-top:28px}.card{overflow:hidden;background:#fff;border:1px solid rgba(16,37,52,.1);border-radius:24px;box-shadow:var(--soft);transition:.25s}.card:hover{transform:translateY(-5px);box-shadow:var(--shadow)}.media{position:relative;height:210px;overflow:hidden;background:#ddd}.media img{width:100%;height:100%;object-fit:cover;transition:.4s}.card:hover .media img{transform:scale(1.05)}.badge{position:absolute;left:14px;top:14px;display:flex;align-items:center;gap:7px;padding:8px 10px;border-radius:12px;background:rgba(255,255,255,.94);font-size:11px;font-weight:900;box-shadow:var(--soft)}.badge.veg{color:var(--mint)}.badge.nonveg{color:var(--red)}.status{position:absolute;right:14px;top:14px;padding:8px 10px;border-radius:999px;background:rgba(16,37,52,.88);color:#fff;font-size:10px;font-weight:900}.body{padding:18px}.body h3{margin:0;font-family:"Space Grotesk";font-size:21px;letter-spacing:-.04em}.meta{display:flex;gap:10px;flex-wrap:wrap;margin-top:8px;color:var(--muted);font-size:12px;font-weight:700}.menu{margin:14px 0;color:#485b69;font-size:13px;line-height:1.6}.cardfoot{display:flex;align-items:center;justify-content:space-between;gap:12px}.price{font-family:"Space Grotesk";font-size:24px;font-weight:700}.mini-btn{display:inline-flex;align-items:center;gap:7px;padding:10px 13px;border-radius:13px;background:var(--ink);color:#fff;font-size:12px;font-weight:900;transition:.2s}.mini-btn:hover{background:var(--coral);transform:translateY(-2px)}
+.empty{display:none;padding:34px;text-align:center;color:var(--muted);font-weight:800}
+.partner-band{margin:0 clamp(14px,3vw,44px) 44px;padding:clamp(30px,5vw,60px);display:grid;grid-template-columns:1.3fr .7fr;gap:24px;align-items:center;border-radius:34px;background:linear-gradient(135deg,#102534,#19394d);color:#fff;box-shadow:var(--shadow)}.partner-band h2{margin:0 0 10px;font-family:"Space Grotesk";font-size:clamp(32px,4vw,52px);letter-spacing:-.06em}.partner-band p{margin:0;color:#d4e0e6;max-width:620px;line-height:1.7}.partner-actions{display:flex;justify-content:flex-end;gap:10px;flex-wrap:wrap}.partner-actions .btn-secondary{background:rgba(255,255,255,.09);color:#fff;border-color:rgba(255,255,255,.14)}
+footer{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;padding:26px clamp(20px,5vw,64px) 38px;color:var(--muted);font-size:12px}
+@media(max-width:980px){.hero{grid-template-columns:1fr}.visual{min-height:420px}.grid{grid-template-columns:repeat(2,1fr)}.partner-band{grid-template-columns:1fr}.partner-actions{justify-content:flex-start}}
+@media(max-width:680px){.topbar{gap:10px}.top-actions{gap:6px}.lang-switch{padding:3px}.lang-btn{padding:7px 8px;font-size:10px}.nav a:not(.partner){display:none}.nav .partner{padding:9px 11px;font-size:11px}.hero{padding-top:38px}.visual{min-height:320px}.filter-panel{grid-template-columns:1fr}.locate{width:100%}.grid{grid-template-columns:1fr}.discover{padding:22px 16px}.dietary{display:grid;grid-template-columns:repeat(3,1fr)}.diet-btn{justify-content:center;padding:11px 8px}.partner-band{padding:28px 20px}.btn{min-height:50px;border-radius:15px}.media{height:190px}}
+</style>
+</head>
+<body>
+<div class="shell">
+<header class="topbar">
+  <a class="brand" href="#"><span class="logo">🍽</span><span><b>Meal <span>Buzz</span></b><small data-i18n="brandNote">fresh menus nearby</small></span></a>
+  <div class="top-actions">
+    <div class="lang-switch" aria-label="Language">
+      <button class="lang-btn active" data-lang="en">EN</button>
+      <button class="lang-btn" data-lang="mr">मराठी</button>
+      <button class="lang-btn" data-lang="hi">हिंदी</button>
+    </div>
+    <nav class="nav">
+      <a href="#discover" data-i18n="menusNav">Menus</a>
+      <a href="#partner" data-i18n="ownersNav">For mess owners</a>
+      <a class="partner" href="partner-index.html"><span data-i18n="partnerLogin">Partner login</span> ↗</a>
+    </nav>
+  </div>
+</header>
+
+<section class="hero">
+  <div>
+    <span class="eyebrow"><i></i> <span data-i18n="eyebrow">Live local menus</span></span>
+    <h1 data-i18n-html="heroTitle">Know what’s <span>cooking</span> nearby.</h1>
+    <p data-i18n="heroDesc">Find today’s mess menus, compare prices, choose Veg or Non‑Veg, and reach the kitchen in one tap.</p>
+    <div class="hero-actions">
+      <a class="btn btn-primary" href="#discover"><span data-i18n="explore">Explore nearby</span> →</a>
+      <button class="btn btn-secondary" id="heroLocate">◎ <span data-i18n="useLocation">Use my location</span></button>
+    </div>
+  </div>
+  <div class="visual">
+    <img src="https://images.unsplash.com/photo-1567337710282-00832b415979?auto=format&fit=crop&w=1200&q=86" alt="Fresh Indian meal">
+    <span class="float top">● <span data-i18n="liveAround">Live menus around you</span></span>
+    <span class="float bottom" data-i18n="freshLocal">Fresh • Local • Easy to compare</span>
+  </div>
+</section>
+
+<section class="discover" id="discover">
+  <div class="head">
+    <div><div class="kicker" data-i18n="discoverNearby">Discover nearby</div><h2 data-i18n="feelLike">What do you feel like eating?</h2><p data-i18n="switchMenus">Switch instantly between Veg and Non‑Veg menus.</p></div>
+    <span class="live"><i class="dot"></i><span id="count">6 kitchens live</span></span>
+  </div>
+
+  <div class="filter-panel">
+    <div class="searchbox"><span>⌕</span><input id="search" type="search" data-i18n-placeholder="searchPlaceholder" placeholder="Search mess, dish or area…"><button class="btn btn-primary" style="min-height:42px;padding:0 16px;border-radius:12px"><span data-i18n="searchBtn">Search</span></button></div>
+    <button class="btn btn-secondary locate" id="locate">◎ <span data-i18n="useLocation">Use my location</span></button>
+  </div>
+
+  <div class="dietary" aria-label="Dietary filter">
+    <button class="diet-btn active" data-filter="all" data-i18n="allMenus">All menus</button>
+    <button class="diet-btn" data-filter="veg"><span class="symbol"></span> <span data-i18n="veg">Veg</span></button>
+    <button class="diet-btn" data-filter="nonveg"><span class="symbol"></span> <span data-i18n="nonVeg">Non‑Veg</span></button>
+  </div>
+
+  <div class="grid" id="grid">
+    <article class="card" data-type="veg" data-search="Shree Krishna Mess thali paneer karad">
+      <div class="media"><img src="https://images.unsplash.com/photo-1546833999-b9f581a1996d?auto=format&fit=crop&w=900&q=84" alt="Veg thali"><span class="badge veg"><span class="symbol"></span> VEG</span><span class="status" data-i18n="openNow">OPEN NOW</span></div>
+      <div class="body"><h3>Shree Krishna Mess</h3><div class="meta"><span>📍 0.8 km</span><span>★ 4.7</span><span>Updated 8 min ago</span></div><p class="menu" data-i18n="menu1">Chapati, dal, rice, 2 sabji, salad & buttermilk</p><div class="cardfoot"><span class="price">₹90</span><a class="mini-btn" href="mess.html?name=Shree%20Krishna%20Mess&type=veg"><span data-i18n="viewMenu">View menu</span> →</a></div></div>
+    </article>
+    <article class="card" data-type="nonveg" data-search="Royal Kitchen chicken curry mutton karad">
+      <div class="media"><img src="https://images.unsplash.com/photo-1599487488170-d11ec9c172f0?auto=format&fit=crop&w=900&q=84" alt="Chicken meal"><span class="badge nonveg"><span class="symbol"></span> NON‑VEG</span><span class="status" data-i18n="openNow">OPEN NOW</span></div>
+      <div class="body"><h3>Royal Kitchen</h3><div class="meta"><span>📍 1.2 km</span><span>★ 4.6</span><span>Updated 11 min ago</span></div><p class="menu" data-i18n="menu2">Chicken curry, chapati, rice, gravy, salad</p><div class="cardfoot"><span class="price">₹140</span><a class="mini-btn" href="mess.html?name=Royal%20Kitchen&type=nonveg"><span data-i18n="viewMenu">View menu</span> →</a></div></div>
+    </article>
+    <article class="card" data-type="veg" data-search="Annapurna Home Food veg rice dal karad">
+      <div class="media"><img src="https://images.unsplash.com/photo-1567337710282-00832b415979?auto=format&fit=crop&w=900&q=84" alt="Healthy vegetarian food"><span class="badge veg"><span class="symbol"></span> VEG</span><span class="status" data-i18n="openNow">OPEN NOW</span></div>
+      <div class="body"><h3>Annapurna Home Food</h3><div class="meta"><span>📍 1.7 km</span><span>★ 4.8</span><span>Updated 15 min ago</span></div><p class="menu" data-i18n="menu3">Phulka, seasonal sabji, dal tadka, jeera rice</p><div class="cardfoot"><span class="price">₹100</span><a class="mini-btn" href="mess.html?name=Annapurna%20Home%20Food&type=veg"><span data-i18n="viewMenu">View menu</span> →</a></div></div>
+    </article>
+    <article class="card" data-type="nonveg" data-search="Spice Route egg curry chicken biryani karad">
+      <div class="media"><img src="https://images.unsplash.com/photo-1589302168068-964664d93dc0?auto=format&fit=crop&w=900&q=84" alt="Non vegetarian meal"><span class="badge nonveg"><span class="symbol"></span> NON‑VEG</span><span class="status" data-i18n="dinnerLive">DINNER LIVE</span></div>
+      <div class="body"><h3>Spice Route Mess</h3><div class="meta"><span>📍 2.0 km</span><span>★ 4.5</span><span>Updated 6 min ago</span></div><p class="menu" data-i18n="menu4">Egg curry / chicken option, chapati, rice & salad</p><div class="cardfoot"><span class="price">₹130</span><a class="mini-btn" href="mess.html?name=Spice%20Route%20Mess&type=nonveg"><span data-i18n="viewMenu">View menu</span> →</a></div></div>
+    </article>
+    <article class="card" data-type="veg" data-search="Sahyadri Bhojanalay veg bhakri pithla karad">
+      <div class="media"><img src="https://images.unsplash.com/photo-1601050690117-94f5f6fa8bd7?auto=format&fit=crop&w=900&q=84" alt="Indian vegetarian meal"><span class="badge veg"><span class="symbol"></span> VEG</span><span class="status" data-i18n="openNow">OPEN NOW</span></div>
+      <div class="body"><h3>Sahyadri Bhojanalay</h3><div class="meta"><span>📍 2.4 km</span><span>★ 4.4</span><span>Updated 19 min ago</span></div><p class="menu" data-i18n="menu5">Bhakri, pithla, bharli vangi, rice & taak</p><div class="cardfoot"><span class="price">₹110</span><a class="mini-btn" href="mess.html?name=Sahyadri%20Bhojanalay&type=veg"><span data-i18n="viewMenu">View menu</span> →</a></div></div>
+    </article>
+    <article class="card" data-type="nonveg" data-search="Kolhapuri Tadka mutton chicken thali karad">
+      <div class="media"><img src="https://images.unsplash.com/photo-1603894584373-5ac82b2ae398?auto=format&fit=crop&w=900&q=84" alt="Indian curry meal"><span class="badge nonveg"><span class="symbol"></span> NON‑VEG</span><span class="status" data-i18n="limited">LIMITED</span></div>
+      <div class="body"><h3>Kolhapuri Tadka</h3><div class="meta"><span>📍 2.8 km</span><span>★ 4.7</span><span>Updated 4 min ago</span></div><p class="menu" data-i18n="menu6">Chicken / mutton thali, tambda rassa, pandhra rassa</p><div class="cardfoot"><span class="price">₹180</span><a class="mini-btn" href="mess.html?name=Kolhapuri%20Tadka&type=nonveg"><span data-i18n="viewMenu">View menu</span> →</a></div></div>
+    </article>
+  </div>
+  <div class="empty" id="empty" data-i18n="empty">No matching menus found. Try another search or filter.</div>
+</section>
+
+<section class="partner-band" id="partner">
+  <div><h2 data-i18n="ownKitchen">Own a mess or home kitchen?</h2><p data-i18n="publishDesc">Publish today’s menu, price and availability in minutes. Customers nearby can discover you instantly.</p></div>
+  <div class="partner-actions"><a class="btn btn-primary" href="register.html"><span data-i18n="joinPartner">Join as a partner</span> →</a><a class="btn btn-secondary" href="partner-index.html" data-i18n="partnerLogin">Partner login</a></div>
+</section>
+
+<footer><span>© 2026 Meal Buzz</span><span data-i18n="footerTag">Fresh menus • Local kitchens • Better choices</span></footer>
+</div>
+<script>
+const translations={
+ en:{
+  brandNote:"fresh menus nearby",menusNav:"Menus",ownersNav:"For mess owners",partnerLogin:"Partner login",
+  eyebrow:"Live local menus",heroTitle:"Know what’s <span>cooking</span> nearby.",heroDesc:"Find today’s mess menus, compare prices, choose Veg or Non‑Veg, and reach the kitchen in one tap.",
+  explore:"Explore nearby",useLocation:"Use my location",liveAround:"Live menus around you",freshLocal:"Fresh • Local • Easy to compare",
+  discoverNearby:"Discover nearby",feelLike:"What do you feel like eating?",switchMenus:"Switch instantly between Veg and Non‑Veg menus.",
+  searchPlaceholder:"Search mess, dish or area…",searchBtn:"Search",allMenus:"All menus",veg:"Veg",nonVeg:"Non‑Veg",
+  openNow:"OPEN NOW",dinnerLive:"DINNER LIVE",limited:"LIMITED",viewMenu:"View menu",
+  menu1:"Chapati, dal, rice, 2 sabji, salad & buttermilk",menu2:"Chicken curry, chapati, rice, gravy, salad",menu3:"Phulka, seasonal sabji, dal tadka, jeera rice",
+  menu4:"Egg curry / chicken option, chapati, rice & salad",menu5:"Bhakri, pithla, bharli vangi, rice & taak",menu6:"Chicken / mutton thali, tambda rassa, pandhra rassa",
+  empty:"No matching menus found. Try another search or filter.",ownKitchen:"Own a mess or home kitchen?",publishDesc:"Publish today’s menu, price and availability in minutes. Customers nearby can discover you instantly.",
+  joinPartner:"Join as a partner",footerTag:"Fresh menus • Local kitchens • Better choices",kitchens:"kitchens live",kitchen:"kitchen live",
+  finding:"Finding you…",enabled:"✓ Location enabled",allow:"Allow location access",unavailable:"Location unavailable"
+ },
+ mr:{
+  brandNote:"जवळचे ताजे मेनू",menusNav:"मेनू",ownersNav:"मेस मालकांसाठी",partnerLogin:"पार्टनर लॉगिन",
+  eyebrow:"आजचे लाईव्ह लोकल मेनू",heroTitle:"जवळच काय <span>शिजतंय</span> ते लगेच बघा.",heroDesc:"आजचा मेस मेनू बघा, किंमती तुलना करा, Veg किंवा Non‑Veg निवडा आणि एका टॅपमध्ये किचनपर्यंत पोहोचा.",
+  explore:"जवळचे मेनू बघा",useLocation:"माझं लोकेशन वापरा",liveAround:"तुमच्या आसपास लाईव्ह मेनू",freshLocal:"ताजे • स्थानिक • तुलना सोपी",
+  discoverNearby:"जवळचे पर्याय",feelLike:"आज काय खायचंय?",switchMenus:"Veg आणि Non‑Veg मेनूमध्ये लगेच बदल करा.",
+  searchPlaceholder:"मेस, पदार्थ किंवा परिसर शोधा…",searchBtn:"शोधा",allMenus:"सगळे मेनू",veg:"Veg",nonVeg:"Non‑Veg",
+  openNow:"आत्ता सुरू",dinnerLive:"डिनर लाईव्ह",limited:"मर्यादित",viewMenu:"मेनू बघा",
+  menu1:"चपाती, डाळ, भात, २ भाज्या, सॅलड आणि ताक",menu2:"चिकन करी, चपाती, भात, ग्रेव्ही आणि सॅलड",menu3:"फुलका, हंगामी भाजी, डाळ तडका आणि जिरा राईस",
+  menu4:"अंडा करी / चिकन पर्याय, चपाती, भात आणि सॅलड",menu5:"भाकरी, पिठलं, भरली वांगी, भात आणि ताक",menu6:"चिकन / मटण थाळी, तांबडा रस्सा, पांढरा रस्सा",
+  empty:"जुळणारा मेनू सापडला नाही. दुसरा शोध किंवा फिल्टर वापरा.",ownKitchen:"तुमची मेस किंवा होम किचन आहे?",publishDesc:"आजचा मेनू, किंमत आणि उपलब्धता काही मिनिटांत टाका. जवळचे ग्राहक तुम्हाला लगेच शोधू शकतात.",
+  joinPartner:"पार्टनर म्हणून जोडा",footerTag:"ताजे मेनू • स्थानिक किचन्स • चांगली निवड",kitchens:"किचन्स लाईव्ह",kitchen:"किचन लाईव्ह",
+  finding:"लोकेशन शोधत आहे…",enabled:"✓ लोकेशन सुरू",allow:"लोकेशन परवानगी द्या",unavailable:"लोकेशन उपलब्ध नाही"
+ },
+ hi:{
+  brandNote:"पास के ताज़ा मेनू",menusNav:"मेनू",ownersNav:"मेस मालिकों के लिए",partnerLogin:"पार्टनर लॉगिन",
+  eyebrow:"आज के लाइव लोकल मेनू",heroTitle:"पास में क्या <span>पक रहा है</span> तुरंत देखें.",heroDesc:"आज का मेस मेनू देखें, कीमतों की तुलना करें, Veg या Non‑Veg चुनें और एक टैप में किचन तक पहुँचें.",
+  explore:"पास के मेनू देखें",useLocation:"मेरा लोकेशन इस्तेमाल करें",liveAround:"आपके आसपास लाइव मेनू",freshLocal:"ताज़ा • लोकल • तुलना आसान",
+  discoverNearby:"पास में खोजें",feelLike:"आज क्या खाने का मन है?",switchMenus:"Veg और Non‑Veg मेनू के बीच तुरंत बदलें.",
+  searchPlaceholder:"मेस, डिश या एरिया खोजें…",searchBtn:"खोजें",allMenus:"सभी मेनू",veg:"Veg",nonVeg:"Non‑Veg",
+  openNow:"अभी खुला",dinnerLive:"डिनर लाइव",limited:"सीमित",viewMenu:"मेनू देखें",
+  menu1:"चपाती, दाल, चावल, 2 सब्ज़ी, सलाद और छाछ",menu2:"चिकन करी, चपाती, चावल, ग्रेवी और सलाद",menu3:"फुल्का, मौसमी सब्ज़ी, दाल तड़का और जीरा राइस",
+  menu4:"एग करी / चिकन विकल्प, चपाती, चावल और सलाद",menu5:"भाकरी, पिठला, भरली वांगी, चावल और छाछ",menu6:"चिकन / मटन थाली, तांबडा रस्सा, पांढरा रस्सा",
+  empty:"मिलता-जुलता मेनू नहीं मिला. दूसरा सर्च या फ़िल्टर आज़माएँ.",ownKitchen:"आपकी मेस या होम किचन है?",publishDesc:"आज का मेनू, कीमत और उपलब्धता कुछ मिनटों में डालें. पास के ग्राहक आपको तुरंत खोज सकते हैं.",
+  joinPartner:"पार्टनर बनें",footerTag:"ताज़ा मेनू • लोकल किचन • बेहतर चुनाव",kitchens:"किचन लाइव",kitchen:"किचन लाइव",
+  finding:"लोकेशन खोज रहे हैं…",enabled:"✓ लोकेशन चालू",allow:"लोकेशन की अनुमति दें",unavailable:"लोकेशन उपलब्ध नहीं"
+ }
+};
+let lang=localStorage.getItem("mealbuzzLang")||"en";
+const buttons=[...document.querySelectorAll('.diet-btn')], cards=[...document.querySelectorAll('.card')], search=document.getElementById('search'), count=document.getElementById('count'), empty=document.getElementById('empty');
+let filter='all';
+function t(k){return translations[lang][k]||translations.en[k]||k}
+function setLang(next){
+ lang=next; localStorage.setItem("mealbuzzLang",lang); document.documentElement.lang=lang;
+ document.querySelectorAll(".lang-btn").forEach(b=>b.classList.toggle("active",b.dataset.lang===lang));
+ document.querySelectorAll("[data-i18n]").forEach(el=>el.textContent=t(el.dataset.i18n));
+ document.querySelectorAll("[data-i18n-html]").forEach(el=>el.innerHTML=t(el.dataset.i18nHtml));
+ document.querySelectorAll("[data-i18n-placeholder]").forEach(el=>el.placeholder=t(el.dataset.i18nPlaceholder));
+ apply();
+}
+function apply(){
+ const q=search.value.trim().toLowerCase(); let visible=0;
+ cards.forEach(c=>{const okType=filter==='all'||c.dataset.type===filter; const okSearch=!q||c.dataset.search.toLowerCase().includes(q); const show=okType&&okSearch;c.style.display=show?'':'none';if(show)visible++;});
+ count.textContent=visible+" "+(visible===1?t("kitchen"):t("kitchens")); empty.style.display=visible?'none':'block';
+}
+document.querySelectorAll(".lang-btn").forEach(b=>b.addEventListener("click",()=>setLang(b.dataset.lang)));
+buttons.forEach(b=>b.addEventListener('click',()=>{buttons.forEach(x=>x.classList.remove('active'));b.classList.add('active');filter=b.dataset.filter;apply()}));
+search.addEventListener('input',apply);
+function locate(btn){
+ if(!navigator.geolocation){btn.textContent=t("unavailable");return}
+ btn.textContent=t("finding");
+ navigator.geolocation.getCurrentPosition(()=>{btn.textContent=t("enabled");setTimeout(()=>setLang(lang),1800)},()=>{btn.textContent=t("allow");setTimeout(()=>setLang(lang),2200)},{timeout:7000});
+}
+document.getElementById('locate').addEventListener('click',e=>locate(e.currentTarget));
+document.getElementById('heroLocate').addEventListener('click',e=>locate(e.currentTarget));
+setLang(lang);
+</script>
+</body>
+</html>
