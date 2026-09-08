@@ -8,7 +8,7 @@
 <meta name="description" content="Discover fresh Veg and Non-Veg mess menus near you with Meal Buzz.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Noto+Sans+Devanagari:wght@400;500;600;700;800;900&family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet">
 <style>
 :root{--ink:#0d2940;--muted:#667685;--paper:#f7f1e7;--white:#fff;--coral:#ff654b;--green:#198668;--line:rgba(13,41,64,.10);--shadow:0 18px 50px rgba(30,43,53,.12)}
 *{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:linear-gradient(120deg,#fffaf2 0,#f7f1e7 55%,#fff8e8 100%);color:var(--ink);font-family:"DM Sans",system-ui,sans-serif}a{text-decoration:none;color:inherit}button,input{font:inherit}.shell{max-width:1536px;margin:auto;overflow:hidden}
@@ -35,6 +35,35 @@ footer{padding:24px 64px 42px;color:#6f7e89;font-size:12px;display:flex;justify-
 
 
 @media(max-width:980px){.topbar{height:auto;padding:14px 20px}.nav a:not(.owner){display:none}.hero{grid-template-columns:1fr;padding-top:54px;min-height:auto}.visual{min-height:520px}.grid{grid-template-columns:repeat(2,1fr)}.steps{grid-template-columns:1fr}.feature-strip{grid-template-columns:repeat(2,1fr)}.feature:nth-child(2){border-right:0}.owner-premium{grid-template-columns:1fr}.owner-cta{justify-content:flex-start}.quotes{grid-template-columns:1fr}.faq-section{grid-template-columns:1fr}.final-cta{align-items:flex-start;flex-direction:column}}@media(max-width:640px){.brand-name{font-size:22px}.tagline{font-size:8px}.logo{width:44px;height:44px}.nav .owner{padding:11px 13px;font-size:11px}.lang{display:none}.hero{padding:40px 18px 28px}.hero-copy{font-size:16px}.visual{min-height:360px}.nearby{top:52px;right:8px;font-size:11px;padding:12px 15px}.fresh{left:8px;font-size:11px}.local{width:82px;height:82px;font-size:10px}.stats{overflow-x:auto}.stat{min-width:120px;padding:0 20px}.section{margin:0 12px 34px;padding:24px 16px}.grid{grid-template-columns:1fr}.menu-tools{grid-template-columns:1fr}.card-media{height:190px}.card img{height:190px}.feature-strip{grid-template-columns:1fr}.feature{border-right:0;border-bottom:1px solid var(--line)}.feature:last-child{border-bottom:0}.owner-cta{display:grid}.owner-cta .btn{width:100%}.final-cta{margin:0 12px 24px;padding:26px 20px}.final-cta .btn{width:100%}footer{padding:20px}}
+
+html[lang="mr"] body,html[lang="hi"] body{font-family:"Noto Sans Devanagari","DM Sans",system-ui,sans-serif}
+html[lang="mr"] h1,html[lang="hi"] h1,
+html[lang="mr"] h2,html[lang="hi"] h2,
+html[lang="mr"] h3,html[lang="hi"] h3,
+html[lang="mr"] .brand-name,html[lang="hi"] .brand-name,
+html[lang="mr"] .intro h1,html[lang="hi"] .intro h1,
+html[lang="mr"] .form-head h2,html[lang="hi"] .form-head h2,
+html[lang="mr"] .section h2,html[lang="hi"] .section h2,
+html[lang="mr"] .info h1,html[lang="hi"] .info h1,
+html[lang="mr"] .panel h2,html[lang="hi"] .panel h2{
+  font-family:"Noto Sans Devanagari","Space Grotesk",sans-serif!important;
+  letter-spacing:-.035em!important;
+  line-height:1.06!important
+}
+html[lang="mr"] .eyebrow,html[lang="hi"] .eyebrow,
+html[lang="mr"] .kicker,html[lang="hi"] .kicker,
+html[lang="mr"] .proof-kicker,html[lang="hi"] .proof-kicker,
+html[lang="mr"] .tagline,html[lang="hi"] .tagline{
+  letter-spacing:.06em!important;
+  text-transform:none!important
+}
+html[lang="mr"] button,html[lang="hi"] button,
+html[lang="mr"] input,html[lang="hi"] input,
+html[lang="mr"] textarea,html[lang="hi"] textarea,
+html[lang="mr"] select,html[lang="hi"] select{
+  font-family:"Noto Sans Devanagari","DM Sans",sans-serif
+}
+
 </style>
 </head>
 <body>
