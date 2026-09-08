@@ -7,10 +7,56 @@
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><script>
 const sb=window.supabase.createClient("https://iinvhwsbnvmcujyrzlxe.supabase.co","sb_publishable_fwhxfVqWpDrro8hkQbQQRA_1crMexZv");let currentMessId=null,currentLat=null,currentLon=null;
 function setStatus(m,e=false){const x=document.getElementById("statusText");x.textContent=m;x.className=e?"status error":"status"}function showImage(url){imagePreview.innerHTML=url?'Current photo:<img src="'+url+'" alt="Kitchen">':"No image uploaded yet."}
-async function getMess(){const p=new URLSearchParams(location.search).get("id")||localStorage.getItem("ownerMessId");if(p){const{data}=await sb.from("mess").select("*").eq("id",Number(p)).maybeSingle();if(data)return data}const{data:u}=await sb.auth.getUser();if(u?.user){const{data}=await sb.from("mess").select("*").eq("user_id",u.user.id).maybeSingle();if(data)return data}return null}
+async function getMess(){
+  const legacyToken=localStorage.getItem("ownerLegacyToken");
+  if(legacyToken){
+    const{data}=await sb.rpc("legacy_get_mess",{p_token:legacyToken});
+    if(Array.isArray(data)&&data[0])return data[0];
+  }
+  const{data:u}=await sb.auth.getUser();
+  if(u?.user){
+    const{data}=await sb.from("mess").select("*").eq("user_id",u.user.id).maybeSingle();
+    if(data)return data;
+  }
+  return null
+}
 async function load(){const d=await getMess();if(!d){setStatus("Could not load profile. Please login again.",true);return}currentMessId=d.id;ownerName.value=d.owner_name||"";contact.value=d.contact||"";messName.value=d.name||"";price.value=d.price||"";location.value=d.location||"";mealType.value=d.type||"veg";currentLat=d.latitude??null;currentLon=d.longitude??null;showImage(d.image_url||null)}
 function captureLocation(){if(!navigator.geolocation){setStatus("Location is not supported on this device.",true);return}navigator.geolocation.getCurrentPosition(p=>{currentLat=p.coords.latitude;currentLon=p.coords.longitude;coordsNote.style.display="block";coordsNote.textContent="Location updated: "+currentLat.toFixed(5)+", "+currentLon.toFixed(5)},()=>setStatus("Please allow location permission.",true),{enableHighAccuracy:true,timeout:8000})}
 async function upload(file){if(!file)return null;if(!["image/jpeg","image/png","image/webp"].includes(file.type))throw new Error("Only JPG, PNG or WEBP images are allowed.");if(file.size>5*1024*1024)throw new Error("Image must be below 5 MB.");const name="mess-profile/"+Date.now()+"-"+file.name.toLowerCase().replace(/[^a-z0-9.]/g,"-");const{error}=await sb.storage.from("mess-images").upload(name,file);if(error)throw error;return sb.storage.from("mess-images").getPublicUrl(name).data.publicUrl}
-async function saveProfile(){const phone=String(contact.value||"").replace(/\D/g,"").slice(-10);if(!ownerName.value.trim()||phone.length!==10||!messName.value.trim()||!price.value.trim()||!location.value.trim()){setStatus("Please fill all details and use a valid 10 digit mobile number.",true);return}if(!currentMessId){setStatus("Kitchen ID not found.",true);return}saveBtn.disabled=true;try{const image=await upload(mainImage.files[0]);const payload={owner_name:ownerName.value.trim(),contact:phone,name:messName.value.trim(),price:price.value.trim(),location:location.value.trim(),type:mealType.value,updated_at:new Date().toISOString()};if(currentLat!==null&&currentLon!==null){payload.latitude=currentLat;payload.longitude=currentLon}if(image)payload.image_url=image;const{error}=await sb.from("mess").update(payload).eq("id",Number(currentMessId));if(error)throw error;localStorage.setItem("ownerMessName",payload.name);localStorage.setItem("ownerPhone",phone);if(image)showImage(image);setStatus("Profile updated successfully ✓")}catch(e){setStatus(e.message||"Save failed.",true)}finally{saveBtn.disabled=false}}
+async function saveProfile(){
+  const phone=String(contact.value||"").replace(/\D/g,"").slice(-10);
+  if(!ownerName.value.trim()||phone.length!==10||!messName.value.trim()||!price.value.trim()||!location.value.trim()){setStatus("Please fill all details and use a valid 10 digit mobile number.",true);return}
+  if(!currentMessId){setStatus("Kitchen ID not found.",true);return}
+  saveBtn.disabled=true;
+  try{
+    const legacyToken=localStorage.getItem("ownerLegacyToken");
+    let image=null;
+    if(mainImage.files[0]){
+      if(legacyToken){
+        setStatus("For security, photo changes require your account to be upgraded. Other profile details can still be saved.",true);
+      }else{
+        image=await upload(mainImage.files[0]);
+      }
+    }
+    const payload={owner_name:ownerName.value.trim(),contact:phone,name:messName.value.trim(),price:price.value.trim(),location:location.value.trim(),type:mealType.value,updated_at:new Date().toISOString()};
+    if(currentLat!==null&&currentLon!==null){payload.latitude=currentLat;payload.longitude=currentLon}
+    if(image)payload.image_url=image;
+
+    if(legacyToken){
+      const{data,error}=await sb.rpc("legacy_update_profile",{
+        p_token:legacyToken,p_owner_name:payload.owner_name,p_contact:payload.contact,p_name:payload.name,p_price:payload.price,
+        p_location:payload.location,p_type:payload.type,p_lat:payload.latitude??null,p_lon:payload.longitude??null,p_image_url:image||""
+      });
+      if(error||!data)throw error||new Error("Legacy session expired. Please login again.");
+    }else{
+      const{error}=await sb.from("mess").update(payload).eq("id",Number(currentMessId));
+      if(error)throw error;
+    }
+
+    localStorage.setItem("ownerMessName",payload.name);localStorage.setItem("ownerPhone",phone);
+    if(image)showImage(image);
+    setStatus("Profile updated successfully ✓");
+  }catch(e){setStatus(e.message||"Save failed.",true)}finally{saveBtn.disabled=false}
+}
 load();
 </script></body></html>
