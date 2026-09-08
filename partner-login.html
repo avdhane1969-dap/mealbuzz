@@ -8,7 +8,7 @@
 <meta name="description" content="Meal Buzz Partner login for mess owners and home kitchens.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Noto+Sans+Devanagari:wght@400;500;600;700;800;900&family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet">
 <style>
 :root{--ink:#0d2940;--muted:#667685;--paper:#f7f1e7;--white:#fff;--coral:#ff654b;--green:#198668;--line:rgba(13,41,64,.10);--shadow:0 20px 56px rgba(13,41,64,.10)}
 *{box-sizing:border-box}body{margin:0;background:linear-gradient(120deg,#fffaf3,#f7f1e7 58%,#fff8e8);color:var(--ink);font-family:"DM Sans",system-ui,sans-serif}button,input{font:inherit}a{text-decoration:none;color:inherit}.shell{max-width:1320px;margin:auto;padding:0 24px 60px}
@@ -20,6 +20,35 @@
 .register-box{margin-top:18px;padding:16px;border-radius:17px;background:#fff6e9;color:#775c32;font-size:13px;line-height:1.6}.register-box a{font-weight:900;color:var(--coral)}.small-note{margin-top:14px;color:#81909b;font-size:11px;text-align:center}
 @media(max-width:950px){.hero{grid-template-columns:1fr}.intro{min-height:auto}}
 @media(max-width:640px){.shell{padding:0 14px 40px}.top{height:82px}.lang{display:none}.brand-name{font-size:22px}.back{font-size:11px;padding:9px 11px}.intro,.login-card{padding:22px 17px;border-radius:24px}.benefits{grid-template-columns:1fr}.benefit.featured{grid-column:auto;grid-template-columns:auto 1fr}.benefit.featured .mini-badge{grid-column:1/-1;justify-self:start}.growth-strip{align-items:flex-start;flex-direction:column}.growth-strip span{text-align:left}.mini-stats{grid-template-columns:1fr 1fr}.mini-stat:last-child{grid-column:1/-1}}
+
+html[lang="mr"] body,html[lang="hi"] body{font-family:"Noto Sans Devanagari","DM Sans",system-ui,sans-serif}
+html[lang="mr"] h1,html[lang="hi"] h1,
+html[lang="mr"] h2,html[lang="hi"] h2,
+html[lang="mr"] h3,html[lang="hi"] h3,
+html[lang="mr"] .brand-name,html[lang="hi"] .brand-name,
+html[lang="mr"] .intro h1,html[lang="hi"] .intro h1,
+html[lang="mr"] .form-head h2,html[lang="hi"] .form-head h2,
+html[lang="mr"] .section h2,html[lang="hi"] .section h2,
+html[lang="mr"] .info h1,html[lang="hi"] .info h1,
+html[lang="mr"] .panel h2,html[lang="hi"] .panel h2{
+  font-family:"Noto Sans Devanagari","Space Grotesk",sans-serif!important;
+  letter-spacing:-.035em!important;
+  line-height:1.06!important
+}
+html[lang="mr"] .eyebrow,html[lang="hi"] .eyebrow,
+html[lang="mr"] .kicker,html[lang="hi"] .kicker,
+html[lang="mr"] .proof-kicker,html[lang="hi"] .proof-kicker,
+html[lang="mr"] .tagline,html[lang="hi"] .tagline{
+  letter-spacing:.06em!important;
+  text-transform:none!important
+}
+html[lang="mr"] button,html[lang="hi"] button,
+html[lang="mr"] input,html[lang="hi"] input,
+html[lang="mr"] textarea,html[lang="hi"] textarea,
+html[lang="mr"] select,html[lang="hi"] select{
+  font-family:"Noto Sans Devanagari","DM Sans",sans-serif
+}
+
 </style>
 </head>
 <body>
