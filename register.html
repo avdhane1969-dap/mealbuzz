@@ -140,18 +140,45 @@ async function saveMess(){
  if(!name||!location||!price||!contact||!password||!menu||!imageFile){setStatus(t("required"),true);return}
  if(contact.length!==10){setStatus(t("invalidPhone"),true);return}
  if(password.length<8){setStatus(t("weakPassword"),true);return}
- const{data:existing}=await sb.from("mess").select("id,contact").limit(1000);if((existing||[]).some(r=>String(r.contact||"").replace(/\D/g,"").slice(-10)===contact)){setStatus(t("duplicatePhone"),true);return}
+ const{data:existing}=await sb.from("mess_public").select("id,contact").limit(1000);if((existing||[]).some(r=>String(r.contact||"").replace(/\D/g,"").slice(-10)===contact)){setStatus(t("duplicatePhone"),true);return}
  if(currentLat===null||currentLon===null){setStatus(t("needLocation"),true);return}
  try{
   setStatus(t("uploading"));
-  const imageUrl=await uploadImageIfAny(imageFile,"main"),vegImageUrl=await uploadImageIfAny(vegImageFile,"veg"),nonVegImageUrl=await uploadImageIfAny(nonVegImageFile,"nonveg");
-  const partnerEmail=contact+"@mealbuzz.partner";let userId=null;try{const{data:authData,error:authError}=await sb.auth.signUp({email:partnerEmail,password});if(authError)throw authError;userId=authData?.user?.id||null}catch(authErr){console.error(authErr);setStatus(authErr.message||t("saveError"),true);return}
-  const payload={name,location,price,contact,type:mealType||null,menu,today_menu:menu,latitude:currentLat,longitude:currentLon,image_url:imageUrl,veg_image_url:vegImageUrl||null,nonveg_image_url:nonVegImageUrl||null,user_id:userId};
-  const{data:created,error}=await sb.from("mess").insert([payload]).select("*").single();if(error){console.error(error);setStatus(t("saveError"),true);return}
-  if(created){localStorage.setItem("ownerMessId",created.id);localStorage.setItem("ownerMessName",created.name||name);localStorage.setItem("ownerPhone",created.contact||contact)}
+  const partnerEmail=contact+"@mealbuzz.partner";
+
+  let authData=null;
+  const signup=await sb.auth.signUp({email:partnerEmail,password});
+  if(signup.error)throw signup.error;
+  authData=signup.data;
+
+  // RLS requires a real authenticated session before owner data or photos can be created.
+  if(!authData?.session){
+    const login=await sb.auth.signInWithPassword({email:partnerEmail,password});
+    if(login.error||!login.data?.session)throw login.error||new Error("Secure login session could not be created. Please try again.");
+    authData=login.data;
+  }
+
+  const userId=authData.user?.id;
+  if(!userId)throw new Error("Secure owner account could not be created.");
+
+  const imageUrl=await uploadImageIfAny(imageFile,"main"),
+        vegImageUrl=await uploadImageIfAny(vegImageFile,"veg"),
+        nonVegImageUrl=await uploadImageIfAny(nonVegImageFile,"nonveg");
+
+  const payload={name,location,price,contact,type:mealType||null,menu,today_menu:menu,latitude:currentLat,longitude:currentLon,image_url:imageUrl,veg_image_url:vegImageUrl||null,nonveg_image_url:nonVegImageUrl||null,user_id:userId,status:"Open",updated_at:new Date().toISOString()};
+  const{data:created,error}=await sb.from("mess").insert([payload]).select("*").single();
+  if(error)throw error;
+
+  localStorage.removeItem("ownerLegacyToken");
+  if(created){
+    localStorage.setItem("ownerMessId",created.id);
+    localStorage.setItem("ownerMessName",created.name||name);
+    localStorage.setItem("ownerPhone",created.contact||contact);
+    localStorage.setItem("ownerUserId",userId);
+  }
   setStatus(t("success"));
-  setTimeout(()=>{if(created?.id)window.location.href="dashboard.html?id="+encodeURIComponent(created.id);else window.location.href="partner-login.html"},900);["name","location","price","contact","password","menu","image","vegImage","nonVegImage"].forEach(id=>document.getElementById(id).value="");document.getElementById("mealType").value="";currentLat=currentLon=null;document.getElementById("coordsBox").innerHTML=t("coords");
- }catch(e){console.error(e);setStatus(t("uploadError"),true)}
+  setTimeout(()=>{window.location.href=created?.id?"dashboard.html?id="+encodeURIComponent(created.id):"partner-login.html"},900);
+ }catch(e){console.error(e);setStatus(e.message||t("uploadError"),true)}
 }
 setLang(lang);
 </script>
