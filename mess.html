@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#f6f0e6"><title>Meal Buzz — Menu</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet">
+<style>
+:root{--ink:#102534;--muted:#667786;--paper:#f6f0e6;--white:#fff;--coral:#ff6548;--mint:#19795f;--red:#d84b42;--line:rgba(16,37,52,.12);--shadow:0 20px 55px rgba(16,37,52,.12)}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(circle at 90% 0,rgba(239,173,56,.18),transparent 24rem),var(--paper);color:var(--ink);font-family:"DM Sans",sans-serif}a{text-decoration:none;color:inherit}.wrap{width:min(1180px,100%);margin:auto;padding:18px}
+.top{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:10px 0 20px}.brand{font-family:"Space Grotesk";font-size:24px;font-weight:700}.brand span{color:var(--coral)}.back{padding:11px 15px;border-radius:14px;background:#fff;border:1px solid var(--line);font-weight:800;box-shadow:0 8px 20px rgba(16,37,52,.06)}
+.hero{display:grid;grid-template-columns:1.05fr .95fr;gap:24px;background:rgba(255,255,255,.7);border:1px solid var(--line);border-radius:30px;padding:24px;box-shadow:var(--shadow)}.photo{min-height:430px;border-radius:24px;background:url('https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=1200&q=84') center/cover}.info{padding:14px}.tag{display:inline-flex;align-items:center;gap:8px;padding:9px 11px;border-radius:12px;background:#fff;font-size:12px;font-weight:900}.dot{width:9px;height:9px;border-radius:50%;background:currentColor}.veg{color:var(--mint)}.nonveg{color:var(--red)}h1{font-family:"Space Grotesk";font-size:clamp(38px,5vw,64px);letter-spacing:-.06em;line-height:1;margin:18px 0 12px}.sub{color:var(--muted);line-height:1.7}.stats{display:flex;gap:10px;flex-wrap:wrap;margin:20px 0}.stat{padding:10px 12px;background:#fff;border:1px solid var(--line);border-radius:13px;font-size:12px;font-weight:800}.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:24px}.btn{display:inline-flex;align-items:center;justify-content:center;min-height:50px;padding:0 17px;border-radius:15px;border:0;font-weight:900;cursor:pointer}.primary{background:linear-gradient(135deg,var(--coral),#ff7d58);color:#fff;box-shadow:0 14px 28px rgba(255,101,72,.25)}.secondary{background:#fff;border:1px solid var(--line);color:var(--ink)}
+.menu{margin-top:24px;display:grid;grid-template-columns:1fr 1fr;gap:18px}.panel{background:#fff;border:1px solid var(--line);border-radius:24px;padding:22px;box-shadow:0 10px 28px rgba(16,37,52,.07)}.panel h2{font-family:"Space Grotesk";font-size:27px;margin:0 0 16px;letter-spacing:-.04em}.item{display:flex;justify-content:space-between;gap:14px;padding:13px 0;border-bottom:1px dashed var(--line)}.item:last-child{border-bottom:0}.item b{font-size:15px}.item span{color:var(--muted);font-size:13px}.price{font-weight:900;color:var(--ink)!important}.note{margin-top:18px;padding:15px;border-radius:16px;background:#fff7ec;color:#7a5b29;font-size:13px;line-height:1.6}
+@media(max-width:760px){.hero,.menu{grid-template-columns:1fr}.photo{min-height:300px}.hero{padding:14px}.info{padding:10px}.actions .btn{flex:1}}
+</style></head>
+<body><main class="wrap">
+<div class="top"><a class="brand" href="index.html">Meal <span>Buzz</span></a><a class="back" href="index.html">← Back to menus</a></div>
+<section class="hero">
+<div class="photo"></div>
+<div class="info">
+<span id="tag" class="tag veg"><i class="dot"></i><span id="typeText">VEG</span></span>
+<h1 id="name">Shree Krishna Mess</h1>
+<p class="sub">Today’s menu is live. Freshly prepared local food with transparent pricing and quick contact options.</p>
+<div class="stats"><span class="stat">★ 4.7 rating</span><span class="stat">📍 0.8 km away</span><span class="stat">● Open now</span></div>
+<div class="actions"><a class="btn primary" href="tel:+919999999999">Call kitchen</a><a class="btn secondary" href="https://maps.google.com" target="_blank" rel="noopener">Directions ↗</a></div>
+</div>
+</section>
+<section class="menu">
+<div class="panel"><h2>Today’s menu</h2><div id="menuItems"></div></div>
+<div class="panel"><h2>Kitchen details</h2><div class="item"><div><b>Lunch timing</b><br><span>12:00 PM – 3:30 PM</span></div></div><div class="item"><div><b>Dinner timing</b><br><span>7:00 PM – 10:30 PM</span></div></div><div class="item"><div><b>Service</b><br><span>Dine-in • Parcel • Monthly mess</span></div></div><div class="note">Menu and availability may change during the day. Call the kitchen before travelling for the latest confirmation.</div></div>
+</section>
+</main>
+<script>
+const q=new URLSearchParams(location.search),name=q.get('name')||'Shree Krishna Mess',type=q.get('type')||'veg';document.getElementById('name').textContent=name;const tag=document.getElementById('tag');tag.className='tag '+(type==='nonveg'?'nonveg':'veg');document.getElementById('typeText').textContent=type==='nonveg'?'NON-VEG':'VEG';
+const veg=[['Full thali','₹90'],['Chapati','₹12'],['Extra rice','₹25'],['Buttermilk','₹15']],nv=[['Chicken thali','₹140'],['Egg thali','₹110'],['Extra gravy','₹30'],['Rice','₹30']];
+document.getElementById('menuItems').innerHTML=(type==='nonveg'?nv:veg).map(x=>'<div class="item"><div><b>'+x[0]+'</b><br><span>Freshly prepared today</span></div><span class="price">'+x[1]+'</span></div>').join('');
+</script></body></html>
