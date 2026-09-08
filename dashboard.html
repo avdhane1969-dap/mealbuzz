@@ -65,19 +65,12 @@ async function getMess(){
 
   const{data:u}=await sb.auth.getUser();
   if(u?.user){
-    const{data}=await sb.from("mess").select("id,created_at,name,location,price,menu,contact,latitude,longitude,image_url,nonveg_image_url,morning_menu_type,morning_menu,night_nonveg_menu,dinner_menu,menu_date,night_menu_updated_at,morning_menu_updated_at,morning_nonveg_menu,night_menu_type,veg_image_url,owner_name,lunch_menu,updated_at,today_price,status,type,today_menu").eq("user_id",u.user.id).maybeSingle();
-    if(data)return data;
-  }
-
-  const params=new URLSearchParams(location.search);
-  const urlId=params.get("id"),savedId=localStorage.getItem("ownerMessId");
-  for(const id of [urlId,savedId].filter(Boolean)){
-    const{data}=await sb.from("mess").select("id,created_at,name,location,price,menu,contact,latitude,longitude,image_url,nonveg_image_url,morning_menu_type,morning_menu,night_nonveg_menu,dinner_menu,menu_date,night_menu_updated_at,morning_menu_updated_at,morning_nonveg_menu,night_menu_type,veg_image_url,owner_name,lunch_menu,updated_at,today_price,status,type,today_menu").eq("id",Number(id)).maybeSingle();
-    if(data)return data;
+    const{data,error}=await sb.rpc("get_my_mess");
+    if(!error&&Array.isArray(data)&&data[0])return data[0];
   }
   return null
 }
-async function init(){try{const d=await getMess();if(!d){document.getElementById("loading").innerHTML='No kitchen profile found. <a href="partner-login.html"><b>Login again</b></a>';return}currentMessId=d.id;localStorage.setItem("ownerMessId",d.id);localStorage.setItem("ownerMessName",d.name||"");localStorage.setItem("ownerPhone",d.contact||"");currentMessName=d.owner_name||d.name||"Partner";document.getElementById("welcome").textContent=t("welcome")+", "+currentMessName;document.getElementById("messName").textContent=d.name||"—";document.getElementById("statusBox").textContent=d.status||"Open";document.getElementById("priceBox").textContent=d.today_price||d.price||"—";document.getElementById("locationBox").textContent=d.location||"—";document.getElementById("morningMenu").value=d.morning_menu||"";document.getElementById("lunchMenu").value=d.lunch_menu||d.today_menu||"";document.getElementById("dinnerMenu").value=d.dinner_menu||"";document.getElementById("messStatus").value=d.status||"Open";document.getElementById("todayPrice").value=d.today_price||d.price||"";document.getElementById("loading").classList.add("hidden");document.getElementById("app").classList.remove("hidden")}catch(e){document.getElementById("loading").textContent="Dashboard load failed."}}
+async function init(){try{const d=await getMess();if(!d){document.getElementById("loading").innerHTML='<div style="display:grid;gap:12px;justify-items:center"><b style="font-size:18px;color:var(--ink)">Session expired</b><span>Please login again to open your kitchen dashboard.</span><a class="btn primary" href="partner-login.html?fresh=1">Login again →</a></div>';return}currentMessId=d.id;localStorage.setItem("ownerMessId",d.id);localStorage.setItem("ownerMessName",d.name||"");localStorage.setItem("ownerPhone",d.contact||"");currentMessName=d.owner_name||d.name||"Partner";document.getElementById("welcome").textContent=t("welcome")+", "+currentMessName;document.getElementById("messName").textContent=d.name||"—";document.getElementById("statusBox").textContent=d.status||"Open";document.getElementById("priceBox").textContent=d.today_price||d.price||"—";document.getElementById("locationBox").textContent=d.location||"—";document.getElementById("morningMenu").value=d.morning_menu||"";document.getElementById("lunchMenu").value=d.lunch_menu||d.today_menu||"";document.getElementById("dinnerMenu").value=d.dinner_menu||"";document.getElementById("messStatus").value=d.status||"Open";document.getElementById("todayPrice").value=d.today_price||d.price||"";document.getElementById("loading").classList.add("hidden");document.getElementById("app").classList.remove("hidden")}catch(e){document.getElementById("loading").textContent="Dashboard load failed."}}
 async function saveMenu(){
   if(!currentMessId){setStatus(t("notFound"),true);return}
   document.getElementById("saveBtn").disabled=true;setStatus(t("saving"));
