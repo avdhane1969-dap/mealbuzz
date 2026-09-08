@@ -352,7 +352,7 @@ function renderLiveMenus(){
 }
 async function loadLiveMenus(){
   try{
-    const {data,error}=await sb.from("mess").select("*").order("updated_at",{ascending:false});
+    const {data,error}=await sb.from("mess_public").select("*").order("updated_at",{ascending:false});
     if(error)throw error;
     liveRows=data||[];
     const now=new Date(), todayStart=new Date(now.getFullYear(),now.getMonth(),now.getDate());
