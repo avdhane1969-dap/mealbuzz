@@ -163,7 +163,7 @@ async function loadKitchen(){
   const id=q.get("id");
   if(!id){renderKitchen({name:fallbackName,type:fallbackType});return}
   try{
-    const {data,error}=await sb.from("mess").select("*").eq("id",Number(id)).maybeSingle();
+    const {data,error}=await sb.from("mess_public").select("*").eq("id",Number(id)).maybeSingle();
     if(error)throw error;
     if(!data)throw new Error("Kitchen not found");
     renderKitchen(data);
