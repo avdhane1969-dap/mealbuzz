@@ -133,7 +133,7 @@ html[lang="mr"] select,html[lang="hi"] select{
 const SUPABASE_URL="https://iinvhwsbnvmcujyrzlxe.supabase.co";
 const SUPABASE_KEY="sb_publishable_fwhxfVqWpDrro8hkQbQQRA_1crMexZv";
 const sb=window.supabase.createClient(SUPABASE_URL,SUPABASE_KEY);
-const q=new URLSearchParams(location.search),fallbackName=q.get("name")||"Kitchen",fallbackType=q.get("type")==="nonveg"?"nonveg":"veg";
+const q=new URLSearchParams(location.search),fromPartner=q.get("from")==="partner",fallbackName=q.get("name")||"Kitchen",fallbackType=q.get("type")==="nonveg"?"nonveg":"veg";
 let currentKitchen=null;
 function esc(v){return String(v??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[m]))}
 function normType(v){const x=String(v||"").toLowerCase();if(x==="nonveg"||x==="non-veg")return"nonveg";if(x==="veg")return"veg";if(x==="both")return"both";return fallbackType}
@@ -199,6 +199,10 @@ hi:{back:"मेनू पर वापस",updated:"आज का मेनू"
 };
 let lang=localStorage.getItem("mealbuzzLang")||"en";
 function setLang(l){lang=l;localStorage.setItem("mealbuzzLang",l);document.documentElement.lang=l;document.querySelectorAll(".lang-btn").forEach(b=>b.classList.toggle("active",b.dataset.lang===l));document.querySelectorAll("[data-i18n]").forEach(el=>{const v=tr[l][el.dataset.i18n];if(v)el.textContent=v})}
+if(fromPartner){
+  const back=document.querySelector(".back");
+  if(back){back.href="dashboard.html";const span=back.querySelector("[data-i18n]");if(span){span.removeAttribute("data-i18n");span.textContent="Dashboard"}}
+}
 document.querySelectorAll(".lang-btn").forEach(b=>b.onclick=()=>{setLang(b.dataset.lang);if(currentKitchen)renderKitchen(currentKitchen)});setLang(lang);loadKitchen();
 </script>
 </body>
