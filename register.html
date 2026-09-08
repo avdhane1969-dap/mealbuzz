@@ -143,8 +143,10 @@ async function saveMess(){
   setStatus(t("uploading"));
   const imageUrl=await uploadImageIfAny(imageFile,"main"),vegImageUrl=await uploadImageIfAny(vegImageFile,"veg"),nonVegImageUrl=await uploadImageIfAny(nonVegImageFile,"nonveg");
   const payload={name,location,price,contact,password,type:mealType||null,menu,today_menu:menu,latitude:currentLat,longitude:currentLon,image_url:imageUrl,veg_image_url:vegImageUrl||null,nonveg_image_url:nonVegImageUrl||null};
-  const{error}=await sb.from("mess").insert([payload]);if(error){console.error(error);setStatus(t("saveError"),true);return}
-  setStatus(t("success"));["name","location","price","contact","password","menu","image","vegImage","nonVegImage"].forEach(id=>document.getElementById(id).value="");document.getElementById("mealType").value="";currentLat=currentLon=null;document.getElementById("coordsBox").innerHTML=t("coords");
+  const{data:created,error}=await sb.from("mess").insert([payload]).select("*").single();if(error){console.error(error);setStatus(t("saveError"),true);return}
+  if(created){localStorage.setItem("ownerMessId",created.id);localStorage.setItem("ownerMessName",created.name||name);localStorage.setItem("ownerPhone",created.contact||contact)}
+  setStatus(t("success"));
+  setTimeout(()=>{if(created?.id)window.location.href="dashboard.html?id="+encodeURIComponent(created.id);else window.location.href="partner-login.html"},900);["name","location","price","contact","password","menu","image","vegImage","nonVegImage"].forEach(id=>document.getElementById(id).value="");document.getElementById("mealType").value="";currentLat=currentLon=null;document.getElementById("coordsBox").innerHTML=t("coords");
  }catch(e){console.error(e);setStatus(t("uploadError"),true)}
 }
 setLang(lang);
