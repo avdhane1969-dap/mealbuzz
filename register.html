@@ -140,7 +140,7 @@ async function saveMess(){
  if(!name||!location||!price||!contact||!password||!menu||!imageFile){setStatus(t("required"),true);return}
  if(contact.length!==10){setStatus(t("invalidPhone"),true);return}
  if(password.length<8){setStatus(t("weakPassword"),true);return}
- const{data:existing}=await sb.from("mess_public").select("id,contact").limit(1000);if((existing||[]).some(r=>String(r.contact||"").replace(/\D/g,"").slice(-10)===contact)){setStatus(t("duplicatePhone"),true);return}
+ const{data:existing}=await sb.from("mess").select("id,contact").limit(1000);if((existing||[]).some(r=>String(r.contact||"").replace(/\D/g,"").slice(-10)===contact)){setStatus(t("duplicatePhone"),true);return}
  if(currentLat===null||currentLon===null){setStatus(t("needLocation"),true);return}
  try{
   setStatus(t("uploading"));
