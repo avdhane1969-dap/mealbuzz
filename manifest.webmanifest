@@ -1,0 +1,10 @@
+{
+  "name":"Meal Buzz",
+  "short_name":"MealBuzz",
+  "start_url":"./index.html",
+  "display":"standalone",
+  "background_color":"#f7f1e7",
+  "theme_color":"#f7f1e7",
+  "description":"Discover today’s local menus, prices and nearby kitchens.",
+  "icons":[]
+}
