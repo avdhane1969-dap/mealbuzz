@@ -352,7 +352,7 @@ function renderLiveMenus(){
 }
 async function loadLiveMenus(){
   try{
-    const {data,error}=await sb.from("mess_public").select("*").order("updated_at",{ascending:false});
+    const {data,error}=await sb.from("mess").select("id,created_at,name,location,price,menu,contact,latitude,longitude,image_url,nonveg_image_url,morning_menu_type,morning_menu,night_nonveg_menu,dinner_menu,menu_date,night_menu_updated_at,morning_menu_updated_at,morning_nonveg_menu,night_menu_type,veg_image_url,owner_name,lunch_menu,updated_at,today_price,status,type,today_menu").order("updated_at",{ascending:false});
     if(error)throw error;
     liveRows=data||[];
     const now=new Date(), todayStart=new Date(now.getFullYear(),now.getMonth(),now.getDate());
