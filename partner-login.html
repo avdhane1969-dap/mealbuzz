@@ -140,24 +140,31 @@ function setLoginDisabled(disabled){document.getElementById("loginBtn").disabled
 function saveOwnerSession(mess,userId=null,phoneFallback=""){localStorage.setItem("ownerMessId",mess.id);localStorage.setItem("ownerMessName",mess.name||"");localStorage.setItem("ownerPhone",mess.contact||phoneFallback||"");if(userId||mess.user_id)localStorage.setItem("ownerUserId",userId||mess.user_id);else localStorage.removeItem("ownerUserId")}
 async function loginWithSupabaseAuth(contact10,password){const partnerEmail=buildPartnerEmail(contact10);const{data:loginData,error:loginError}=await sb.auth.signInWithPassword({email:partnerEmail,password});if(loginError||!loginData?.user)return null;const{data:messByUser,error:messByUserError}=await sb.from("mess").select("*").eq("user_id",loginData.user.id).maybeSingle();if(messByUserError||!messByUser)return null;return{userId:loginData.user.id,mess:messByUser}}
 async function loginWithOldMessTable(contact10,password){
-  const{data:allMess,error:fetchError}=await sb.from("mess").select("*").limit(1000);
-  if(fetchError)throw new Error("Login check failed.");
-  const matchedMess=(allMess||[]).find(row=>last10(row.contact)===contact10&&String(row.password||"").trim()===password);
-  if(!matchedMess)return null;
+  const{data,error}=await sb.rpc("legacy_partner_login",{p_phone:contact10,p_password:password});
+  if(error||!data)return null;
+  const token=data.token||"",messId=data.mess_id;
+  if(!token||!messId)return null;
+  localStorage.setItem("ownerLegacyToken",token);
 
-  // One-time migration for older accounts that stored a legacy password in the mess row.
+  // Try to upgrade the legacy account to Supabase Auth automatically.
   const partnerEmail=buildPartnerEmail(contact10);
-  let userId=matchedMess.user_id||null;
-  if(!userId){
-    const{data:signupData,error:signupError}=await sb.auth.signUp({email:partnerEmail,password});
-    if(!signupError&&signupData?.user)userId=signupData.user.id;
+  let userId=null;
+  const{data:signupData}=await sb.auth.signUp({email:partnerEmail,password});
+  if(signupData?.session&&signupData?.user){
+    userId=signupData.user.id;
+    const{data:claimed}=await sb.rpc("claim_legacy_mess",{p_token:token});
+    if(claimed)localStorage.removeItem("ownerLegacyToken");
+  }else{
+    const{data:loginData}=await sb.auth.signInWithPassword({email:partnerEmail,password});
+    if(loginData?.user){
+      userId=loginData.user.id;
+      const{data:claimed}=await sb.rpc("claim_legacy_mess",{p_token:token});
+      if(claimed)localStorage.removeItem("ownerLegacyToken");
+    }
   }
-  if(userId){
-    await sb.from("mess").update({user_id:userId,password:null,updated_at:new Date().toISOString()}).eq("id",matchedMess.id);
-    matchedMess.user_id=userId;
-    matchedMess.password=null;
-  }
-  return{userId:userId||null,mess:matchedMess}
+  const{data:messRows}=await sb.rpc("legacy_get_mess",{p_token:token});
+  const mess=(Array.isArray(messRows)&&messRows[0])||{id:messId,name:data.name,contact:data.contact};
+  return{userId,mess}
 }
 async function loginPartner(){const rawContact=document.getElementById("loginContact").value.trim(),contact10=last10(rawContact),password=document.getElementById("loginPassword").value.trim();if(!contact10||!password){setLoginStatus(t("need"),true);return}if(contact10.length!==10){setLoginStatus(t("invalidPhone"),true);return}setLoginDisabled(true);setLoginStatus(t("checking"));try{let result=await loginWithSupabaseAuth(contact10,password);if(!result)result=await loginWithOldMessTable(contact10,password);if(!result||!result.mess){setLoginStatus(t("invalid"),true);setLoginDisabled(false);return}saveOwnerSession(result.mess,result.userId,contact10);setLoginStatus(t("success"));setTimeout(()=>{window.location.href="dashboard.html"},600)}catch(err){console.error(err);setLoginStatus(err.message||"Something went wrong during login.",true);setLoginDisabled(false)}}
 document.getElementById("loginPassword").addEventListener("keydown",e=>{if(e.key==="Enter")loginPartner()});
