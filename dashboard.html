@@ -51,14 +51,14 @@ async function getMess(){
 
   const{data:u}=await sb.auth.getUser();
   if(u?.user){
-    const{data}=await sb.from("mess").select("*").eq("user_id",u.user.id).maybeSingle();
+    const{data}=await sb.from("mess").select("id,created_at,name,location,price,menu,contact,latitude,longitude,image_url,nonveg_image_url,morning_menu_type,morning_menu,night_nonveg_menu,dinner_menu,menu_date,night_menu_updated_at,morning_menu_updated_at,morning_nonveg_menu,night_menu_type,veg_image_url,owner_name,lunch_menu,updated_at,today_price,status,type,today_menu").eq("user_id",u.user.id).maybeSingle();
     if(data)return data;
   }
 
   const params=new URLSearchParams(location.search);
   const urlId=params.get("id"),savedId=localStorage.getItem("ownerMessId");
   for(const id of [urlId,savedId].filter(Boolean)){
-    const{data}=await sb.from("mess").select("*").eq("id",Number(id)).maybeSingle();
+    const{data}=await sb.from("mess").select("id,created_at,name,location,price,menu,contact,latitude,longitude,image_url,nonveg_image_url,morning_menu_type,morning_menu,night_nonveg_menu,dinner_menu,menu_date,night_menu_updated_at,morning_menu_updated_at,morning_nonveg_menu,night_menu_type,veg_image_url,owner_name,lunch_menu,updated_at,today_price,status,type,today_menu").eq("id",Number(id)).maybeSingle();
     if(data)return data;
   }
   return null
