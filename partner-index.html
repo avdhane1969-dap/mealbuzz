@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Meal Buzz Partner Login</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Poppins:wght@700;800;900&display=swap" rel="stylesheet">
+
+  <style>
+    *{
+      margin:0;
+      padding:0;
+      box-sizing:border-box;
+    }
+
+    :root{
+      --text:#f5f7fb;
+      --muted:#cfd6e2;
+      --accent:#ff9800;
+      --accent2:#ffbf66;
+      --card:rgba(12,15,22,.88);
+      --line:rgba(255,255,255,.12);
+      --danger:#ffb3b3;
+      --ok:#8df0b5;
+    }
+
+    body{
+      font-family:Inter,sans-serif;
+      color:var(--text);
+      min-height:100vh;
+      background:
+        radial-gradient(circle at top right,rgba(255,152,0,.16),transparent 25%),
+        radial-gradient(circle at bottom left,rgba(0,210,255,.08),transparent 30%),
+        linear-gradient(180deg,#0b0d12 0%,#131924 100%);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:20px;
+    }
+
+    button,input{
+      font-family:inherit;
+    }
+
+    a{
+      color:inherit;
+      text-decoration:none;
+    }
+
+    .login-card{
+      width:min(460px,100%);
+      background:var(--card);
+      border:1px solid var(--line);
+      border-radius:28px;
+      padding:26px;
+      box-shadow:0 22px 55px rgba(0,0,0,.34);
+      backdrop-filter:blur(12px);
+      -webkit-backdrop-filter:blur(12px);
+    }
+
+    .brand{
+      margin-bottom:24px;
+      text-align:center;
+    }
+
+    .brand h1{
+      font-family:Poppins,sans-serif;
+      font-size:36px;
+      line-height:1;
+      background:linear-gradient(90deg,#fff 0%,#fff4e8 30%,#ffd699 58%,#ffb347 76%,#ff9800 100%);
+      -webkit-background-clip:text;
+      -webkit-text-fill-color:transparent;
+      background-clip:text;
+      margin-bottom:8px;
+    }
+
+    .brand p{
+      color:var(--muted);
+      font-size:14px;
+      line-height:1.6;
+    }
+
+    .field-group{
+      display:grid;
+      gap:8px;
+      margin-bottom:15px;
+    }
+
+    .label{
+      font-size:12px;
+      font-weight:900;
+      letter-spacing:1px;
+      text-transform:uppercase;
+      color:#ffcc80;
+    }
+
+    .input{
+      width:100%;
+      padding:15px;
+      border-radius:16px;
+      border:1px solid var(--line);
+      background:rgba(255,255,255,.06);
+      color:#fff;
+      font-size:15px;
+      outline:none;
+    }
+
+    .input::placeholder{
+      color:rgba(255,255,255,.55);
+    }
+
+    .input:focus{
+      border-color:rgba(255,179,71,.65);
+      box-shadow:0 0 0 3px rgba(255,152,0,.08);
+    }
+
+    .login-btn{
+      width:100%;
+      padding:15px;
+      border:none;
+      border-radius:16px;
+      background:linear-gradient(90deg,var(--accent),var(--accent2));
+      color:#111;
+      font-size:15px;
+      font-weight:900;
+      cursor:pointer;
+      box-shadow:0 14px 30px rgba(255,152,0,.24);
+      margin-top:6px;
+    }
+
+    .login-btn:disabled{
+      opacity:.65;
+      cursor:not-allowed;
+    }
+
+    .status{
+      min-height:22px;
+      margin-top:12px;
+      font-size:14px;
+      color:var(--ok);
+      text-align:center;
+      line-height:1.5;
+    }
+
+    .status.error{
+      color:var(--danger);
+    }
+
+    .bottom-text{
+      margin-top:18px;
+      text-align:center;
+      color:var(--muted);
+      font-size:14px;
+      line-height:1.7;
+    }
+
+    .bottom-text a{
+      color:#ffcc80;
+      font-weight:900;
+    }
+
+    .small-note{
+      margin-top:14px;
+      color:rgba(255,255,255,.58);
+      font-size:12px;
+      line-height:1.6;
+      text-align:center;
+    }
+  </style>
+  <link rel="stylesheet" href="brand.css">
+</head>
+
+<body>
+  <div class="login-card">
+    <div class="brand">
+      <h1>Meal Buzz Partner</h1>
+      <p>Login to manage your mess details and daily menu.</p>
+    </div>
+
+    <div class="field-group">
+      <div class="label">Mobile Number</div>
+      <input
+        type="text"
+        id="loginContact"
+        class="input"
+        placeholder="Enter 10 digit mobile number"
+        maxlength="15"
+        inputmode="numeric"
+        autocomplete="tel"
+      />
+    </div>
+
+    <div class="field-group">
+      <div class="label">Password</div>
+      <input
+        type="password"
+        id="loginPassword"
+        class="input"
+        placeholder="Enter password"
+        autocomplete="current-password"
+      />
+    </div>
+
+    <button class="login-btn" id="loginBtn" onclick="loginPartner()" type="button">
+      Login
+    </button>
+
+    <div class="status" id="loginStatus"></div>
+
+    <div class="bottom-text">
+      New partner?
+      <a href="register.html">Register your mess</a>
+    </div>
+
+    <div class="small-note">
+      Enter only your 10 digit mobile number. Do not add +91.
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+  <script>
+    const SUPABASE_URL = "https://iinvhwsbnvmcujyrzlxe.supabase.co";
+    const SUPABASE_KEY = "sb_publishable_fwhxfVqWpDrro8hkQbQQRA_1crMexZv";
+    const sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+    function normalizePhone(phone){
+      return String(phone || "").replace(/\D/g, "");
+    }
+
+    function last10(phone){
+      const clean = normalizePhone(phone);
+      return clean.length > 10 ? clean.slice(-10) : clean;
+    }
+
+    function buildPartnerEmail(phone){
+      return `${last10(phone)}@mealbuzz.partner`;
+    }
+
+    function setLoginStatus(message, isError = false){
+      const status = document.getElementById("loginStatus");
+      status.innerText = message;
+      status.className = isError ? "status error" : "status";
+    }
+
+    function setLoginDisabled(disabled){
+      document.getElementById("loginBtn").disabled = disabled;
+    }
+
+    function saveOwnerSession(mess, userId = null, phoneFallback = ""){
+      localStorage.setItem("ownerMessId", mess.id);
+      localStorage.setItem("ownerMessName", mess.name || "");
+      localStorage.setItem("ownerPhone", mess.contact || phoneFallback || "");
+
+      if(userId || mess.user_id){
+        localStorage.setItem("ownerUserId", userId || mess.user_id);
+      }else{
+        localStorage.removeItem("ownerUserId");
+      }
+    }
+
+    async function loginWithSupabaseAuth(contact10, password){
+      const partnerEmail = buildPartnerEmail(contact10);
+
+      const { data: loginData, error: loginError } = await sb.auth.signInWithPassword({
+        email: partnerEmail,
+        password: password
+      });
+
+      if(loginError || !loginData?.user){
+        return null;
+      }
+
+      const { data: messByUser, error: messByUserError } = await sb
+        .from("mess")
+        .select("*")
+        .eq("user_id", loginData.user.id)
+        .maybeSingle();
+
+      if(messByUserError || !messByUser){
+        return null;
+      }
+
+      return {
+        userId: loginData.user.id,
+        mess: messByUser
+      };
+    }
+
+    async function loginWithOldMessTable(contact10, password){
+      /*
+        MVP fallback:
+        This supports old registrations where password is stored in mess table.
+        Later, remove this and use only Supabase Auth.
+      */
+
+      const { data: allMess, error: fetchError } = await sb
+        .from("mess")
+        .select("*")
+        .limit(1000);
+
+      if(fetchError){
+        console.log("Old login fetch error:", fetchError);
+        throw new Error("Login check failed. Please check Supabase table permission.");
+      }
+
+      const matchedMess = (allMess || []).find(row => {
+        const rowPhone10 = last10(row.contact);
+        const rowPassword = String(row.password || "").trim();
+
+        return rowPhone10 === contact10 && rowPassword === password;
+      });
+
+      if(!matchedMess){
+        return null;
+      }
+
+      return {
+        userId: matchedMess.user_id || null,
+        mess: matchedMess
+      };
+    }
+
+    async function loginPartner(){
+      const rawContact = document.getElementById("loginContact").value.trim();
+      const contact10 = last10(rawContact);
+      const password = document.getElementById("loginPassword").value.trim();
+
+      if(!contact10 || !password){
+        setLoginStatus("Please enter mobile number and password.", true);
+        return;
+      }
+
+      if(contact10.length !== 10){
+        setLoginStatus("Please enter valid 10 digit mobile number.", true);
+        return;
+      }
+
+      setLoginDisabled(true);
+      setLoginStatus("Checking login...");
+
+      try{
+        let result = await loginWithSupabaseAuth(contact10, password);
+
+        if(!result){
+          result = await loginWithOldMessTable(contact10, password);
+        }
+
+        if(!result || !result.mess){
+          setLoginStatus("Invalid mobile number or password.", true);
+          setLoginDisabled(false);
+          return;
+        }
+
+        saveOwnerSession(result.mess, result.userId, contact10);
+
+        setLoginStatus("Login successful! Opening dashboard...");
+
+        setTimeout(() => {
+          window.location.href = "dashboard.html";
+        }, 600);
+
+      }catch(err){
+        console.log("Unexpected login error:", err);
+        setLoginStatus(err.message || "Something went wrong during login.", true);
+        setLoginDisabled(false);
+      }
+    }
+
+    document.getElementById("loginPassword").addEventListener("keydown", function(e){
+      if(e.key === "Enter"){
+        loginPartner();
+      }
+    });
+
+    document.getElementById("loginContact").addEventListener("keydown", function(e){
+      if(e.key === "Enter"){
+        loginPartner();
+      }
+    });
+  </script>
+</body>
+</html>

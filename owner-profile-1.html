@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Meal Buzz Partner - Owner Profile</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Poppins:wght@700;800;900&display=swap" rel="stylesheet">
+
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box}
+
+    :root{
+      --text:#f5f7fb;
+      --muted:#cfd6e2;
+      --accent:#ff9800;
+      --accent2:#ffbf66;
+      --card:rgba(12,15,22,.88);
+      --line:rgba(255,255,255,.12);
+      --ok:#8df0b5;
+      --danger:#ffb3b3;
+    }
+
+    body{
+      font-family:Inter,sans-serif;
+      color:var(--text);
+      min-height:100vh;
+      background:
+        radial-gradient(circle at top right,rgba(255,152,0,.16),transparent 25%),
+        radial-gradient(circle at bottom left,rgba(0,210,255,.08),transparent 30%),
+        linear-gradient(180deg,#0b0d12 0%,#131924 100%);
+    }
+
+    button,input,textarea{font-family:inherit}
+    a{text-decoration:none;color:inherit}
+
+    .page{
+      width:min(980px,100%);
+      margin:0 auto;
+      padding:18px 16px 34px;
+      display:grid;
+      gap:18px;
+    }
+
+    .topbar{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:12px;
+      flex-wrap:wrap;
+    }
+
+    .brand h1{
+      font-family:Poppins,sans-serif;
+      font-size:34px;
+      line-height:1;
+      background:linear-gradient(90deg,#fff,#ffe7bd,#ff9800);
+      -webkit-background-clip:text;
+      -webkit-text-fill-color:transparent;
+      background-clip:text;
+    }
+
+    .brand p{
+      margin-top:7px;
+      font-size:12px;
+      font-weight:900;
+      letter-spacing:2.5px;
+      color:#e9eef6;
+      text-transform:uppercase;
+    }
+
+    .card{
+      background:var(--card);
+      border:1px solid var(--line);
+      border-radius:26px;
+      padding:20px;
+      box-shadow:0 22px 52px rgba(0,0,0,.28);
+      backdrop-filter:blur(12px);
+      -webkit-backdrop-filter:blur(12px);
+    }
+
+    .section-title{
+      font-family:Poppins,sans-serif;
+      font-size:24px;
+      margin-bottom:8px;
+    }
+
+    .section-sub{
+      color:var(--muted);
+      font-size:14px;
+      line-height:1.7;
+      margin-bottom:16px;
+    }
+
+    .form-grid{
+      display:grid;
+      gap:14px;
+    }
+
+    .field-group{
+      display:grid;
+      gap:8px;
+    }
+
+    .label{
+      font-size:12px;
+      font-weight:900;
+      letter-spacing:1px;
+      text-transform:uppercase;
+      color:#ffcc80;
+    }
+
+    .input,.textarea,.file-input{
+      width:100%;
+      padding:14px 15px;
+      border-radius:16px;
+      border:1px solid var(--line);
+      background:rgba(255,255,255,.06);
+      color:#fff;
+      font-size:14px;
+      outline:none;
+    }
+
+    .textarea{
+      min-height:105px;
+      resize:vertical;
+      line-height:1.7;
+    }
+
+    .input::placeholder,.textarea::placeholder{
+      color:rgba(255,255,255,.55);
+    }
+
+    .input:focus,.textarea:focus{
+      border-color:rgba(255,152,0,.55);
+      box-shadow:0 0 0 3px rgba(255,152,0,.10);
+    }
+
+    .actions{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+    }
+
+    .save-btn,.back-btn,.logout-btn{
+      border:none;
+      cursor:pointer;
+      border-radius:14px;
+      font-weight:900;
+      padding:14px 18px;
+      font-size:15px;
+    }
+
+    .save-btn{
+      background:linear-gradient(90deg,var(--accent),var(--accent2));
+      color:#111;
+      width:100%;
+      box-shadow:0 14px 30px rgba(255,152,0,.22);
+    }
+
+    .save-btn:disabled{
+      opacity:.7;
+      cursor:not-allowed;
+    }
+
+    .back-btn{
+      background:rgba(255,255,255,.06);
+      color:#fff;
+      border:1px solid var(--line);
+    }
+
+    .logout-btn{
+      background:rgba(255,80,80,.12);
+      color:#ffd6d6;
+      border:1px solid rgba(255,120,120,.25);
+    }
+
+    .status{
+      min-height:22px;
+      font-size:14px;
+      color:var(--ok);
+      margin-top:8px;
+      line-height:1.6;
+    }
+
+    .status.error{
+      color:var(--danger);
+    }
+
+    .preview{
+      margin-top:14px;
+      padding:14px;
+      border-radius:18px;
+      background:rgba(255,255,255,.045);
+      border:1px solid rgba(255,255,255,.09);
+      color:var(--muted);
+      line-height:1.7;
+      font-size:13px;
+    }
+
+    .preview img{
+      width:100%;
+      max-height:240px;
+      object-fit:cover;
+      border-radius:16px;
+      margin-top:10px;
+      border:1px solid rgba(255,255,255,.10);
+    }
+
+    @media(min-width:820px){
+      .form-grid{
+        grid-template-columns:1fr 1fr;
+      }
+
+      .full{
+        grid-column:1/-1;
+      }
+    }
+
+    @media(max-width:520px){
+      .brand h1{font-size:28px}
+      .actions{width:100%}
+      .back-btn,.logout-btn{width:100%}
+      .card{padding:17px;border-radius:22px}
+    }
+  </style>
+  <link rel="stylesheet" href="brand.css">
+</head>
+
+<body>
+  <div class="page">
+    <div class="topbar">
+      <div class="brand">
+        <h1>Meal Buzz Partner</h1>
+        <p>Owner Profile</p>
+      </div>
+
+      <div class="actions">
+        <a href="dashboard.html" class="back-btn">Back to Dashboard</a>
+        <button class="logout-btn" type="button" onclick="logoutOwner()">Logout</button>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="section-title">Edit Your Mess Details</div>
+      <div class="section-sub">
+        Update owner name, mobile number, mess name, price, address and main image.
+      </div>
+
+      <div class="form-grid">
+        <div class="field-group">
+          <div class="label">Owner Name</div>
+          <input type="text" id="ownerName" class="input" placeholder="Owner name">
+        </div>
+
+        <div class="field-group">
+          <div class="label">Mobile Number</div>
+          <input type="text" id="contact" class="input" placeholder="10 digit mobile number" maxlength="15" inputmode="numeric">
+        </div>
+
+        <div class="field-group">
+          <div class="label">Mess Name</div>
+          <input type="text" id="messName" class="input" placeholder="Mess name">
+        </div>
+
+        <div class="field-group">
+          <div class="label">Price</div>
+          <input type="text" id="price" class="input" placeholder="₹80 / ₹100 / ₹3000 monthly">
+        </div>
+
+        <div class="field-group full">
+          <div class="label">Address / Location</div>
+          <textarea id="location" class="textarea" placeholder="Area, address, landmark"></textarea>
+        </div>
+
+        <div class="field-group full">
+          <div class="label">Change Main Image Optional</div>
+          <input type="file" id="mainImage" class="file-input" accept="image/jpeg,image/png,image/webp">
+          <div class="preview" id="imagePreview">Current image will appear here if available.</div>
+        </div>
+
+        <div class="field-group full">
+          <button class="save-btn" id="saveBtn" onclick="saveProfile()" type="button">
+            Save Changes
+          </button>
+          <div class="status" id="statusText"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+  <script>
+    const SUPABASE_URL = "https://iinvhwsbnvmcujyrzlxe.supabase.co";
+    const SUPABASE_KEY = "sb_publishable_fwhxfVqWpDrro8hkQbQQRA_1crMexZv";
+    const sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+    let currentMessId = null;
+    let currentUserId = null;
+    let currentMessData = null;
+
+    function normalizePhone(phone){
+      return String(phone || "").replace(/\D/g, "");
+    }
+
+    function last10(phone){
+      const clean = normalizePhone(phone);
+      return clean.length > 10 ? clean.slice(-10) : clean;
+    }
+
+    function setStatus(message, isError = false){
+      const box = document.getElementById("statusText");
+      box.innerText = message;
+      box.className = isError ? "status error" : "status";
+    }
+
+    function setSaveDisabled(disabled){
+      document.getElementById("saveBtn").disabled = disabled;
+    }
+
+    function showImagePreview(url){
+      const box = document.getElementById("imagePreview");
+
+      if(!url){
+        box.innerHTML = "No image uploaded yet.";
+        return;
+      }
+
+      box.innerHTML = `
+        Current main image:
+        <img src="${url}" alt="Mess image">
+      `;
+    }
+
+    async function getCurrentMess(){
+      const params = new URLSearchParams(window.location.search);
+      const urlMessId = params.get("id");
+
+      if(urlMessId){
+        const { data: messByUrlId, error: urlError } = await sb
+          .from("mess")
+          .select("*")
+          .eq("id", Number(urlMessId))
+          .maybeSingle();
+
+        if(!urlError && messByUrlId){
+          currentMessId = messByUrlId.id;
+          currentUserId = messByUrlId.user_id || localStorage.getItem("ownerUserId") || null;
+
+          localStorage.setItem("ownerMessId", messByUrlId.id);
+          localStorage.setItem("ownerMessName", messByUrlId.name || "");
+          localStorage.setItem("ownerPhone", messByUrlId.contact || "");
+
+          if(messByUrlId.user_id){
+            localStorage.setItem("ownerUserId", messByUrlId.user_id);
+          }
+
+          return messByUrlId;
+        }
+      }
+
+      const ownerMessId = localStorage.getItem("ownerMessId");
+
+      if(ownerMessId){
+        const { data: messById, error: idError } = await sb
+          .from("mess")
+          .select("*")
+          .eq("id", Number(ownerMessId))
+          .maybeSingle();
+
+        if(!idError && messById){
+          currentMessId = messById.id;
+          currentUserId = messById.user_id || localStorage.getItem("ownerUserId") || null;
+          return messById;
+        }
+      }
+
+      const { data: authData, error: authError } = await sb.auth.getUser();
+
+      if(!authError && authData?.user){
+        currentUserId = authData.user.id;
+
+        const { data: messByUser, error: messError } = await sb
+          .from("mess")
+          .select("*")
+          .eq("user_id", currentUserId)
+          .maybeSingle();
+
+        if(!messError && messByUser){
+          currentMessId = messByUser.id;
+
+          localStorage.setItem("ownerMessId", messByUser.id);
+          localStorage.setItem("ownerUserId", currentUserId);
+          localStorage.setItem("ownerMessName", messByUser.name || "");
+          localStorage.setItem("ownerPhone", messByUser.contact || "");
+
+          return messByUser;
+        }
+      }
+
+      return null;
+    }
+
+    async function loadProfile(){
+      setStatus("Loading profile...");
+
+      try{
+        const data = await getCurrentMess();
+
+        if(!data){
+          setStatus("Could not load profile. Please go back to dashboard or login again.", true);
+          return;
+        }
+
+        currentMessData = data;
+
+        document.getElementById("ownerName").value = data.owner_name || "";
+        document.getElementById("contact").value = data.contact || "";
+        document.getElementById("messName").value = data.name || "";
+        document.getElementById("price").value = data.price || "";
+        document.getElementById("location").value = data.location || "";
+
+        showImagePreview(data.image_url || null);
+
+        setStatus("");
+
+      }catch(err){
+        console.log("Profile load error:", err);
+        setStatus(err.message || "Could not load profile.", true);
+      }
+    }
+
+    async function uploadMainImage(file){
+      if(!file) return null;
+
+      const allowedTypes = ["image/jpeg", "image/png", "image/webp"];
+
+      if(!allowedTypes.includes(file.type)){
+        throw new Error("Only JPG, PNG or WEBP images are allowed.");
+      }
+
+      const maxSizeMB = 5;
+
+      if(file.size > maxSizeMB * 1024 * 1024){
+        throw new Error("Image size should be below 5 MB.");
+      }
+
+      const cleanName = file.name
+        .toLowerCase()
+        .replace(/[^a-z0-9.]/g, "-")
+        .replace(/-+/g, "-");
+
+      const filePath = `mess-profile/${Date.now()}-${cleanName}`;
+
+      const { error: uploadError } = await sb.storage
+        .from("mess-images")
+        .upload(filePath, file, {
+          cacheControl: "3600",
+          upsert: false
+        });
+
+      if(uploadError){
+        console.log("Upload error:", uploadError);
+        throw new Error(uploadError.message || "Image upload failed.");
+      }
+
+      const { data: publicData } = sb.storage
+        .from("mess-images")
+        .getPublicUrl(filePath);
+
+      return publicData?.publicUrl || null;
+    }
+
+    async function saveProfile(){
+      const ownerName = document.getElementById("ownerName").value.trim();
+      const contact = last10(document.getElementById("contact").value.trim());
+      const messName = document.getElementById("messName").value.trim();
+      const price = document.getElementById("price").value.trim();
+      const location = document.getElementById("location").value.trim();
+      const mainImageFile = document.getElementById("mainImage").files[0];
+
+      if(!ownerName || !contact || !messName || !price || !location){
+        setStatus("Please fill all details.", true);
+        return;
+      }
+
+      if(contact.length !== 10){
+        setStatus("Please enter valid 10 digit mobile number.", true);
+        return;
+      }
+
+      if(!currentMessId){
+        setStatus("Mess ID not found. Please go back to dashboard or login again.", true);
+        return;
+      }
+
+      setSaveDisabled(true);
+
+      try{
+        let imageUrl = null;
+
+        if(mainImageFile){
+          setStatus("Uploading image...");
+          imageUrl = await uploadMainImage(mainImageFile);
+        }
+
+        setStatus("Saving profile...");
+
+        const payload = {
+          owner_name: ownerName,
+          contact: contact,
+          name: messName,
+          price: price,
+          location: location,
+          updated_at: new Date().toISOString()
+        };
+
+        if(imageUrl){
+          payload.image_url = imageUrl;
+        }
+
+        const { error } = await sb
+          .from("mess")
+          .update(payload)
+          .eq("id", Number(currentMessId));
+
+        if(error){
+          console.log("Save profile error:", error);
+          setStatus("Save failed: " + error.message, true);
+          setSaveDisabled(false);
+          return;
+        }
+
+        localStorage.setItem("ownerPhone", contact);
+        localStorage.setItem("ownerMessName", messName);
+        localStorage.setItem("ownerMessId", currentMessId);
+
+        if(imageUrl){
+          showImagePreview(imageUrl);
+        }
+
+        setStatus("Profile updated successfully.");
+        setSaveDisabled(false);
+
+      }catch(err){
+        console.log("Unexpected error:", err);
+        setStatus(err.message || "Something went wrong.", true);
+        setSaveDisabled(false);
+      }
+    }
+
+    async function logoutOwner(){
+      try{
+        await sb.auth.signOut();
+      }catch(e){
+        console.log("Logout error:", e);
+      }
+
+      localStorage.removeItem("ownerUserId");
+      localStorage.removeItem("ownerMessId");
+      localStorage.removeItem("ownerMessName");
+      localStorage.removeItem("ownerPhone");
+
+      window.location.href = "index.html";
+    }
+
+    loadProfile();
+  </script>
+</body>
+</html>

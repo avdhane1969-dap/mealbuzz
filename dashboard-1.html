@@ -1,0 +1,716 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Meal Buzz Partner Dashboard</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Poppins:wght@700;800;900&display=swap" rel="stylesheet">
+
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box}
+
+    :root{
+      --text:#f5f7fb;
+      --muted:#cfd6e2;
+      --accent:#ff9800;
+      --accent2:#ffbf66;
+      --card:rgba(12,15,22,.88);
+      --line:rgba(255,255,255,.12);
+      --ok:#8df0b5;
+      --danger:#ffb3b3;
+    }
+
+    body{
+      font-family:Inter,sans-serif;
+      color:var(--text);
+      min-height:100vh;
+      background:
+        radial-gradient(circle at top right,rgba(255,152,0,.16),transparent 25%),
+        radial-gradient(circle at bottom left,rgba(0,210,255,.08),transparent 30%),
+        linear-gradient(180deg,#0b0d12 0%,#131924 100%);
+    }
+
+    button,input,textarea,select{font-family:inherit}
+    a{text-decoration:none;color:inherit}
+
+    .page{
+      width:min(1100px,100%);
+      margin:0 auto;
+      padding:18px 16px 34px;
+      display:grid;
+      gap:18px;
+    }
+
+    .topbar{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:12px;
+      flex-wrap:wrap;
+    }
+
+    .brand h1{
+      font-family:Poppins,sans-serif;
+      font-size:34px;
+      line-height:1;
+      background:linear-gradient(90deg,#fff,#ffe7bd,#ff9800);
+      -webkit-background-clip:text;
+      -webkit-text-fill-color:transparent;
+      background-clip:text;
+    }
+
+    .brand p{
+      margin-top:7px;
+      font-size:12px;
+      font-weight:900;
+      letter-spacing:2.5px;
+      color:#e9eef6;
+      text-transform:uppercase;
+    }
+
+    .actions{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+    }
+
+    .btn{
+      border:none;
+      cursor:pointer;
+      border-radius:14px;
+      font-weight:900;
+      padding:13px 16px;
+      font-size:14px;
+    }
+
+    .primary{
+      background:linear-gradient(90deg,var(--accent),var(--accent2));
+      color:#111;
+      box-shadow:0 14px 30px rgba(255,152,0,.22);
+    }
+
+    .ghost{
+      background:rgba(255,255,255,.06);
+      color:#fff;
+      border:1px solid var(--line);
+    }
+
+    .danger{
+      background:rgba(255,80,80,.12);
+      color:#ffd6d6;
+      border:1px solid rgba(255,120,120,.25);
+    }
+
+    .btn:disabled{
+      opacity:.65;
+      cursor:not-allowed;
+    }
+
+    .card{
+      background:var(--card);
+      border:1px solid var(--line);
+      border-radius:26px;
+      padding:20px;
+      box-shadow:0 22px 52px rgba(0,0,0,.28);
+      backdrop-filter:blur(12px);
+      -webkit-backdrop-filter:blur(12px);
+    }
+
+    .hidden{display:none!important}
+
+    .section-title{
+      font-family:Poppins,sans-serif;
+      font-size:24px;
+      margin-bottom:8px;
+    }
+
+    .muted{
+      color:var(--muted);
+      font-size:14px;
+      line-height:1.7;
+    }
+
+    .badge{
+      display:inline-flex;
+      padding:7px 11px;
+      border-radius:999px;
+      background:rgba(255,152,0,.14);
+      color:#ffd79b;
+      border:1px solid rgba(255,152,0,.24);
+      font-size:12px;
+      font-weight:900;
+      margin-bottom:10px;
+    }
+
+    .info-grid{
+      display:grid;
+      grid-template-columns:repeat(2,1fr);
+      gap:12px;
+      margin-top:18px;
+    }
+
+    .info-box{
+      padding:14px;
+      border-radius:18px;
+      background:rgba(255,255,255,.045);
+      border:1px solid rgba(255,255,255,.09);
+    }
+
+    .k{
+      color:#ffcc80;
+      font-size:11px;
+      font-weight:900;
+      letter-spacing:1px;
+      text-transform:uppercase;
+      margin-bottom:7px;
+    }
+
+    .v{
+      color:#fff;
+      font-size:15px;
+      font-weight:800;
+      line-height:1.4;
+      word-break:break-word;
+    }
+
+    .form-grid{
+      display:grid;
+      gap:15px;
+      margin-top:16px;
+    }
+
+    .two{
+      grid-template-columns:1fr 1fr;
+    }
+
+    .full{
+      grid-column:1/-1;
+    }
+
+    .label{
+      display:block;
+      margin-bottom:8px;
+      font-size:12px;
+      font-weight:900;
+      letter-spacing:1px;
+      text-transform:uppercase;
+      color:#ffcc80;
+    }
+
+    textarea,input,select{
+      width:100%;
+      padding:14px 15px;
+      border-radius:16px;
+      border:1px solid var(--line);
+      background:rgba(255,255,255,.06);
+      color:#fff;
+      font-size:14px;
+      outline:none;
+    }
+
+    select option{
+      color:#111;
+    }
+
+    textarea{
+      min-height:105px;
+      resize:vertical;
+      line-height:1.7;
+    }
+
+    textarea::placeholder,input::placeholder{
+      color:rgba(255,255,255,.55);
+    }
+
+    textarea:focus,input:focus,select:focus{
+      border-color:rgba(255,152,0,.55);
+      box-shadow:0 0 0 3px rgba(255,152,0,.10);
+    }
+
+    .chips{
+      display:flex;
+      flex-wrap:wrap;
+      gap:8px;
+      margin-top:9px;
+    }
+
+    .chip{
+      padding:8px 11px;
+      border-radius:999px;
+      border:1px solid rgba(255,255,255,.12);
+      background:rgba(255,255,255,.065);
+      color:#fff;
+      font-size:12px;
+      font-weight:800;
+      cursor:pointer;
+    }
+
+    .chip:hover{
+      background:rgba(255,152,0,.18);
+      border-color:rgba(255,152,0,.35);
+    }
+
+    .preview-card{
+      margin-top:18px;
+      padding:16px;
+      border-radius:20px;
+      background:rgba(255,255,255,.045);
+      border:1px solid rgba(255,255,255,.09);
+    }
+
+    .menu-item{
+      display:grid;
+      gap:5px;
+      padding:12px 0;
+      border-bottom:1px solid rgba(255,255,255,.08);
+    }
+
+    .menu-item:last-child{
+      border-bottom:none;
+    }
+
+    .menu-item b{
+      color:#ffcc80;
+      font-size:13px;
+    }
+
+    .menu-item span{
+      color:#fff;
+      line-height:1.6;
+      font-size:14px;
+      white-space:pre-wrap;
+    }
+
+    .status-line{
+      margin-top:10px;
+      min-height:22px;
+      color:var(--ok);
+      font-size:14px;
+      line-height:1.6;
+    }
+
+    .status-line.error{
+      color:var(--danger);
+    }
+
+    @media(max-width:720px){
+      .info-grid,.two{
+        grid-template-columns:1fr;
+      }
+
+      .brand h1{
+        font-size:28px;
+      }
+
+      .actions{
+        width:100%;
+      }
+
+      .actions .btn{
+        flex:1;
+      }
+
+      .card{
+        padding:17px;
+        border-radius:22px;
+      }
+    }
+  </style>
+  <link rel="stylesheet" href="brand.css">
+</head>
+
+<body>
+  <main class="page">
+    <div class="topbar">
+      <div class="brand">
+        <h1>Meal Buzz Partner</h1>
+        <p>Owner Dashboard</p>
+      </div>
+
+      <div class="actions">
+        <button class="btn ghost" type="button" onclick="openProfile()">Edit Profile</button>
+        <button class="btn danger" type="button" onclick="logoutOwner()">Logout</button>
+      </div>
+    </div>
+
+    <div class="card" id="loadingCard">
+      <div class="section-title">Loading dashboard...</div>
+      <p class="muted">Please wait while we load your mess profile.</p>
+    </div>
+
+    <section id="dashboardContent" class="hidden">
+      <div class="card">
+        <span class="badge" id="statusBadge">Partner</span>
+        <h2 class="section-title" id="welcomeTitle">Welcome, Partner</h2>
+        <p class="muted">
+          Update today’s menu and availability. These details will be shown on Meal Buzz customer site.
+        </p>
+
+        <div class="info-grid">
+          <div class="info-box">
+            <div class="k">Mess Name</div>
+            <div class="v" id="messNameBox">-</div>
+          </div>
+
+          <div class="info-box">
+            <div class="k">Owner Mobile</div>
+            <div class="v" id="contactBox">-</div>
+          </div>
+
+          <div class="info-box">
+            <div class="k">Base Price</div>
+            <div class="v" id="priceBox">-</div>
+          </div>
+
+          <div class="info-box">
+            <div class="k">Location</div>
+            <div class="v" id="locationBox">-</div>
+          </div>
+        </div>
+
+        <div class="preview-card">
+          <div class="section-title" style="font-size:20px;margin:0;">Today’s Preview</div>
+
+          <div class="menu-item">
+            <b>Morning Menu</b>
+            <span id="previewMorning">Not updated</span>
+          </div>
+
+          <div class="menu-item">
+            <b>Lunch Menu</b>
+            <span id="previewLunch">Not updated</span>
+          </div>
+
+          <div class="menu-item">
+            <b>Dinner Menu</b>
+            <span id="previewDinner">Not updated</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="section-title">Update Daily Menu</div>
+        <p class="muted">
+          Type your menu or tap quick options below. Example: Chapati, Bhaji, Rice, Dal, Salad.
+        </p>
+
+        <div class="form-grid two">
+          <label class="full">
+            <span class="label">Morning Menu</span>
+            <textarea id="morningMenu" placeholder="Poha, Upma, Tea..."></textarea>
+            <div class="chips">
+              <button class="chip" type="button" onclick="addItem('morningMenu','Poha')">Poha</button>
+              <button class="chip" type="button" onclick="addItem('morningMenu','Upma')">Upma</button>
+              <button class="chip" type="button" onclick="addItem('morningMenu','Idli')">Idli</button>
+              <button class="chip" type="button" onclick="addItem('morningMenu','Dosa')">Dosa</button>
+              <button class="chip" type="button" onclick="addItem('morningMenu','Tea')">Tea</button>
+              <button class="chip" type="button" onclick="addItem('morningMenu','Chapati')">Chapati</button>
+              <button class="chip" type="button" onclick="clearMenu('morningMenu')">Clear</button>
+            </div>
+          </label>
+
+          <label class="full">
+            <span class="label">Lunch Menu</span>
+            <textarea id="lunchMenu" placeholder="Chapati, Bhaji, Rice, Dal..."></textarea>
+            <div class="chips">
+              <button class="chip" type="button" onclick="addItem('lunchMenu','Chapati')">Chapati</button>
+              <button class="chip" type="button" onclick="addItem('lunchMenu','Bhaji')">Bhaji</button>
+              <button class="chip" type="button" onclick="addItem('lunchMenu','Rice')">Rice</button>
+              <button class="chip" type="button" onclick="addItem('lunchMenu','Dal')">Dal</button>
+              <button class="chip" type="button" onclick="addItem('lunchMenu','Salad')">Salad</button>
+              <button class="chip" type="button" onclick="addItem('lunchMenu','Curd')">Curd</button>
+              <button class="chip" type="button" onclick="addItem('lunchMenu','Papad')">Papad</button>
+              <button class="chip" type="button" onclick="setFullMenu('lunchMenu','Chapati, Bhaji, Rice, Dal, Salad')">Basic Thali</button>
+              <button class="chip" type="button" onclick="clearMenu('lunchMenu')">Clear</button>
+            </div>
+          </label>
+
+          <label class="full">
+            <span class="label">Dinner Menu</span>
+            <textarea id="dinnerMenu" placeholder="Chapati, Bhaji, Rice, Dal..."></textarea>
+            <div class="chips">
+              <button class="chip" type="button" onclick="addItem('dinnerMenu','Chapati')">Chapati</button>
+              <button class="chip" type="button" onclick="addItem('dinnerMenu','Bhaji')">Bhaji</button>
+              <button class="chip" type="button" onclick="addItem('dinnerMenu','Rice')">Rice</button>
+              <button class="chip" type="button" onclick="addItem('dinnerMenu','Dal')">Dal</button>
+              <button class="chip" type="button" onclick="addItem('dinnerMenu','Salad')">Salad</button>
+              <button class="chip" type="button" onclick="addItem('dinnerMenu','Curd')">Curd</button>
+              <button class="chip" type="button" onclick="addItem('dinnerMenu','Papad')">Papad</button>
+              <button class="chip" type="button" onclick="setFullMenu('dinnerMenu','Chapati, Bhaji, Rice, Dal, Salad')">Basic Thali</button>
+              <button class="chip" type="button" onclick="clearMenu('dinnerMenu')">Clear</button>
+            </div>
+          </label>
+
+          <label>
+            <span class="label">Today Status</span>
+            <select id="messStatus">
+              <option value="Open">Open</option>
+              <option value="Limited Meals">Limited Meals</option>
+              <option value="Closed">Closed</option>
+            </select>
+          </label>
+
+          <label>
+            <span class="label">Today Price</span>
+            <input id="todayPrice" placeholder="₹80 / ₹100 / ₹3000 monthly" />
+            <div class="chips">
+              <button class="chip" type="button" onclick="setPrice('₹70')">₹70</button>
+              <button class="chip" type="button" onclick="setPrice('₹80')">₹80</button>
+              <button class="chip" type="button" onclick="setPrice('₹100')">₹100</button>
+              <button class="chip" type="button" onclick="setPrice('₹120')">₹120</button>
+              <button class="chip" type="button" onclick="setPrice('₹3000 monthly')">Monthly</button>
+            </div>
+          </label>
+
+          <div class="full">
+            <button id="saveBtn" class="btn primary" type="button" onclick="saveMenu()">Save Today’s Menu</button>
+            <div id="saveStatus" class="status-line"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+  <script>
+    const SUPABASE_URL = "https://iinvhwsbnvmcujyrzlxe.supabase.co";
+    const SUPABASE_KEY = "sb_publishable_fwhxfVqWpDrro8hkQbQQRA_1crMexZv";
+    const sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+    let currentUserId = null;
+    let currentMessId = null;
+    let currentMessData = null;
+
+    function setStatus(message, isError = false){
+      const box = document.getElementById("saveStatus");
+      box.innerText = message;
+      box.className = isError ? "status-line error" : "status-line";
+    }
+
+    function setSaveDisabled(disabled){
+      document.getElementById("saveBtn").disabled = disabled;
+    }
+
+    function safeValue(value, fallback = "-"){
+      return value && String(value).trim() ? value : fallback;
+    }
+
+    function fillPreview(){
+      document.getElementById("previewMorning").innerText =
+        safeValue(document.getElementById("morningMenu").value, "Not updated");
+
+      document.getElementById("previewLunch").innerText =
+        safeValue(document.getElementById("lunchMenu").value, "Not updated");
+
+      document.getElementById("previewDinner").innerText =
+        safeValue(document.getElementById("dinnerMenu").value, "Not updated");
+    }
+
+    function addItem(fieldId, item){
+      const field = document.getElementById(fieldId);
+      const current = field.value.trim();
+
+      if(!current){
+        field.value = item;
+      }else{
+        const items = current.split(",").map(x => x.trim().toLowerCase());
+
+        if(!items.includes(item.toLowerCase())){
+          field.value = current + ", " + item;
+        }
+      }
+
+      fillPreview();
+    }
+
+    function setFullMenu(fieldId, text){
+      document.getElementById(fieldId).value = text;
+      fillPreview();
+    }
+
+    function clearMenu(fieldId){
+      document.getElementById(fieldId).value = "";
+      fillPreview();
+    }
+
+    function setPrice(price){
+      document.getElementById("todayPrice").value = price;
+    }
+
+    async function getCurrentMess(){
+      const savedMessId = localStorage.getItem("ownerMessId");
+
+      if(savedMessId){
+        const { data: messById, error: idError } = await sb
+          .from("mess")
+          .select("*")
+          .eq("id", Number(savedMessId))
+          .maybeSingle();
+
+        if(!idError && messById){
+          currentMessId = messById.id;
+          currentUserId = messById.user_id || localStorage.getItem("ownerUserId") || null;
+
+          localStorage.setItem("ownerMessId", messById.id);
+          localStorage.setItem("ownerMessName", messById.name || "");
+          localStorage.setItem("ownerPhone", messById.contact || "");
+
+          if(messById.user_id){
+            localStorage.setItem("ownerUserId", messById.user_id);
+          }
+
+          return messById;
+        }
+      }
+
+      const { data: authData, error: authError } = await sb.auth.getUser();
+
+      if(!authError && authData?.user){
+        currentUserId = authData.user.id;
+
+        const { data: messByUser, error: userMessError } = await sb
+          .from("mess")
+          .select("*")
+          .eq("user_id", currentUserId)
+          .maybeSingle();
+
+        if(!userMessError && messByUser){
+          currentMessId = messByUser.id;
+
+          localStorage.setItem("ownerUserId", currentUserId);
+          localStorage.setItem("ownerMessId", messByUser.id);
+          localStorage.setItem("ownerMessName", messByUser.name || "");
+          localStorage.setItem("ownerPhone", messByUser.contact || "");
+
+          return messByUser;
+        }
+      }
+
+      return null;
+    }
+
+    function loadIntoUI(data){
+      currentMessData = data;
+
+      document.getElementById("welcomeTitle").innerText =
+        "Welcome, " + safeValue(data.owner_name || data.name, "Partner");
+
+      document.getElementById("messNameBox").innerText = safeValue(data.name);
+      document.getElementById("contactBox").innerText = safeValue(data.contact);
+      document.getElementById("priceBox").innerText = safeValue(data.price);
+      document.getElementById("locationBox").innerText = safeValue(data.location);
+      document.getElementById("statusBadge").innerText = safeValue(data.status, "Open");
+
+      document.getElementById("morningMenu").value = data.morning_menu || "";
+      document.getElementById("lunchMenu").value = data.lunch_menu || "";
+      document.getElementById("dinnerMenu").value = data.dinner_menu || "";
+      document.getElementById("messStatus").value = data.status || "Open";
+      document.getElementById("todayPrice").value = data.today_price || data.price || "";
+
+      fillPreview();
+    }
+
+    async function initDashboard(){
+      try{
+        const data = await getCurrentMess();
+
+        if(!data){
+          document.getElementById("loadingCard").innerHTML = `
+            <div class="section-title">No mess profile found</div>
+            <p class="muted">Please login again or register your mess first.</p>
+            <br>
+            <a class="btn primary" href="index.html">Go to Login</a>
+          `;
+          return;
+        }
+
+        loadIntoUI(data);
+
+        document.getElementById("loadingCard").classList.add("hidden");
+        document.getElementById("dashboardContent").classList.remove("hidden");
+
+        ["morningMenu","lunchMenu","dinnerMenu"].forEach(id => {
+          document.getElementById(id).addEventListener("input", fillPreview);
+        });
+
+      }catch(err){
+        console.log("Dashboard load error:", err);
+
+        document.getElementById("loadingCard").innerHTML = `
+          <div class="section-title">Dashboard load failed</div>
+          <p class="muted">${err.message || "Something went wrong while loading dashboard."}</p>
+          <br>
+          <a class="btn primary" href="index.html">Go to Login</a>
+        `;
+      }
+    }
+
+    async function saveMenu(){
+      if(!currentMessId){
+        setStatus("Mess ID not found. Please login again.", true);
+        return;
+      }
+
+      const payload = {
+        morning_menu: document.getElementById("morningMenu").value.trim(),
+        lunch_menu: document.getElementById("lunchMenu").value.trim(),
+        dinner_menu: document.getElementById("dinnerMenu").value.trim(),
+        status: document.getElementById("messStatus").value,
+        today_price: document.getElementById("todayPrice").value.trim(),
+        updated_at: new Date().toISOString()
+      };
+
+            setSaveDisabled(true);
+      setStatus("Saving menu...");
+
+      const { error } = await sb
+        .from("mess")
+        .update(payload)
+        .eq("id", Number(currentMessId));
+
+      if(error){
+        console.log("Save menu error:", error);
+        setStatus("Save failed: " + error.message, true);
+        setSaveDisabled(false);
+        return;
+      }
+
+      document.getElementById("statusBadge").innerText = payload.status;
+      fillPreview();
+
+      setStatus("Menu updated successfully. Students can now see your live menu.");
+      setSaveDisabled(false);
+    }
+
+    function openProfile(){
+      if(currentMessId){
+        window.location.href = "owner-profile.html?id=" + encodeURIComponent(currentMessId);
+      }else{
+        window.location.href = "owner-profile.html";
+      }
+    }
+
+    async function logoutOwner(){
+      try{
+        await sb.auth.signOut();
+      }catch(err){
+        console.log("Logout auth error:", err);
+      }
+
+      localStorage.removeItem("ownerUserId");
+      localStorage.removeItem("ownerMessId");
+      localStorage.removeItem("ownerMessName");
+      localStorage.removeItem("ownerPhone");
+
+      window.location.href = "index.html";
+    }
+
+    initDashboard();
+  </script>
+</body>
+</html>
