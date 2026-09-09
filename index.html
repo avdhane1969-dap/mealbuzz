@@ -1046,7 +1046,7 @@ function useLocation(){if(!navigator.geolocation)return;navigator.geolocation.ge
 document.getElementById("heroLocate").onclick=useLocation;document.getElementById("menuLocate").onclick=useLocation;
 setLang(lang);
 loadLiveMenus();
-if("serviceWorker" in navigator){window.addEventListener("load",()=>navigator.serviceWorker.register("sw.js").catch(()=>{}))}
+if("serviceWorker" in navigator){window.addEventListener("load",()=>navigator.serviceWorker.register("sw.js?v=4").catch(()=>{}))}
 </script>
 
 <script>
