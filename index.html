@@ -982,6 +982,54 @@ html{overflow-x:hidden!important}body{overflow-x:hidden!important}.section[id],.
 }
 </style>
 
+
+<style id="mealbuzz-glitch-free-layout">
+@media (max-width:1400px){
+  .feature-strip{
+    display:grid!important;
+    grid-template-columns:repeat(2,minmax(0,1fr))!important;
+    overflow:visible!important
+  }
+  .feature-strip .feature{
+    flex:none!important;
+    min-width:0!important;
+    min-height:0!important
+  }
+  .how-section .steps{
+    display:grid!important;
+    grid-template-columns:repeat(3,minmax(0,1fr))!important;
+    overflow:visible!important
+  }
+  .how-section .step{
+    flex:none!important;
+    min-width:0!important
+  }
+  .social-proof .quotes{
+    display:grid!important;
+    grid-template-columns:repeat(3,minmax(0,1fr))!important;
+    overflow:visible!important
+  }
+  .social-proof .quote{
+    flex:none!important;
+    min-width:0!important
+  }
+}
+@media (max-width:650px){
+  .feature-strip,
+  .how-section .steps,
+  .social-proof .quotes{
+    grid-template-columns:1fr!important;
+    overflow:visible!important
+  }
+  .feature-strip .feature,
+  .how-section .step,
+  .social-proof .quote{
+    width:auto!important;
+    min-width:0!important
+  }
+}
+</style>
+
 </head>
 <body>
 <div class="shell">
