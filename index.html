@@ -587,7 +587,7 @@ body{background:linear-gradient(180deg,#fffdf8 0%,#f7f1e7 100%)!important;color:
 </style>
 
 <style id="mealbuzz-tablet-mobile-reference">
-@media (max-width:1100px){
+@media (max-width:1400px){
   .mobile-home-top{display:block!important;padding:18px 20px 0!important;background:#fff!important}
   .mobile-hero-card{display:grid!important;grid-template-columns:1.06fr .94fr!important;min-height:205px!important;overflow:hidden!important;border:1px solid #eee8df!important;border-radius:25px!important;background:linear-gradient(135deg,#fffaf0,#f8f4ee)!important;box-shadow:0 12px 28px rgba(32,47,57,.10)!important}
   .mobile-hero-copy{display:flex!important;align-items:flex-start!important;justify-content:center!important;flex-direction:column!important;padding:24px 12px 22px 22px!important}
@@ -608,7 +608,7 @@ body{background:linear-gradient(180deg,#fffdf8 0%,#f7f1e7 100%)!important;color:
   #menus{margin:0 20px 30px!important;padding:18px 20px!important;border-radius:25px!important;background:#fff!important;box-shadow:0 10px 28px rgba(17,45,67,.07)!important}
   #menus>.menu-head{display:none!important}#menus>.filters{display:none!important}
   #menus>.menu-tools{position:sticky!important;top:64px!important;z-index:12!important;margin:0 -20px 16px!important;padding:10px 20px!important;background:rgba(255,255,255,.96)!important;border-bottom:1px solid #edf0f1!important}
-  .grid{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:16px!important}
+  .grid{grid-template-columns:1fr!important;gap:16px!important}
   .card{border-radius:20px!important;background:#fff!important;border:1px solid #e0e7e9!important;box-shadow:0 8px 22px rgba(17,45,67,.09)!important}
   .card .body{padding:16px!important}.card h3{font-size:21px!important}.card .menu{font-size:14px!important}
 }
@@ -617,6 +617,14 @@ body{background:linear-gradient(180deg,#fffdf8 0%,#f7f1e7 100%)!important;color:
   .mobile-hero-card{min-height:192px!important}.mobile-hero-copy{padding-left:19px!important}
   .mobile-hero-copy h1{font-size:29px!important}.mobile-hero-image{min-height:192px!important}
   #menus{margin:0 12px 28px!important;padding:18px 14px!important}.grid{grid-template-columns:1fr!important}
+}
+</style>
+
+<style id="mealbuzz-force-mobile-reference">
+@media (max-width:1400px){
+  .mobile-home-top{display:block!important}
+  .hero{display:none!important}
+  .mobile-home-top,.section{max-width:760px!important;margin-left:auto!important;margin-right:auto!important}
 }
 </style>
 </head>
