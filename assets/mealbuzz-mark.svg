@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 72 58" fill="none">
+  <title>MealBuzz</title>
+  <defs>
+    <linearGradient id="teal" x1="2" y1="2" x2="70" y2="58" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#249f93"/>
+      <stop offset="1" stop-color="#168378"/>
+    </linearGradient>
+  </defs>
+  <path d="M2 48V22C2 10 9 2 20 2c7 0 13 3 16 10C40 5 45 2 52 2c11 0 18 8 18 20v26c0 6-4 10-10 10H12C6 58 2 54 2 48Z" fill="url(#teal)"/>
+  <path d="M36 12c-4 8-4 19-4 28v18h4V12Z" fill="#08776e" opacity=".13"/>
+  <path d="M18 18v12m4-12v12m4-12v12m4-12v12" stroke="#fffdf5" stroke-width="2.3" stroke-linecap="round"/>
+  <path d="M17 28h14v4c0 4-2 7-5 8v18h-4V40c-3-1-5-4-5-8v-4Z" fill="#fffdf5"/>
+  <ellipse cx="48" cy="29" rx="9" ry="13" fill="#fffdf5"/>
+  <path d="M45.8 39h4.4v19h-4.4z" fill="#fffdf5"/>
+</svg>

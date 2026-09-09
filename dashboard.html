@@ -27,10 +27,11 @@ html[lang="mr"] body,html[lang="hi"] body{font-family:"Noto Sans Devanagari","DM
   .save-row{margin-left:-16px;margin-right:-16px;margin-bottom:-20px;padding:18px 16px 20px;border-radius:0 0 24px 24px}
 }
 </style>
+<link rel="stylesheet" href="assets/mealbuzz-brand.css">
 </head>
 <body>
 <main class="shell">
-<header class="top"><a class="brand" href="dashboard.html"><span class="logo">🍽</span><span class="brand-name">Meal <span>Buzz</span></span></a><div class="top-right"><div class="lang"><button class="lang-btn active" data-lang="en">EN</button><button class="lang-btn" data-lang="mr">मराठी</button><button class="lang-btn" data-lang="hi">हिंदी</button></div><div class="actions"><button class="btn ghost" onclick="viewListing()" data-i18n="viewLive">View live</button><button class="btn ghost" onclick="openProfile()" data-i18n="editProfile">Edit profile</button><button class="btn danger" onclick="logoutOwner()" data-i18n="logout">Logout</button></div></div></header>
+<header class="top"><a class="brand mealbuzz-brand" href="dashboard.html"><img class="mealbuzz-mark" src="assets/mealbuzz-mark.svg" width="48" height="40" alt="" aria-hidden="true"><span class="brand-name">Meal<span>Buzz</span></span></a><div class="top-right"><div class="lang"><button class="lang-btn active" data-lang="en">EN</button><button class="lang-btn" data-lang="mr">मराठी</button><button class="lang-btn" data-lang="hi">हिंदी</button></div><div class="actions"><button class="btn ghost" onclick="viewListing()" data-i18n="viewLive">View live</button><button class="btn ghost" onclick="openProfile()" data-i18n="editProfile">Edit profile</button><button class="btn danger" onclick="logoutOwner()" data-i18n="logout">Logout</button></div></div></header>
 <div id="loading" class="loading" data-i18n="loading">Loading your partner dashboard…</div>
 <section id="app" class="hero hidden">
 <aside class="side"><div class="kicker" data-i18n="kicker">Partner dashboard</div><h1 id="welcome">Welcome back.</h1><p data-i18n="intro">Keep today’s menu accurate so nearby customers always see what is actually available.</p><div class="summary"><div><small data-i18n="kitchen">Kitchen</small><b id="messName">—</b></div><div><small data-i18n="status">Status</small><b id="statusBox">—</b></div><div><small data-i18n="todayPriceLabel">Today price</small><b id="priceBox">—</b></div><div><small data-i18n="area">Area</small><b id="locationBox">—</b></div></div></aside>

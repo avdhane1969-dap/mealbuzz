@@ -1,0 +1,18 @@
+/* Shared MealBuzz mark, matched to the approved teal fork-and-spoon reference. */
+a.mealbuzz-brand { gap: 10px; }
+.mealbuzz-brand .mealbuzz-mark {
+  display: block;
+  width: 48px;
+  height: auto;
+  aspect-ratio: 72 / 58;
+  flex: 0 0 auto;
+  object-fit: contain;
+}
+.mealbuzz-brand .brand-name {
+  color: #10283a;
+  white-space: nowrap;
+}
+.mealbuzz-brand .brand-name > span { color: #18887d !important; }
+@media (max-width: 650px) {
+  .mealbuzz-brand .mealbuzz-mark { width: 40px; }
+}
