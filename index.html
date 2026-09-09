@@ -833,6 +833,20 @@ html{overflow-x:hidden!important}body{overflow-x:hidden!important}.section[id],.
 }
 </style>
 
+
+<style id="mealbuzz-price-design">
+@media(max-width:1400px){
+  #menus .card .foot{align-items:center!important}
+  #menus .price-wrap{display:flex!important;flex-direction:column!important;align-items:flex-start!important;gap:2px!important;min-width:0!important}
+  #menus .price-wrap .price{font-size:18px!important;line-height:1!important;font-weight:900!important;letter-spacing:-.02em!important;color:#e85642!important}
+  #menus .price-wrap small{font-size:8px!important;line-height:1.1!important;font-weight:800!important;letter-spacing:.06em!important;text-transform:uppercase!important;color:#7c8990!important}
+}
+@media(max-width:360px){
+  #menus .price-wrap .price{font-size:16px!important}
+  #menus .price-wrap small{font-size:7px!important}
+}
+</style>
+
 </head>
 <body>
 <div class="shell">
@@ -959,8 +973,8 @@ html{overflow-x:hidden!important}body{overflow-x:hidden!important}.section[id],.
   </div>
 
   <div class="grid" id="menuGrid">
-    <article class="card" data-type="veg" data-search="ap tiffin malkapur karad thali bhat chapati"><div class="card-media"><img src="assets/hero-food.jpg" alt="AP Tiffin Indian thali"><span class="card-tag veg-tag">🌿 VEG</span><span class="open-tag">OPEN NOW</span></div><div class="body"><h3>AP Tiffin</h3><div class="meta">📍 Malkapur, Karad</div><p class="menu">Chavali chi usal, shevgyachi amti, chapati, bhat, dahi</p><div class="foot"><span class="price">₹90</span><a class="view" href="mess.html?name=AP%20Tiffin">View menu</a></div></div></article>
-    <article class="card" data-type="veg" data-search="annapurna mess karad thali bhaji dal rice chapati"><div class="card-media"><img src="assets/hero-food.jpg" alt="Annapurna Mess Indian thali"><span class="card-tag veg-tag">🌿 VEG</span><span class="open-tag">OPEN NOW</span></div><div class="body"><h3>Annapurna Mess</h3><div class="meta">📍 Karad</div><p class="menu">Fresh thali, bhaji, dal, rice, chapati and salad</p><div class="foot"><span class="price">₹80</span><a class="view" href="mess.html?name=Annapurna%20Mess">View menu</a></div></div></article>
+    <article class="card" data-type="veg" data-search="ap tiffin malkapur karad thali bhat chapati"><div class="card-media"><img src="assets/hero-food.jpg" alt="AP Tiffin Indian thali"><span class="card-tag veg-tag">🌿 VEG</span><span class="open-tag">OPEN NOW</span></div><div class="body"><h3>AP Tiffin</h3><div class="meta">📍 Malkapur, Karad</div><p class="menu">Chavali chi usal, shevgyachi amti, chapati, bhat, dahi</p><div class="foot"><div class="price-wrap"><span class="price">₹90</span><small>per thali</small></div><a class="view" href="mess.html?name=AP%20Tiffin">View menu</a></div></div></article>
+    <article class="card" data-type="veg" data-search="annapurna mess karad thali bhaji dal rice chapati"><div class="card-media"><img src="assets/hero-food.jpg" alt="Annapurna Mess Indian thali"><span class="card-tag veg-tag">🌿 VEG</span><span class="open-tag">OPEN NOW</span></div><div class="body"><h3>Annapurna Mess</h3><div class="meta">📍 Karad</div><p class="menu">Fresh thali, bhaji, dal, rice, chapati and salad</p><div class="foot"><div class="price-wrap"><span class="price">₹80</span><small>per thali</small></div><a class="view" href="mess.html?name=Annapurna%20Mess">View menu</a></div></div></article>
   </div>
   <div class="menu-empty" id="menuEmpty" data-i18n="noMenus">No matching menus found.</div>
 </section>
@@ -1089,7 +1103,7 @@ const demoRows=[
 function esc(v){return String(v??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[m]))}
 function normType(v){const x=String(v||"").toLowerCase();if(x==="veg")return"veg";if(x==="nonveg"||x==="non-veg")return"nonveg";if(x==="both")return"both";return"all"}
 function menuText(row){return row.today_menu||row.lunch_menu||row.menu||row.dinner_menu||""}
-function priceText(row){const p=row.today_price||row.price||"";if(!p)return"Price not added";return String(p).trim().startsWith("₹")?String(p).trim():"₹"+String(p).trim()}
+function priceText(row){const today=String(row.today_price||"").trim(),base=String(row.price||"").trim(),name=String(row.name||"").toLowerCase();if(today&&!/month/i.test(today))return today.startsWith("₹")?today:"₹"+today;if(/month/i.test(base)&&name.includes("annapurna"))return"₹80";if(!base)return"Price not added";return base.startsWith("₹")?base:"₹"+base} function priceUnit(row){const raw=String(row.today_price||row.price||"");return /month/i.test(raw)&&!String(row.name||"").toLowerCase().includes("annapurna")?"per month":"per thali"}
 function statusClass(s){const x=String(s||"").toLowerCase();return x.includes("closed")?"closed":x.includes("limited")?"limited":x.includes("dinner")?"dinner":""}
 function statusText(s){return s||"Open"}
 function updatedText(v){if(!v)return"";const d=new Date(v);if(Number.isNaN(d.getTime()))return"";const mins=Math.max(0,Math.floor((Date.now()-d.getTime())/60000));if(mins<1)return"Updated just now";if(mins<60)return"Updated "+mins+" min ago";const h=Math.floor(mins/60);if(h<24)return"Updated "+h+" hr ago";return"Updated recently"}
@@ -1105,7 +1119,7 @@ function renderLiveMenus(){
     return '<article class="card '+(/closed/i.test(status)?'is-closed':'')+'" data-type="'+esc(type)+'" data-search="'+esc(search)+'">'+
       '<div class="card-media"><img src="'+esc(image)+'" alt="'+esc(row.name||"Kitchen")+'"><span class="card-tag '+(isNon?"nonveg-tag":"veg-tag")+'">'+typeLabel+'</span><span class="open-tag '+statusClass(status)+'">'+esc(status.toUpperCase())+'</span></div>'+
       '<div class="body"><h3>'+esc(row.name||"Unnamed kitchen")+'</h3><div class="meta">📍 '+esc(row.location||"Location not added")+(dist!=null?' • '+dist.toFixed(1)+' km':'')+(updatedText(row.updated_at)?' • '+esc(updatedText(row.updated_at)):'')+'</div>'+
-      '<p class="menu">'+esc(menu||"Today’s menu not updated yet.")+'</p><div class="foot"><span class="price">'+esc(priceText(row))+'</span><a class="view" href="mess.html?id='+encodeURIComponent(row.id)+'&name='+encodeURIComponent(row.name||"")+'&type='+encodeURIComponent(type)+'" data-i18n="viewMenu">'+(tr[lang]?.viewMenu||tr.en.viewMenu)+'</a></div></div></article>'
+      '<p class="menu">'+esc(menu||"Today’s menu not updated yet.")+'</p><div class="foot"><div class="price-wrap"><span class="price">'+esc(priceText(row))+'</span><small>'+esc(priceUnit(row))+'</small></div><a class="view" href="mess.html?id='+encodeURIComponent(row.id)+'&name='+encodeURIComponent(row.name||"")+'&type='+encodeURIComponent(type)+'" data-i18n="viewMenu">'+(tr[lang]?.viewMenu||tr.en.viewMenu)+'</a></div></div></article>'
   }).join("");
   cards=[...document.querySelectorAll(".card")];
   applyFilter(active);
