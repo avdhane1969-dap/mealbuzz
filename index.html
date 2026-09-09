@@ -1190,7 +1190,9 @@ window.addEventListener("DOMContentLoaded",()=>{
   const ms=document.getElementById("mobileSearch");
   const ds=document.getElementById("menuSearch");
   if(ms&&ds){
-    ms.addEventListener("input",()=>{ds.value=ms.value;applyFilter(active)});
+    const syncMobileSearch=()=>{ds.value=ms.value;applyFilter(active)};
+    ms.addEventListener("input",syncMobileSearch);
+    ms.addEventListener("change",syncMobileSearch);
   }
   const near=document.getElementById("mobileNearBtn");
   if(near)near.addEventListener("click",()=>{near.classList.toggle("active");useLocation()});
