@@ -12,6 +12,7 @@
 <meta property="og:type" content="website">
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="icon" type="image/svg+xml" href="assets/mealbuzz-mark.svg">
+<link rel="stylesheet" href="assets/mealbuzz-brand.css">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Anek+Devanagari:wght@500;600;700;800&family=DM+Sans:wght@400;500;600;700;800&family=Noto+Sans+Devanagari:wght@400;500;600;700;800;900&family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet">
@@ -739,8 +740,9 @@ html{overflow-x:hidden!important}body{overflow-x:hidden!important}.section[id],.
 .mobile-search{height:58px!important;border:1px solid rgba(20,55,74,.14)!important;border-radius:18px!important;background:rgba(255,255,255,.96)!important;box-shadow:0 10px 24px rgba(19,48,65,.10),inset 0 1px 0 #fff!important;gap:11px!important;transition:.2s ease!important}.mobile-search:focus-within{border-color:#d94835!important;box-shadow:0 0 0 4px rgba(216,72,53,.12),0 12px 28px rgba(19,48,65,.12)!important}.mobile-search span{width:30px;height:30px;display:grid;place-items:center;border-radius:10px;background:#fff4ec;color:#d94835!important;font-size:21px!important}.mobile-search input{font-weight:600!important;letter-spacing:-.01em}.mobile-search input::placeholder{color:#7a858b!important;font-weight:500!important}.mobile-filter-row button{min-height:43px!important;border-color:rgba(20,55,74,.13)!important;box-shadow:0 3px 0 rgba(20,55,74,.06),0 6px 14px rgba(20,55,74,.05)!important;transition:.18s ease!important}.mobile-filter-row button:hover,.mobile-filter-row button:focus-visible{transform:translateY(-1px);border-color:#198668!important;box-shadow:0 4px 0 rgba(25,134,104,.10),0 8px 18px rgba(20,55,74,.08)!important;outline:none}.view{background:linear-gradient(135deg,#173f55,#0e2b3c)!important;border:1px solid rgba(255,255,255,.14)!important;box-shadow:0 8px 16px rgba(14,43,60,.18)!important;transition:.18s ease!important}.view:hover,.view:focus-visible{transform:translateY(-1px);box-shadow:0 11px 20px rgba(14,43,60,.24)!important;outline:3px solid rgba(25,134,104,.18)!important}.primary{background:linear-gradient(135deg,#ee684e,#d94835)!important;box-shadow:0 10px 20px rgba(216,72,53,.22)!important}.secondary{box-shadow:0 8px 18px rgba(20,55,74,.08)!important}@media(max-width:650px){.mobile-search{height:55px!important;border-radius:17px!important}.mobile-search span{width:28px;height:28px;font-size:20px!important}.mobile-filter-row button{min-height:40px!important}.view{min-height:42px!important}}
 @media(max-width:650px){.owner-premium{grid-template-columns:1fr!important;align-items:start!important;gap:18px!important}.owner-premium h2{font-size:32px!important;line-height:1.08!important;max-width:100%!important}.owner-premium p{font-size:15px!important;line-height:1.65!important;max-width:100%!important;color:#e4edf1!important;opacity:1!important}.owner-premium .owner-cta{display:grid!important;grid-template-columns:1fr!important;width:100%!important;gap:10px!important}.owner-premium .owner-cta .btn{width:100%!important;min-height:50px!important;padding:0 16px!important;font-size:13px!important}.faq-section{grid-template-columns:1fr!important;gap:20px!important}.faq-section h2{font-size:32px!important;line-height:1.08!important}.faq-list{gap:10px!important}.faq-list details{padding-inline:16px!important}.faq-list summary{font-size:15px!important;line-height:1.35!important;padding:19px 26px 19px 0!important}.faq-list details p{font-size:14px!important;line-height:1.55!important}.final-cta{flex-direction:column!important;align-items:stretch!important;gap:16px!important}.final-cta h2{font-size:32px!important}.final-cta .btn{width:100%!important;min-height:50px!important;font-size:13px!important}}
 .final-cta:after{width:160px!important;height:125px!important;right:-48px!important;top:-55px!important;border-radius:58% 42% 62% 38%!important;background:linear-gradient(135deg,rgba(188,226,210,.68),rgba(229,244,233,.28))!important;transform:rotate(18deg)!important;opacity:.8!important}
+.mobile-owner-link{display:none}
+@media(max-width:650px){.mobile-owner-link{display:inline-flex;align-items:center;gap:3px;min-height:34px;padding:0 9px;border:1px solid #dfe5e6;border-radius:999px;background:#fff;color:#18887d;font-size:10px;font-weight:900;white-space:nowrap;box-shadow:0 3px 10px rgba(16,43,64,.06)}.mobile-owner-link:active{transform:translateY(1px)}.nav-wrap{gap:6px!important}}
 </style>
-<link rel="stylesheet" href="assets/mealbuzz-brand.css">
 </head>
 <body>
 <div class="shell">
@@ -750,6 +752,7 @@ html{overflow-x:hidden!important}body{overflow-x:hidden!important}.section[id],.
     <span><div class="brand-name">Meal<span>Buzz</span></div><div class="tagline" data-i18n="brandPunch">GOOD FOOD, RIGHT AROUND YOU</div></span>
   </a>
   <div class="nav-wrap">
+    <a class="mobile-owner-link" href="partner-login.html" aria-label="Open partner site">Partner <span aria-hidden="true">↗</span></a>
     <nav class="nav">
       <a href="#menus" data-i18n="menusNav">Menus</a>
       <a href="#how" data-i18n="howNav">How it works</a>
