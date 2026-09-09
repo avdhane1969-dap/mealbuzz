@@ -743,6 +743,42 @@ html{overflow-x:hidden!important}body{overflow-x:hidden!important}.section[id],.
 .mobile-owner-link{display:none}
 @media(max-width:650px){.nav-wrap:after{content:none!important;display:none!important}.mobile-owner-link{display:inline-flex;align-items:center;gap:3px;min-height:34px;padding:0 11px;border:1px solid #cfe3de;border-radius:999px;background:#eff8f5;color:#187b70;font-size:10px;font-weight:900;white-space:nowrap;box-shadow:0 3px 10px rgba(16,43,64,.06)}.mobile-owner-link:active{transform:translateY(1px)}.nav-wrap{gap:6px!important}}
 </style>
+
+<style id="mealbuzz-mobile-list-cards">
+@media(max-width:650px){
+  #menus{padding:0 12px 24px!important;background:transparent!important;box-shadow:none!important;border:0!important}
+  #menus .grid{gap:12px!important}
+  #menus .card{display:grid!important;grid-template-columns:43% minmax(0,57%)!important;min-height:174px!important;border-radius:20px!important;background:#fff!important;border:1px solid #dfe7e8!important;box-shadow:0 10px 24px rgba(16,43,64,.10)!important;overflow:hidden!important}
+  #menus .card-media{height:174px!important;min-height:174px!important;border-radius:20px 0 0 20px!important;overflow:hidden!important}
+  #menus .card-media:after{content:""!important;position:absolute!important;inset:48% 0 0!important;background:linear-gradient(180deg,transparent,rgba(12,35,48,.45))!important;pointer-events:none!important}
+  #menus .card-media img,#menus .card img{width:100%!important;height:100%!important;object-fit:cover!important}
+  #menus .card-tag,#menus .open-tag{z-index:2!important;font-size:9px!important;line-height:1!important;padding:7px 8px!important;border-radius:10px!important;box-shadow:0 5px 12px rgba(13,41,64,.14)!important}
+  #menus .card-tag{top:11px!important;left:11px!important;background:rgba(255,255,255,.94)!important}
+  #menus .open-tag{top:auto!important;right:auto!important;bottom:11px!important;left:11px!important;background:#198668!important;color:#fff!important}
+  #menus .open-tag.dinner{background:#b77917!important}
+  #menus .open-tag.limited{background:#b65d35!important}
+  #menus .open-tag.closed{background:#77858d!important}
+  #menus .card .body{display:flex!important;flex-direction:column!important;justify-content:space-between!important;min-width:0!important;padding:15px 14px 13px!important;gap:0!important}
+  #menus .card h3{font-size:18px!important;line-height:1.1!important;color:#122f44!important;margin:0 0 6px!important;white-space:nowrap!important;overflow:hidden!important;text-overflow:ellipsis!important}
+  #menus .card .meta{font-size:11px!important;line-height:1.4!important;color:#667783!important;display:-webkit-box!important;-webkit-box-orient:vertical!important;-webkit-line-clamp:2!important;overflow:hidden!important}
+  #menus .card .menu{font-size:12px!important;line-height:1.4!important;color:#4f626d!important;margin:9px 0 10px!important;display:-webkit-box!important;-webkit-box-orient:vertical!important;-webkit-line-clamp:2!important;overflow:hidden!important}
+  #menus .card .foot{display:flex!important;align-items:center!important;justify-content:space-between!important;gap:8px!important;padding-top:10px!important;border-top:1px solid rgba(16,43,64,.09)!important;min-height:40px!important}
+  #menus .price{font-size:18px!important;line-height:1!important;color:#e85642!important;white-space:nowrap!important}
+  #menus .view{min-height:38px!important;flex:0 0 auto!important;padding:8px 12px!important;border-radius:12px!important;background:linear-gradient(145deg,#284f64,#102a3c)!important;color:#fff!important;font-size:10px!important;font-weight:900!important;white-space:nowrap!important;box-shadow:0 6px 13px rgba(16,43,64,.16)!important}
+}
+@media(max-width:360px){
+  #menus{padding-inline:10px!important}
+  #menus .card{grid-template-columns:42% minmax(0,58%)!important;min-height:164px!important}
+  #menus .card-media{height:164px!important;min-height:164px!important}
+  #menus .card .body{padding:13px 11px 11px!important}
+  #menus .card h3{font-size:16px!important}
+  #menus .card .meta{font-size:10px!important}
+  #menus .card .menu{font-size:11px!important;margin:7px 0 8px!important}
+  #menus .price{font-size:16px!important}
+  #menus .view{font-size:9px!important;padding:7px 9px!important}
+}
+</style>
+
 </head>
 <body>
 <div class="shell">
