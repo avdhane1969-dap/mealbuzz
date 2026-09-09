@@ -2,9 +2,17 @@
   "name":"Meal Buzz",
   "short_name":"MealBuzz",
   "start_url":"./index.html",
+  "scope":"./",
   "display":"standalone",
   "background_color":"#f7f1e7",
   "theme_color":"#f7f1e7",
   "description":"Discover today’s local menus, prices and nearby kitchens.",
-  "icons":[]
+  "icons":[
+    {
+      "src":"assets/favicon-48.png",
+      "sizes":"48x48",
+      "type":"image/png",
+      "purpose":"any"
+    }
+  ]
 }
