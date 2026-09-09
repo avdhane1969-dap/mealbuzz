@@ -979,6 +979,10 @@ let cards=[], liveRows=[], userCoords=null;
 const menuSearch=document.getElementById("menuSearch"), menuEmpty=document.getElementById("menuEmpty"), menuGrid=document.getElementById("menuGrid");
 const fallbackVeg="https://images.unsplash.com/photo-1546833999-b9f581a1996d?auto=format&fit=crop&w=900&q=88";
 const fallbackNonVeg="https://images.unsplash.com/photo-1599487488170-d11ec9c172f0?auto=format&fit=crop&w=900&q=88";
+const demoRows=[
+  {id:"demo-ap-tiffin",name:"AP Tiffin",location:"Malkapur, Karad",type:"veg",price:"90",today_price:"90",status:"Open now",today_menu:"Chavali chi usal, shevgyachi amti, chapati, bhat, dahi",image_url:"assets/hero-food.jpg"},
+  {id:"demo-annapurna",name:"Annapurna Mess",location:"Karad",type:"veg",price:"80",today_price:"80",status:"Open now",today_menu:"Fresh thali, bhaji, dal, rice, chapati and salad",image_url:"assets/hero-food.jpg"}
+];
 function esc(v){return String(v??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[m]))}
 function normType(v){const x=String(v||"").toLowerCase();if(x==="veg")return"veg";if(x==="nonveg"||x==="non-veg")return"nonveg";if(x==="both")return"both";return"all"}
 function menuText(row){return row.today_menu||row.lunch_menu||row.menu||row.dinner_menu||""}
@@ -1018,8 +1022,11 @@ async function loadLiveMenus(){
     if(!liveRows.length){menuEmpty.style.display="block";menuEmpty.textContent=tr[lang]?.noMenus||tr.en.noMenus}
   }catch(err){
     console.error("Live menu load failed:",err);
-    menuGrid.innerHTML='<div class="menu-loading">Could not load live kitchens right now.<br><button class="btn secondary compact" style="margin-top:14px" onclick="loadLiveMenus()">Retry</button></div>';
-    document.getElementById("statMenus").textContent="—";document.getElementById("statOpen").textContent="—";document.getElementById("statUpdated").textContent="—";
+    liveRows=[...demoRows];
+    document.getElementById("statMenus").innerHTML='<span class="green-dot"></span>'+liveRows.length;
+    document.getElementById("statOpen").textContent=liveRows.length;
+    document.getElementById("statUpdated").textContent="—";
+    renderLiveMenus();
   }
 }
 function setLang(l){lang=l;localStorage.setItem("mealbuzzLang",l);document.documentElement.lang=l;document.querySelectorAll(".lang-btn").forEach(b=>b.classList.toggle("active",b.dataset.lang===l));document.querySelectorAll("[data-i18n]").forEach(el=>{const v=tr[l][el.dataset.i18n];if(v)el.innerHTML=v});document.querySelectorAll("[data-i18n-html]").forEach(el=>{const v=tr[l][el.dataset.i18nHtml];if(v)el.innerHTML=v})}
