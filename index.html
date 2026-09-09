@@ -874,6 +874,29 @@ html{overflow-x:hidden!important}body{overflow-x:hidden!important}.section[id],.
 }
 </style>
 <style id="mealbuzz-filter-fix">#menus .card.filter-hidden{display:none!important}</style>
+
+<style id="mealbuzz-location-fix">
+@media(max-width:1400px){
+  .mobile-location-link{
+    display:inline-flex!important;align-items:center;justify-content:center;gap:4px;
+    min-height:38px;padding:0 11px;border:1px solid #f0d0c8;border-radius:999px;
+    background:#fff7f2;color:#c84f3d;font-size:11px;font-weight:900;
+    white-space:nowrap;box-shadow:0 3px 10px rgba(16,43,64,.06);flex:0 0 auto
+  }
+  .mobile-location-link.active{
+    background:#ffebe5!important;border-color:#f3b4a7!important;color:#b74334!important
+  }
+}
+@media(max-width:650px){
+  .mobile-location-link{min-height:34px!important;padding:0 9px!important;font-size:10px!important}
+}
+@media(max-width:390px){
+  .mobile-location-link{min-width:35px!important;padding:0 8px!important;font-size:0!important}
+  .mobile-location-link .location-label{display:none!important}
+  .mobile-location-link span[aria-hidden="true"]{font-size:14px!important}
+}
+</style>
+
 </head>
 <body>
 <div class="shell">
@@ -883,6 +906,7 @@ html{overflow-x:hidden!important}body{overflow-x:hidden!important}.section[id],.
     <span><div class="brand-name">Meal<span>Buzz</span></div><div class="tagline" data-i18n="brandPunch">GOOD FOOD, RIGHT AROUND YOU</div></span>
   </a>
   <div class="nav-wrap">
+    <button type="button" id="mobileHeaderLocation" class="mobile-location-link" aria-label="Use my location"><span aria-hidden="true">⌖</span><span class="location-label">Location</span></button>
     <a class="mobile-owner-link" href="partner-login.html" aria-label="Open owner login"><span data-i18n="ownerLogin">Owner login</span><span aria-hidden="true">↗</span></a>
     <nav class="nav">
       <a href="#menus" data-i18n="menusNav">Menus</a>
@@ -1180,6 +1204,8 @@ document.querySelectorAll(".filter").forEach(b=>b.onclick=()=>applyFilter(b.data
 document.querySelectorAll("[data-hero-filter]").forEach(b=>b.onclick=()=>{applyFilter(b.dataset.heroFilter);document.querySelector("#menus").scrollIntoView({behavior:"smooth"})});document.querySelectorAll("[data-quick]").forEach(b=>b.onclick=()=>{applyFilter(b.dataset.quick);document.querySelector("#menus").scrollIntoView({behavior:"smooth"})});if(menuSearch)menuSearch.addEventListener("input",()=>applyFilter(active));
 function useLocation(){if(!navigator.geolocation)return;navigator.geolocation.getCurrentPosition(p=>{userCoords={lat:p.coords.latitude,lon:p.coords.longitude};renderLiveMenus();document.querySelector("#menus").scrollIntoView({behavior:"smooth"})},()=>{})}
 document.getElementById("heroLocate").onclick=useLocation;document.getElementById("menuLocate").onclick=useLocation;
+  const headerLocation=document.getElementById("mobileHeaderLocation");
+  if(headerLocation)headerLocation.onclick=()=>{headerLocation.classList.toggle("active");useLocation()};
 setLang(lang);
 loadLiveMenus();
 if("serviceWorker" in navigator){window.addEventListener("load",()=>navigator.serviceWorker.register("sw.js?v=4").catch(()=>{}))}
