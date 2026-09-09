@@ -368,6 +368,40 @@ html[lang="mr"] .diet button,html[lang="hi"] .diet button{font-weight:800!import
   .actions{margin-top:2px}
 }
 
+
+/* ===== Mobile app-first cleanup v4 ===== */
+@media(max-width:559px){
+  .hero{padding:12px 14px 10px}
+  .hero .eyebrow,.hero .hero-copy,.hero .diet,.hero #heroLocate{display:none}
+  .hero h1 br{display:none}
+  h1,html[lang="mr"] .hero h1,html[lang="hi"] .hero h1{
+    font-size:22px!important;
+    line-height:1.12!important;
+    margin:2px 0 10px!important;
+    max-width:none!important;
+    letter-spacing:-.025em!important
+  }
+  .hero .actions{display:block;margin:0}
+  .hero .actions .primary{
+    width:100%;min-height:42px;border-radius:12px;
+    font-size:11px;box-shadow:none
+  }
+
+  .taste-strip{margin:10px 12px 0;padding:14px 12px 10px}
+  .taste-head .proof-kicker,.taste-head p{display:none}
+  .taste-head h2{font-size:17px;margin:0 0 10px}
+  .taste-grid{margin:0 -4px;padding:0 4px 1px;gap:8px}
+  .taste-card{flex:0 0 70px}
+  .taste-emoji{width:52px;height:52px;font-size:22px;margin-bottom:6px;border-radius:16px}
+  .taste-card b{font-size:9.8px}
+
+  #menus{margin-top:10px;padding-top:14px}
+  .menu-head .proof-kicker,.menu-head p,.live-pill{display:none}
+  .menu-head h2{font-size:18px;margin:0 0 10px}
+  .menu-tools{margin-top:0}
+  .filters{margin-top:9px}
+}
+
 </style>
 </head>
 <body>
