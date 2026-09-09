@@ -1412,7 +1412,20 @@ if("serviceWorker" in navigator){window.addEventListener("load",()=>navigator.se
 window.addEventListener("DOMContentLoaded",()=>{
   const ms=document.getElementById("mobileSearch");
   if(ms){
-    const syncMobileSearch=()=>applyFilter(active,ms.value);
+    let mobileRestoreTimer;
+    const syncMobileSearch=()=>{
+      const value=ms.value;
+      clearTimeout(mobileRestoreTimer);
+      applyFilter(active,value);
+      if(value){
+        mobileRestoreTimer=setTimeout(()=>{
+          if(document.activeElement===ms&&!ms.value){
+            ms.value=value;
+            applyFilter(active,value);
+          }
+        },60);
+      }
+    };
     ms.addEventListener("input",syncMobileSearch);
     ms.addEventListener("change",syncMobileSearch);
   }
