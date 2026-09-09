@@ -19,6 +19,11 @@ h1{font-size:44px}.sub{font-size:15px;line-height:1.6;max-width:620px}
   .card{box-shadow:0 14px 34px rgba(13,41,64,.07)}
 }
 </style><link rel="stylesheet" href="assets/mealbuzz-brand.css">
+<style id="mealbuzz-mobile-audit-fixes">
+@media(max-width:640px){
+  .back{white-space:nowrap}
+}
+</style>
 </head><body><main class="shell"><header class="top"><a class="brand mealbuzz-brand" href="dashboard.html"><img class="mealbuzz-mark" src="assets/mealbuzz-mark.svg" width="48" height="40" alt="" aria-hidden="true"><span class="brand-name">Meal<span>Buzz</span></span></a><a class="back" href="dashboard.html">← Dashboard</a></header><section class="card"><h1>Edit kitchen profile</h1><p class="sub">Update owner details, kitchen name, pricing, location and main photo.</p><div class="grid"><div class="field"><label>Owner name</label><input id="ownerName"></div><div class="field"><label>Mobile number</label><input id="contact" inputmode="numeric"></div><div class="field"><label>Kitchen name</label><input id="messName"></div><div class="field"><label>Base price</label><input id="price"></div><div class="field"><label>Food type</label><select id="mealType" style="width:100%;border:1px solid var(--line);background:#fff;border-radius:15px;padding:14px 15px;color:var(--ink)"><option value="veg">Veg</option><option value="nonveg">Non-Veg</option><option value="both">Both</option></select></div><div class="field full"><label>Address / area</label><textarea id="location"></textarea><button type="button" class="back" style="margin-top:10px" onclick="captureLocation()">◎ Update current location</button><div id="coordsNote" class="preview" style="display:none"></div></div><div class="field full"><label>Change main photo (optional)</label><input id="mainImage" type="file" accept="image/jpeg,image/png,image/webp"><div id="imagePreview" class="preview">Current image will appear here.</div></div><div class="field full"><button id="saveBtn" class="save" onclick="saveProfile()">Save changes →</button><div id="statusText" class="status"></div></div></div></section></main>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><script>
 const sb=window.supabase.createClient("https://iinvhwsbnvmcujyrzlxe.supabase.co","sb_publishable_fwhxfVqWpDrro8hkQbQQRA_1crMexZv");let currentMessId=null,currentLat=null,currentLon=null;
@@ -29,10 +34,19 @@ async function getMess(){
     const{data}=await sb.rpc("legacy_get_mess",{p_token:legacyToken});
     if(Array.isArray(data)&&data[0])return data[0];
   }
+
   const{data:u}=await sb.auth.getUser();
   if(u?.user){
     const{data,error}=await sb.rpc("get_my_mess");
     if(!error&&Array.isArray(data)&&data[0])return data[0];
+  }
+
+  const cachedId=Number(localStorage.getItem("ownerMessId"));
+  const cachedPhone=String(localStorage.getItem("ownerPhone")||"").replace(/\D/g,"").slice(-10);
+  if(Number.isFinite(cachedId)&&cachedId>0&&cachedPhone){
+    const{data:cached,error:cachedError}=await sb.from("mess").select("*").eq("id",cachedId).maybeSingle();
+    const rowPhone=String(cached?.contact||"").replace(/\D/g,"").slice(-10);
+    if(!cachedError&&cached&&rowPhone===cachedPhone)return cached;
   }
   return null
 }

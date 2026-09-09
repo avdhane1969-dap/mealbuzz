@@ -847,16 +847,42 @@ html{overflow-x:hidden!important}body{overflow-x:hidden!important}.section[id],.
 }
 </style>
 
+<style id="mealbuzz-audit-fixes">
+@media (max-width:1400px){
+  .nav-wrap:after{content:none!important;display:none!important}
+  .mobile-owner-link{
+    display:inline-flex!important;align-items:center;justify-content:center;gap:4px;
+    min-height:38px;padding:0 12px;border:1px solid #cfe3de;border-radius:999px;
+    background:#eff8f5;color:#187b70;font-size:11px;font-weight:900;
+    white-space:nowrap;box-shadow:0 3px 10px rgba(16,43,64,.06);flex:0 0 auto
+  }
+  #mobileNearBtn,#mobilePriceBtn,#mobileTypeBtn{font-size:11px!important}
+  #mobileNearBtn:after,#mobilePriceBtn:after,#mobileTypeBtn:after{
+    content:none!important;display:none!important
+  }
+  #mobileNearBtn.active,#mobilePriceBtn.active,#mobileTypeBtn.active{
+    border-color:#198668!important;background:#eff8f5!important;color:#176b58!important
+  }
+}
+@media (max-width:650px){
+  .mobile-owner-link{min-height:34px!important;padding:0 10px!important;font-size:10px!important}
+  #mobileNearBtn,#mobilePriceBtn,#mobileTypeBtn{font-size:10px!important}
+}
+@media (max-width:390px){
+  .mobile-owner-link{padding:0 8px!important;font-size:9px!important}
+  .brand-name{font-size:21px!important}
+}
+</style>
 </head>
 <body>
 <div class="shell">
 <header class="topbar">
-  <a class="brand mealbuzz-brand" href="#">
+  <a class="brand mealbuzz-brand" href="index.html">
     <img class="mealbuzz-mark" src="assets/mealbuzz-mark.svg" width="48" height="40" alt="" aria-hidden="true">
     <span><div class="brand-name">Meal<span>Buzz</span></div><div class="tagline" data-i18n="brandPunch">GOOD FOOD, RIGHT AROUND YOU</div></span>
   </a>
   <div class="nav-wrap">
-    <a class="mobile-owner-link" href="partner-login.html" aria-label="Open owner login">Owner login <span aria-hidden="true">↗</span></a>
+    <a class="mobile-owner-link" href="partner-login.html" aria-label="Open owner login"><span data-i18n="ownerLogin">Owner login</span><span aria-hidden="true">↗</span></a>
     <nav class="nav">
       <a href="#menus" data-i18n="menusNav">Menus</a>
       <a href="#how" data-i18n="howNav">How it works</a>
@@ -887,10 +913,10 @@ html{overflow-x:hidden!important}body{overflow-x:hidden!important}.section[id],.
   </label>
 
   <div class="mobile-filter-row">
-    <button type="button" id="mobileNearBtn">◎ Near me</button>
+    <button type="button" id="mobileNearBtn">⌖ Distance</button>
     <button type="button" id="mobileOpenBtn">● Open now</button>
     <button type="button" id="mobilePriceBtn">₹ Price</button>
-    <button type="button" id="mobileTypeBtn">Veg / Non-Veg</button>
+    <button type="button" id="mobileTypeBtn">♧ Vegetarian</button>
   </div>
 
   <div class="mobile-nearby-head">
@@ -1101,9 +1127,9 @@ const demoRows=[
   {id:"demo-annapurna",name:"Annapurna Mess",location:"Karad",type:"veg",price:"80",today_price:"80",status:"Open now",today_menu:"Fresh thali, bhaji, dal, rice, chapati and salad",image_url:"assets/hero-food.jpg"}
 ];
 function esc(v){return String(v??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[m]))}
-function normType(v){const x=String(v||"").toLowerCase();if(x==="veg")return"veg";if(x==="nonveg"||x==="non-veg")return"nonveg";if(x==="both")return"both";return"all"}
+function normType(v,row){const x=String(v||"").toLowerCase().replace(/[\s_-]/g,"");if(x==="veg")return"veg";if(x==="nonveg")return"nonveg";if(x==="both")return"both";const text=[row?.name,row?.menu,row?.today_menu,row?.lunch_menu,row?.dinner_menu].filter(Boolean).join(" ").toLowerCase();if(/\b(chicken|mutton|fish|prawn|prawns|egg|eggs|keema|kebab|kabab|nonveg)\b/.test(text))return"nonveg";return"veg"}
 function menuText(row){return row.today_menu||row.lunch_menu||row.menu||row.dinner_menu||""}
-function displayAmount(v){const s=String(v||"").trim().replace(/^₹\s*/,"").replace(/\s*\/?\s*month\b/i,"").replace(/\s*(rs|rupees?)\.?$/i,"").trim();return s?"₹"+s:"Price not added"} function priceText(row){const today=String(row.today_price||"").trim(),base=String(row.price||"").trim(),name=String(row.name||"").toLowerCase();if(today&&!/month/i.test(today))return displayAmount(today);if(/month/i.test(base)&&name.includes("annapurna"))return"₹80";if(!base)return"Price not added";return displayAmount(base)} function priceUnit(row){const raw=String(row.today_price||row.price||"");return /month/i.test(raw)&&!String(row.name||"").toLowerCase().includes("annapurna")?"per month":"per thali"}
+function displayAmount(v){const s=String(v||"").trim().replace(/^₹\s*/,"").replace(/\s*\/?\s*month\b/i,"").replace(/\s*(rs|rupees?)\.?$/i,"").trim();return s?"₹"+s:"Price not added"} function priceText(row){const today=String(row.today_price||"").trim(),base=String(row.price||"").trim();if(today&&!/month/i.test(today))return displayAmount(today);if(!base||/month/i.test(base))return"Price not added";return displayAmount(base)} function priceUnit(row){const today=String(row.today_price||"").trim(),base=String(row.price||"").trim();const hasThaliPrice=(today&&!/month/i.test(today))||(base&&!/month/i.test(base));return hasThaliPrice?"per thali":""}
 function statusClass(s){const x=String(s||"").toLowerCase();return x.includes("closed")?"closed":x.includes("limited")?"limited":x.includes("dinner")?"dinner":""}
 function statusText(s){return s||"Open"}
 function updatedText(v){if(!v)return"";const d=new Date(v);if(Number.isNaN(d.getTime()))return"";const mins=Math.max(0,Math.floor((Date.now()-d.getTime())/60000));if(mins<1)return"Updated just now";if(mins<60)return"Updated "+mins+" min ago";const h=Math.floor(mins/60);if(h<24)return"Updated "+h+" hr ago";return"Updated recently"}
@@ -1112,7 +1138,7 @@ function renderLiveMenus(){
   const rows=[...liveRows];
   if(userCoords){rows.sort((a,b)=>{const da=(a.latitude!=null&&a.longitude!=null)?distanceKm(userCoords.lat,userCoords.lon,Number(a.latitude),Number(a.longitude)):99999;const db=(b.latitude!=null&&b.longitude!=null)?distanceKm(userCoords.lat,userCoords.lon,Number(b.latitude),Number(b.longitude)):99999;return da-db})}
   menuGrid.innerHTML=rows.map(row=>{
-    const type=normType(row.type), isNon=type==="nonveg", image=row.image_url||(isNon?row.nonveg_image_url:row.veg_image_url)||(isNon?fallbackNonVeg:fallbackVeg);
+    const type=normType(row.type,row), isNon=type==="nonveg", image=row.image_url||(isNon?row.nonveg_image_url:row.veg_image_url)||(isNon?fallbackNonVeg:fallbackVeg);
     const menu=menuText(row), status=statusText(row.status), dist=userCoords&&row.latitude!=null&&row.longitude!=null?distanceKm(userCoords.lat,userCoords.lon,Number(row.latitude),Number(row.longitude)):null;
     const typeLabel=type==="veg"?"🌿 VEG":type==="nonveg"?"🍗 NON-VEG":type==="both"?"🍽 BOTH":"🍽 MENU";
     const search=[row.name,row.location,menu,row.type].filter(Boolean).join(" ").toLowerCase();

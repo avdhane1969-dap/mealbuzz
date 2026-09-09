@@ -51,14 +51,21 @@ html[lang="mr"] select,html[lang="hi"] select{
 
 </style>
 <link rel="stylesheet" href="assets/mealbuzz-brand.css">
+<style id="mealbuzz-mobile-audit-fixes">
+@media(max-width:640px){
+  .top-actions .lang{display:none!important}
+  .top{height:auto!important;min-height:76px!important;padding:12px 0!important}
+  .back{white-space:nowrap}
+}
+</style>
 </head>
 <body>
 <main class="shell">
 <header class="top">
-  <a class="brand mealbuzz-brand" href="partner-login.html"><img class="mealbuzz-mark" src="assets/mealbuzz-mark.svg" width="48" height="40" alt="" aria-hidden="true"><span class="brand-name">Meal<span>Buzz</span></span></a>
+  <a class="brand mealbuzz-brand" href="index.html"><img class="mealbuzz-mark" src="assets/mealbuzz-mark.svg" width="48" height="40" alt="" aria-hidden="true"><span class="brand-name">Meal<span>Buzz</span></span></a>
   <div class="top-actions">
     <div class="lang"><button class="lang-btn active" data-lang="en">EN</button><button class="lang-btn" data-lang="mr">मराठी</button><button class="lang-btn" data-lang="hi">हिंदी</button></div>
-    <a class="back" href="partner-login.html">← <span data-i18n="back">Customer site</span></a>
+    <a class="back" href="index.html">← <span data-i18n="back">Customer site</span></a>
   </div>
 </header>
 

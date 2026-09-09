@@ -75,6 +75,13 @@ html[lang="mr"] select,html[lang="hi"] select{
 }
 </style>
 <link rel="stylesheet" href="assets/mealbuzz-brand.css">
+<style id="mealbuzz-mobile-audit-fixes">
+@media(max-width:640px){
+  .top-actions .lang{display:none!important}
+  .top{height:auto!important;min-height:76px!important;padding:12px 0!important}
+  .back{white-space:nowrap}
+}
+</style>
 </head>
 <body>
 <main class="wrap">
@@ -137,7 +144,7 @@ const sb=window.supabase.createClient(SUPABASE_URL,SUPABASE_KEY);
 const q=new URLSearchParams(location.search),fromPartner=q.get("from")==="partner",fallbackName=q.get("name")||"Kitchen",fallbackType=q.get("type")==="nonveg"?"nonveg":"veg";
 let currentKitchen=null;
 function esc(v){return String(v??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[m]))}
-function normType(v){const x=String(v||"").toLowerCase();if(x==="nonveg"||x==="non-veg")return"nonveg";if(x==="veg")return"veg";if(x==="both")return"both";return fallbackType}
+function normType(v,row){const x=String(v||"").toLowerCase().replace(/[\s_-]/g,"");if(x==="nonveg")return"nonveg";if(x==="veg")return"veg";if(x==="both")return"both";const text=[row?.name,row?.menu,row?.today_menu,row?.lunch_menu,row?.dinner_menu].filter(Boolean).join(" ").toLowerCase();if(/\b(chicken|mutton|fish|prawn|prawns|egg|eggs|keema|kebab|kabab|nonveg)\b/.test(text))return"nonveg";return fallbackType}
 function mainMenu(row){return row.today_menu||row.lunch_menu||row.menu||row.dinner_menu||""}
 function formatPrice(v){if(!v)return"Price not added";const s=String(v).trim().replace(/^₹\s*/,"").replace(/\s*(rs|rupees?)\.?$/i,"").trim();return s?"₹"+s:"Price not added"} function thaliPrice(row){const today=String(row.today_price||"").trim(),base=String(row.price||"").trim(),name=String(row.name||"").toLowerCase();if(today&&!/month/i.test(today))return formatPrice(today);if(/month/i.test(base)&&name.includes("annapurna"))return"₹80";if(today)return formatPrice(today);if(!base||/month/i.test(base))return"Price not added";return formatPrice(base)} function monthlyPrice(row){const raw=String(row.monthly_price||"").trim(),base=String(row.price||"").trim();if(raw)return formatPrice(raw);return /month/i.test(base)?formatPrice(base):""}
 function updateAge(v){if(!v)return"";const d=new Date(v);if(Number.isNaN(d.getTime()))return"";const mins=Math.max(0,Math.floor((Date.now()-d.getTime())/60000));if(mins<1)return"Updated just now";if(mins<60)return"Updated "+mins+" min ago";const h=Math.floor(mins/60);if(h<24)return"Updated "+h+" hr ago";return"Updated recently"}
@@ -160,7 +167,7 @@ function setContactAndDirections(row){
 }
 function renderKitchen(row){
   currentKitchen=row;
-  const type=normType(row.type);
+  const type=normType(row.type,row);
   document.getElementById("name").textContent=row.name||fallbackName;
   document.title=(row.name||"Kitchen")+" — Meal Buzz";
   const badge=document.getElementById("dietBadge");
@@ -194,9 +201,9 @@ async function loadKitchen(){
 }
 
 const tr={
-en:{back:"Back to menus",updated:"Today’s menu",liveMenu:"Menu overview",heroDesc:"See the listed meal type, price and today’s menu in one place.",menuType:"Menu details",openNow:"Check today’s availability",startsAt:"Listed thali price",perPlate:"per plate",call:"Call kitchen",directions:"Directions",freshTitle:"Fresh today",freshDesc:"Menu reflects today’s kitchen",clearTitle:"Clear price",clearDesc:"Know the cost before you go",localTitle:"Nearby",localDesc:"Made for local daily meals",todayMenu:"Today’s menu",menuSub:"Freshly prepared items available today",kitchenDetails:"Kitchen details",lunch:"Lunch",dinner:"Dinner",service:"Service",serviceDesc:"Dine-in • Parcel • Monthly mess",area:"Area",monthlyMess:"Monthly mess",note:"Menu and availability can change during the day. Call the kitchen before travelling if you need final confirmation."},
-mr:{back:"मेनूकडे परत",updated:"आजचा मेनू",liveMenu:"मेनूची माहिती",heroDesc:"जेवणाचा प्रकार, किंमत आणि आजचा मेनू एका ठिकाणी बघा.",menuType:"मेनूची माहिती",openNow:"आजची उपलब्धता तपासा",startsAt:"लिस्ट केलेली थाळी किंमत",perPlate:"प्रति प्लेट",call:"मेसला फोन करा",directions:"रस्ता बघा",freshTitle:"आजचं ताजं",freshDesc:"मेनू आजच्या किचननुसार",clearTitle:"किंमत स्पष्ट",clearDesc:"जाण्याआधी खर्च कळतो",localTitle:"जवळचं",localDesc:"रोजच्या लोकल जेवणासाठी",todayMenu:"आजचा मेनू",menuSub:"आज उपलब्ध असलेले ताजे पदार्थ",kitchenDetails:"मेसची माहिती",lunch:"दुपारचं जेवण",dinner:"रात्रीचं जेवण",service:"सेवा",serviceDesc:"बसून जेवण • पार्सल • मासिक मेस",area:"परिसर",monthlyMess:"मासिक मेस",note:"दिवसभरात मेनू आणि उपलब्धता बदलू शकते. निघण्याआधी खात्री हवी असेल तर मेसला फोन करा."},
-hi:{back:"मेनू पर वापस",updated:"आज का मेनू",liveMenu:"मेनू की जानकारी",heroDesc:"खाने का प्रकार, कीमत और आज का मेनू एक ही जगह देखें.",menuType:"मेनू की जानकारी",openNow:"आज की उपलब्धता देखें",startsAt:"लिस्ट की गई थाली कीमत",perPlate:"प्रति प्लेट",call:"किचन को कॉल करें",directions:"रास्ता देखें",freshTitle:"आज का ताज़ा",freshDesc:"मेनू आज की किचन के हिसाब से",clearTitle:"साफ़ कीमत",clearDesc:"जाने से पहले खर्च जानें",localTitle:"पास में",localDesc:"रोज़ के लोकल खाने के लिए",todayMenu:"आज का मेनू",menuSub:"आज उपलब्ध ताज़ा आइटम",kitchenDetails:"किचन की जानकारी",lunch:"लंच",dinner:"डिनर",service:"सर्विस",serviceDesc:"डाइन-इन • पार्सल • मंथली मेस",area:"एरिया",monthlyMess:"मंथली मेस",note:"दिन में मेनू और उपलब्धता बदल सकती है. निकलने से पहले पक्का करना हो तो किचन को कॉल करें."}
+en:{back:"Back to menus",updated:"Today’s menu",liveMenu:"Menu overview",heroDesc:"See the listed meal type, price and today’s menu in one place.",menuType:"Menu details",openNow:"Check today’s availability",startsAt:"Listed thali price",perPlate:"per thali",call:"Call kitchen",directions:"Directions",freshTitle:"Fresh today",freshDesc:"Menu reflects today’s kitchen",clearTitle:"Clear price",clearDesc:"Know the cost before you go",localTitle:"Nearby",localDesc:"Made for local daily meals",todayMenu:"Today’s menu",menuSub:"Freshly prepared items available today",kitchenDetails:"Kitchen details",lunch:"Lunch",dinner:"Dinner",service:"Service",serviceDesc:"Dine-in • Parcel • Monthly mess",area:"Area",monthlyMess:"Monthly mess",note:"Menu and availability can change during the day. Call the kitchen before travelling if you need final confirmation."},
+mr:{back:"मेनूकडे परत",updated:"आजचा मेनू",liveMenu:"मेनूची माहिती",heroDesc:"जेवणाचा प्रकार, किंमत आणि आजचा मेनू एका ठिकाणी बघा.",menuType:"मेनूची माहिती",openNow:"आजची उपलब्धता तपासा",startsAt:"लिस्ट केलेली थाळी किंमत",perPlate:"प्रति थाळी",call:"मेसला फोन करा",directions:"रस्ता बघा",freshTitle:"आजचं ताजं",freshDesc:"मेनू आजच्या किचननुसार",clearTitle:"किंमत स्पष्ट",clearDesc:"जाण्याआधी खर्च कळतो",localTitle:"जवळचं",localDesc:"रोजच्या लोकल जेवणासाठी",todayMenu:"आजचा मेनू",menuSub:"आज उपलब्ध असलेले ताजे पदार्थ",kitchenDetails:"मेसची माहिती",lunch:"दुपारचं जेवण",dinner:"रात्रीचं जेवण",service:"सेवा",serviceDesc:"बसून जेवण • पार्सल • मासिक मेस",area:"परिसर",monthlyMess:"मासिक मेस",note:"दिवसभरात मेनू आणि उपलब्धता बदलू शकते. निघण्याआधी खात्री हवी असेल तर मेसला फोन करा."},
+hi:{back:"मेनू पर वापस",updated:"आज का मेनू",liveMenu:"मेनू की जानकारी",heroDesc:"खाने का प्रकार, कीमत और आज का मेनू एक ही जगह देखें.",menuType:"मेनू की जानकारी",openNow:"आज की उपलब्धता देखें",startsAt:"लिस्ट की गई थाली कीमत",perPlate:"प्रति थाली",call:"किचन को कॉल करें",directions:"रास्ता देखें",freshTitle:"आज का ताज़ा",freshDesc:"मेनू आज की किचन के हिसाब से",clearTitle:"साफ़ कीमत",clearDesc:"जाने से पहले खर्च जानें",localTitle:"पास में",localDesc:"रोज़ के लोकल खाने के लिए",todayMenu:"आज का मेनू",menuSub:"आज उपलब्ध ताज़ा आइटम",kitchenDetails:"किचन की जानकारी",lunch:"लंच",dinner:"डिनर",service:"सर्विस",serviceDesc:"डाइन-इन • पार्सल • मंथली मेस",area:"एरिया",monthlyMess:"मंथली मेस",note:"दिन में मेनू और उपलब्धता बदल सकती है. निकलने से पहले पक्का करना हो तो किचन को कॉल करें."}
 };
 let lang=localStorage.getItem("mealbuzzLang")||"en";
 function setLang(l){lang=l;localStorage.setItem("mealbuzzLang",l);document.documentElement.lang=l;document.querySelectorAll(".lang-btn").forEach(b=>b.classList.toggle("active",b.dataset.lang===l));document.querySelectorAll("[data-i18n]").forEach(el=>{const v=tr[l][el.dataset.i18n];if(v)el.textContent=v})}
