@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://avdhane1969-dap.github.io/mealbuzz/sitemap.xml
